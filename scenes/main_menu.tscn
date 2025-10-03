@@ -1,0 +1,205 @@
+[gd_scene load_steps=4 format=3 uid="uid://dc7il20758ygn"]
+
+[ext_resource type="Script" uid="uid://hpvx6xkk5mpx" path="res://scripts/ui/main_menu.gd" id="1_d0lsa"]
+[ext_resource type="Texture2D" uid="uid://cy20l4ejmkcmg" path="res://icon.svg" id="2_6wafw"]
+[ext_resource type="Theme" uid="uid://bkxtk5gau1dbp" path="res://theme/theme.tres" id="3_bqqt6"]
+
+[node name="MainMenu" type="CanvasLayer"]
+visible = false
+script = ExtResource("1_d0lsa")
+
+[node name="InnerMenu" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="InnerMenu"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="InnerMenu/MarginContainer"]
+layout_mode = 2
+
+[node name="Logo" type="TextureRect" parent="InnerMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+texture = ExtResource("2_6wafw")
+stretch_mode = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="InnerMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="InnerMenu/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(213, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="StarGameButton" type="Button" parent="InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Start game"
+
+[node name="OptionsOpenButton" type="Button" parent="InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Options"
+
+[node name="CreditsOpenButton" type="Button" parent="InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Credits"
+
+[node name="Options" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="InnerMenu" type="PanelContainer" parent="Options"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_bqqt6")
+
+[node name="MarginContainer" type="MarginContainer" parent="Options/InnerMenu"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Options/InnerMenu/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Options/InnerMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Options/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Options"
+
+[node name="OptionsCloseButton" type="Button" parent="Options/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+text = "x"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Options/InnerMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Options/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Options/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="Label" type="Label" parent="Options/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Master volume"
+
+[node name="HSlider" type="HSlider" parent="Options/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="Credits" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="InnerMenu" type="PanelContainer" parent="Credits"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Credits/InnerMenu"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Credits/InnerMenu/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Credits/InnerMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Credits"
+
+[node name="CreditsCloseButton" type="Button" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+text = "x"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Credits/InnerMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="Label" type="Label" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "ART, MUSIC:"
+
+[node name="Label2" type="Label" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "prodcautious"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="Label" type="Label" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "ART, MUSIC:"
+
+[node name="Label2" type="Label" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "chariot"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="Label" type="Label" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Programming:"
+
+[node name="Label2" type="Label" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "bognari"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="Label" type="Label" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Programming:"
+
+[node name="Label2" type="Label" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "iocutus"
