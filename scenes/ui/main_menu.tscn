@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dc7il20758ygn"]
+[gd_scene load_steps=6 format=3 uid="uid://dc7il20758ygn"]
 
 [ext_resource type="Script" uid="uid://hpvx6xkk5mpx" path="res://scripts/ui/main_menu.gd" id="1_d0lsa"]
 [ext_resource type="Texture2D" uid="uid://cy20l4ejmkcmg" path="res://icon.svg" id="2_6wafw"]
 [ext_resource type="Theme" uid="uid://bkxtk5gau1dbp" path="res://theme/theme.tres" id="3_bqqt6"]
 [ext_resource type="Script" uid="uid://b6th40bbhl4o1" path="res://scripts/ui/animation_component.gd" id="4_m1kxf"]
+[ext_resource type="AudioStream" uid="uid://b0v4k0cndn8t2" path="res://music/thegreatunknown.ogg" id="5_x2yvf"]
 
 [node name="MainMenu" type="CanvasLayer"]
 layer = 0
@@ -259,3 +260,8 @@ text = "Programming:"
 layout_mode = 2
 size_flags_horizontal = 10
 text = "iocutus"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_x2yvf")
+autoplay = true
+bus = &"Music"
