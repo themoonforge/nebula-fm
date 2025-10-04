@@ -12,6 +12,9 @@ func set_cell(cell: Vector2i) -> bool:
 	used_cells.append(cell)
 	
 	return true
+	
+func free_grid() -> void:
+	used_cells = []
 
 func free_cell(cell: Vector2i) -> bool:
 	if is_cell_free(cell):

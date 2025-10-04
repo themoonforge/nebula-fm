@@ -1,8 +1,14 @@
-[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://cbb4sityyi4us"]
+[gd_resource type="TileSet" load_steps=9 format=3 uid="uid://cbb4sityyi4us"]
 
 [ext_resource type="Texture2D" uid="uid://du4m5p2do8i0h" path="res://sprites/tileset.png" id="1_3ysh4"]
 [ext_resource type="Texture2D" uid="uid://8en1m8oqbs46" path="res://sprites/tileset_w_template.png" id="2_qsv6y"]
 [ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="3_0w1j7"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_0w1j7"]
+tile_data = PackedInt32Array(65536, 2, 14, 131072, 2, 15, 1, 65538, 13, 65537, 65538, 14, 131073, 65538, 15, 65538, 131074, 14, 131074, 131074, 15)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_difrn"]
+tile_data = PackedInt32Array(65536, 2, 14, 131072, 2, 15, 262144, 131074, 16, 1, 65538, 13, 65537, 65538, 14, 131073, 65538, 15, 65538, 131074, 14, 131074, 131074, 16)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lnu2h"]
 texture = ExtResource("1_3ysh4")
@@ -126,6 +132,23 @@ texture = ExtResource("3_0w1j7")
 7:5/0 = 0
 9:8/0 = 0
 10:7/0 = 0
+0:14/0 = 0
+0:14/0/custom_data_0 = true
+1:14/0 = 0
+1:14/0/custom_data_0 = true
+2:14/0 = 0
+2:14/0/custom_data_0 = true
+1:15/0 = 0
+1:15/0/custom_data_0 = true
+0:15/0 = 0
+0:15/0/custom_data_0 = true
+2:15/0 = 0
+2:15/0/custom_data_0 = true
+1:13/0 = 0
+1:13/0/custom_data_0 = true
+2:16/0 = 0
+2:16/0/custom_data_0 = true
+3:15/0 = 0
 
 [resource]
 terrain_set_0/mode = 0
@@ -136,3 +159,5 @@ custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_lnu2h")
 sources/1 = SubResource("TileSetAtlasSource_0w1j7")
 sources/2 = SubResource("TileSetAtlasSource_difrn")
+pattern_0 = SubResource("TileMapPattern_0w1j7")
+pattern_1 = SubResource("TileMapPattern_difrn")

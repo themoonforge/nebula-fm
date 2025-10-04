@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3lqsa7g6sa0o"]
+[gd_scene load_steps=5 format=4 uid="uid://b3lqsa7g6sa0o"]
 
 [ext_resource type="Script" uid="uid://ccd2m6lh6bgbi" path="res://scripts/map/map.gd" id="1_tqkkf"]
 [ext_resource type="TileSet" uid="uid://cbb4sityyi4us" path="res://tileset/tileset.tres" id="2_a2pkv"]
@@ -18,6 +18,7 @@ script = ExtResource("1_tqkkf")
 
 [node name="GroundLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
+tile_map_data = PackedByteArray("AAAAAAEAAgAAAA4AAAAAAAIAAgAAAA8AAAAAAAQAAgACABAAAAABAAAAAgABAA0AAAABAAEAAgABAA4AAAABAAIAAgABAA8AAAACAAEAAgACAA4AAAACAAIAAgACABAAAAA=")
 tile_set = ExtResource("2_a2pkv")
 
 [node name="ObstaclesLayer" type="TileMapLayer" parent="."]

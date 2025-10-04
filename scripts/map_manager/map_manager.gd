@@ -47,13 +47,14 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed(&"ui_click"):
 		var clicked_position: Vector2 = mouse_pos
 		var clicked_cell: Vector2i = Vector2i(mouse_pos.x / 16, mouse_pos.y / 16)
-		
-		print("clicked cell: ", clicked_cell)
-		
+				
 		if GridManager.is_cell_free(clicked_cell):
 			GridManager.set_cell(clicked_cell)
 			place_transformer(transformer_ghost_instance, clicked_cell)
 			#hide_ghost()
+			
+func free_buildings() -> void:
+	placed_transformers = {}
 			
 func remove_transformer(cell: Vector2i) -> void:
 	if GridManager.is_cell_free(cell):

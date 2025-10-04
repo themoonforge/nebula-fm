@@ -1,8 +1,17 @@
 class_name Tiles
 
-const SOURCE = 0
+# tileset source 0 tiles
+const SOURCE_0 = 0
 const GROUND_0 = Vector2i(2,0)
 const GROUND_1 = Vector2i(2,1)
 const GROUND_2 = Vector2i(3,0)
 const GROUND_3 = Vector2i(3,1)
 const ROCK_SMALL = Vector2i(0,5)
+
+# tileset source 1 tiles
+const SOURCE_1 = 1
+const MUSHROOM = Vector2i(2,16)
+
+# tileset patterns
+const PATTERN_TREE_1 = 0
+const PATTERN_TREE_2 = 1
