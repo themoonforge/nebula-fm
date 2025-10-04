@@ -2,6 +2,7 @@ class_name Map extends Node2D
 
 @onready var ground_layer: TileMapLayer = %GroundLayer
 @onready var obstacles_layer: TileMapLayer = %ObstaclesLayer
+@onready var note_sources_layer: TileMapLayer = %NoteSourcesLayer
 @onready var placed_objects: Node2D = %Objects
 @onready var noise_rect: TextureRect = %NoiseRect
 
@@ -14,7 +15,12 @@ var max_noise = -INF
 var tree_pattern_choices: Dictionary[int, Array]
 
 func _ready() -> void:
-	tree_pattern_choices[Tiles.SOURCE_1] = [Tiles.PATTERN_TREE_1, Tiles.PATTERN_TREE_2]
+	tree_pattern_choices[Tiles.SOURCE_1] = [
+		Tiles.PATTERN_TREE_1, 
+		Tiles.PATTERN_TREE_2,
+		Tiles.PATTERN_TREE_3,
+		Tiles.PATTERN_TREE_4
+	]
 	
 	generate()
 	
@@ -29,6 +35,7 @@ func _process(delta: float) -> void:
 		MapManager.free_buildings()
 		ground_layer.clear()
 		obstacles_layer.clear()
+		note_sources_layer.clear()
 		for object in placed_objects.get_children():
 			object.queue_free()
 			
@@ -40,8 +47,9 @@ func generate() -> void:
 	_generate_noise()
 	
 	_fill_layer(ground_layer, Tiles.SOURCE_0, Tiles.GROUND_0)
-	_place_with_noise(obstacles_layer, Tiles.SOURCE_0, Tiles.ROCK_SMALL, Vector2(0.2, 0.3))
-	_place_patterns(obstacles_layer, tree_pattern_choices, Vector2(0.2, 0.3))
+	_place_note_sources(note_sources_layer, Tiles.SOURCE_2, Tiles.NOTE_SOURCE, Vector2i(5, 5), 4)
+	_place_with_noise(obstacles_layer, Tiles.SOURCE_0, Tiles.ROCK_SMALL, Vector2(0.2, 0.25))
+	_place_patterns(obstacles_layer, tree_pattern_choices, Vector2(0.25, 0.3))
 	
 func _generate_noise() -> void:
 	noise_texture.noise.seed = randi()
@@ -64,6 +72,36 @@ func _fill_layer(tile_map_layer: TileMapLayer, source_id: int, tile_id: Vector2i
 		for x in get_viewport_rect().size.x / 16:
 			var cell: Vector2i = Vector2i(x, y)
 			_set_cell(tile_map_layer, cell, source_id, tile_id)
+			
+func _place_note_sources(tile_map_layer: TileMapLayer, source_id: int, tile_id: Vector2i, offset: Vector2i, count: int) -> void:
+	var valid_cells: Array[Vector2i] = []
+	var screen_size = get_viewport_rect().size / 16
+	
+	for y in range(0, screen_size.y):
+		for x in range(0, screen_size.y):
+			var cell: Vector2i = Vector2i(x, y)
+			if GridManager.is_cell_free(cell):
+				valid_cells.append(cell)
+	
+	valid_cells.shuffle()
+	
+	var placed_cells: Array[Vector2i] = []
+	for candidate in valid_cells:
+		var too_close = false
+		
+		for placed in placed_cells:
+			if abs(candidate.x - placed.x) < offset.x or abs(candidate.y - placed.y) < offset.y:
+				too_close = true
+				break
+		if too_close:
+			continue
+			
+		_set_cell(tile_map_layer, candidate, source_id, tile_id)
+		placed_cells.append(candidate)
+		print("placed cell at: ", candidate)
+		
+		if placed_cells.size() >= count:
+			break
 			
 func _place_with_noise(tile_map_layer: TileMapLayer, source_id: int, tile_id: Vector2i, noise_range: Vector2) -> void:
 	for y in get_viewport_rect().size.y / 16:

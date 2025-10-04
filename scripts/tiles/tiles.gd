@@ -12,6 +12,12 @@ const ROCK_SMALL = Vector2i(0,5)
 const SOURCE_1 = 1
 const MUSHROOM = Vector2i(2,16)
 
+# tileset source 2 tiles
+const SOURCE_2 = 2
+const NOTE_SOURCE = Vector2i(13,3)
+
 # tileset patterns
 const PATTERN_TREE_1 = 0
 const PATTERN_TREE_2 = 1
+const PATTERN_TREE_3 = 2
+const PATTERN_TREE_4 = 3
