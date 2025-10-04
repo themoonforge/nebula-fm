@@ -1,0 +1,25 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://csefdit2dht28"]
+
+[ext_resource type="Texture2D" uid="uid://bbfp84p3hm5ps" path="res://gfx/tileset.png" id="1_wvt7e"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k764t"]
+texture = ExtResource("1_wvt7e")
+8:0/size_in_atlas = Vector2i(1, 2)
+8:0/0 = 0
+9:0/size_in_atlas = Vector2i(1, 2)
+9:0/0 = 0
+10:0/size_in_atlas = Vector2i(1, 2)
+10:0/0 = 0
+8:2/size_in_atlas = Vector2i(1, 2)
+8:2/0 = 0
+0:0/size_in_atlas = Vector2i(7, 8)
+0:0/0 = 0
+7:5/size_in_atlas = Vector2i(3, 3)
+7:5/0 = 0
+9:8/0 = 0
+10:7/0 = 0
+2:8/size_in_atlas = Vector2i(3, 5)
+2:8/0 = 0
+
+[resource]
+sources/1 = SubResource("TileSetAtlasSource_k764t")

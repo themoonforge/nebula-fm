@@ -1,0 +1,153 @@
+[gd_scene load_steps=7 format=3 uid="uid://c3hqe1jdktne8"]
+
+[ext_resource type="Script" uid="uid://4e8ndsmigb3x" path="res://scripts/TestScene.gd" id="1_ti0uj"]
+[ext_resource type="Script" uid="uid://8g273shyfey2" path="res://addons/midi/MidiPlayer.gd" id="2_u0h6i"]
+[ext_resource type="Script" uid="uid://wde3xbyqm6uu" path="res://addons/midi/addition/midi_input_note_resource.gd" id="3_a4y8t"]
+
+[sub_resource type="Resource" id="Resource_a4y8t"]
+resource_name = "D4"
+script = ExtResource("3_a4y8t")
+key_number = 62
+creation_time = 109604
+name = &"D4"
+simple_name = &"D"
+metadata/_custom_type_script = "uid://wde3xbyqm6uu"
+
+[sub_resource type="Resource" id="Resource_4fj7v"]
+resource_name = "F#/Gb4"
+script = ExtResource("3_a4y8t")
+key_number = 66
+creation_time = 130197
+name = &"F#/Gb4"
+simple_name = &"F#/Gb"
+metadata/_custom_type_script = "uid://wde3xbyqm6uu"
+
+[sub_resource type="Resource" id="Resource_egvid"]
+resource_name = "B4"
+script = ExtResource("3_a4y8t")
+key_number = 71
+creation_time = 132635
+name = &"B4"
+simple_name = &"B"
+metadata/_custom_type_script = "uid://wde3xbyqm6uu"
+
+[node name="TestScene" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_ti0uj")
+
+[node name="GodotMIDIPlayer" type="Node" parent="."]
+script = ExtResource("2_u0h6i")
+file = "res://midi/alle_meine_entchen.mid"
+playing = true
+volume_db = -5.0
+soundfont = "res://soundfont/Aspirin-Stereo.sf2"
+input_buffer = Array[ExtResource("3_a4y8t")]([SubResource("Resource_a4y8t"), SubResource("Resource_4fj7v"), SubResource("Resource_egvid")])
+
+[node name="TopController" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 981.0
+offset_bottom = 91.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="First" type="HBoxContainer" parent="TopController"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TopController/First"]
+layout_mode = 2
+text = "Godot MIDI Player Library Test:"
+
+[node name="OpenButton" type="Button" parent="TopController/First"]
+layout_mode = 2
+text = "Open"
+
+[node name="Play" type="Button" parent="TopController/First"]
+layout_mode = 2
+text = "Play"
+
+[node name="Stop" type="Button" parent="TopController/First"]
+layout_mode = 2
+text = "Stop"
+
+[node name="Loop" type="CheckBox" parent="TopController/First"]
+layout_mode = 2
+text = "Loop"
+
+[node name="TempoDisp" type="Label" parent="TopController/First"]
+layout_mode = 2
+text = "Tempo"
+
+[node name="Tempo" type="LineEdit" parent="TopController/First"]
+layout_mode = 2
+caret_blink = true
+caret_blink_interval = 0.5
+
+[node name="OutputEvent" type="CheckBox" parent="TopController/First"]
+layout_mode = 2
+text = "Output Events to Stdout"
+
+[node name="PolyphonyStatus" type="Label" parent="TopController/First"]
+layout_mode = 2
+text = "Polyphony Status"
+
+[node name="Second" type="HBoxContainer" parent="TopController"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="TopController/Second"]
+layout_mode = 2
+text = "PlaySpeed"
+
+[node name="PlaySpeedBar" type="HScrollBar" parent="TopController/Second"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+max_value = 2.0
+value = 1.0
+
+[node name="Label3" type="Label" parent="TopController/Second"]
+layout_mode = 2
+text = "Volume"
+
+[node name="VolumeBar" type="HScrollBar" parent="TopController/Second"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+min_value = -50.0
+max_value = -10.0
+value = -20.0
+
+[node name="Third" type="HBoxContainer" parent="TopController"]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="TopController/Third"]
+layout_mode = 2
+text = "Seek"
+
+[node name="SeekBar" type="HScrollBar" parent="TopController/Third"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open SMF"
+position = Vector2i(80, 135)
+size = Vector2i(811, 372)
+ok_button_text = "開く"
+mode_overrides_title = false
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.mid")
+show_hidden_files = true
+
+[connection signal="pressed" from="TopController/First/OpenButton" to="." method="_on_OpenButton_pressed"]
+[connection signal="pressed" from="TopController/First/Play" to="." method="_on_Play_pressed"]
+[connection signal="pressed" from="TopController/First/Stop" to="." method="_on_Stop_pressed"]
+[connection signal="focus_entered" from="TopController/First/Tempo" to="." method="_on_ui_tempo_focus_entered"]
+[connection signal="focus_exited" from="TopController/First/Tempo" to="." method="_on_ui_tempo_focus_exited"]
+[connection signal="text_submitted" from="TopController/First/Tempo" to="." method="_on_ui_tempo_entered"]
+[connection signal="value_changed" from="TopController/Third/SeekBar" to="." method="_on_SeekBar_value_changed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]

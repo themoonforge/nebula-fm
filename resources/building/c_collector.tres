@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CollectorBuildingResource" load_steps=2 format=3 uid="uid://cls7knxgownu5"]
+
+[ext_resource type="Script" uid="uid://c4v6sx22p8gtg" path="res://scripts/resource/collector_building_resource.gd" id="1_0rssy"]
+
+[resource]
+script = ExtResource("1_0rssy")
+name = &"cCollector"
+background_tile = Vector2i(8, 0)

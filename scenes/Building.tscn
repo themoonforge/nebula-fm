@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5mjgreg8l3ap"]
+
+[ext_resource type="Script" uid="uid://o0f20sinybbj" path="res://scripts/building.gd" id="1_mg2bo"]
+[ext_resource type="Script" uid="uid://d37e4wlqbw6gr" path="res://scripts/buffer.gd" id="2_ogyss"]
+
+[node name="Building" type="Node2D"]
+script = ExtResource("1_mg2bo")
+
+[node name="InputBuffer" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_ogyss")
+metadata/_custom_type_script = "uid://d37e4wlqbw6gr"
+
+[node name="OutputBuffer" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_ogyss")
+metadata/_custom_type_script = "uid://d37e4wlqbw6gr"
+
+[node name="Backgrond" type="TileMapLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="Foreground" type="TileMapLayer" parent="."]
+unique_name_in_owner = true

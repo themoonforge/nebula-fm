@@ -21,6 +21,10 @@ window/size/viewport_width=640
 window/size/viewport_height=360
 window/stretch/mode="canvas_items"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/midi/plugin.cfg")
+
 [gui]
 
 theme/custom="uid://bkxtk5gau1dbp"

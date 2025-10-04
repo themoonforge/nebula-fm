@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://dnm8ixlmllrho"]
+
+[ext_resource type="Script" uid="uid://8g273shyfey2" path="res://addons/midi/MidiPlayer.gd" id="1_rrln5"]
+
+[node name="MidiTest" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="MidiPlayer" type="Node" parent="."]
+script = ExtResource("1_rrln5")
+file = "res://midi/fairyland_gm.mid"
+playing = true
+volume_db = -20.183
+loop = true
+metadata/_custom_type_script = "uid://8g273shyfey2"
