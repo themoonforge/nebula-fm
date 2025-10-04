@@ -1,4 +1,6 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://bkxtk5gau1dbp"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://bkxtk5gau1dbp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lcjcl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ab6e"]
 content_margin_left = 8.0
@@ -13,6 +15,7 @@ bg_color = Color(0, 0, 0, 0.78431374)
 [resource]
 GameMenuButton/base_type = &"Button"
 GameMenuButton/colors/font_color = Color(0, 0, 0, 1)
+GameMenuButton/styles/focus = SubResource("StyleBoxEmpty_lcjcl")
 GameMenuButton/styles/normal = SubResource("StyleBoxFlat_8ab6e")
 GameMenuPanelContainer/base_type = &"PanelContainer"
 GameMenuPanelContainer/styles/panel = SubResource("StyleBoxFlat_lcjcl")

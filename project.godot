@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 MapManager="*res://scenes/map_manager/map_manager.tscn"
 GridManager="*res://scenes/grid_manager/grid_manager.tscn"
+SceneTransition="*res://scenes/ui/scene_transition.tscn"
 
 [display]
 

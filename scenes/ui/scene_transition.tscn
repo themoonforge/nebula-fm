@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://blr60cbslxm6u"]
+
+[ext_resource type="Shader" uid="uid://boxaqjx2055ck" path="res://shaders/screen_wipe_transition.gdshader" id="1_igxph"]
+[ext_resource type="Script" uid="uid://cir6u1lqt7xe0" path="res://scripts/ui/scene_transition.gd" id="1_kq3v3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kq3v3"]
+shader = ExtResource("1_igxph")
+shader_parameter/spacing = 25.0
+shader_parameter/animation_progress = 0.0
+shader_parameter/dot_size = 1.0
+shader_parameter/dot_color = Color(0.19607843, 0.16470589, 0.28627452, 1)
+shader_parameter/pixel_resolution = 256.0
+
+[sub_resource type="Animation" id="Animation_8hbrc"]
+resource_name = "screen_wipe"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/animation_progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_5npbh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/animation_progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dl3iu"]
+_data = {
+&"RESET": SubResource("Animation_5npbh"),
+&"screen_wipe": SubResource("Animation_8hbrc")
+}
+
+[node name="SceneTransition" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_kq3v3")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_kq3v3")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.19607843, 0.16470589, 0.28627452, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_dl3iu")
+}
