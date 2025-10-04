@@ -1,12 +1,12 @@
 extends Node
 
+signal place_obstacle(obstacle: Node2D)
+
 const TILE_SIZE: Vector2 = Vector2(16, 16)
 const COLOR_FREE: Color = Color(0.0, 0.894, 0.894, 0.541)
 const COLOR_OCCUPIED: Color = Color(1.0, 0.68, 0.744, 0.541)
 
 @export var transformer_ghost_scene: PackedScene
-
-@onready var placed_transformers_container: Node2D = %PlacedTransformersContainer
 
 var transformer_ghost_instance: TransformerGhost
 var transformer_ghost_active: bool
@@ -68,7 +68,7 @@ func place_transformer(transformer_ghost: TransformerGhost, cell: Vector2i) -> v
 		
 	var transformer_instance: Transformer = transformer_ghost_instance.transformer_scene.instantiate()
 	transformer_instance.global_position = Vector2(cell.x, cell.y) * TILE_SIZE
-	placed_transformers_container.add_child(transformer_instance)
+	place_obstacle.emit(transformer_instance)
 	placed_transformers[cell] = transformer_instance
 
 func hide_ghost() -> void:

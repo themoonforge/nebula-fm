@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-PlacementManager="*res://scenes/placement_manager/placement_manager.tscn"
+MapManager="*res://scenes/map_manager/map_manager.tscn"
 GridManager="*res://scenes/grid_manager/grid_manager.tscn"
 
 [display]

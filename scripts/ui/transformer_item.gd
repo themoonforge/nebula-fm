@@ -23,4 +23,4 @@ func _on_transformer_item_mouse_exited() -> void:
 	hover_name.hide()
 	
 func _on_placement_button_pressed() -> void:
-	PlacementManager.set_active_transformer_ghost(transformer_resource)
+	MapManager.set_active_transformer_ghost(transformer_resource)
