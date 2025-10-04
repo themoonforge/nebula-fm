@@ -64,7 +64,7 @@ func _process(delta: float) -> void:
 
 func _setup_indicators(connections: Dictionary[Vector2i, BuildingsUtils.BuildingRotation]) -> void:
 	for connection in connections:
-		print("_setup_indicators: ", connection)
+		#print("_setup_indicators: ", connection)
 		var arrow = BuildingsUtils.rotationToArrow(connections[connection])
 		var coordinate = BuildingsUtils.rotateTileBy(connection, building_rotation, building_resource.size, ground_size)
 		var rotated_arrow = BuildingsUtils.rotateArrowBy(arrow, building_rotation)
