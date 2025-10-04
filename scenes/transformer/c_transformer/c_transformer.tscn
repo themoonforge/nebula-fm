@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://b3ygy04ylg1i5"]
+
+[ext_resource type="Texture2D" uid="uid://du4m5p2do8i0h" path="res://sprites/tileset.png" id="1_70f4l"]
+[ext_resource type="Script" uid="uid://c7y3mgb742tuf" path="res://scripts/transformer/c_transformer/c_transformer.gd" id="1_qc5ji"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qc5ji"]
+size = Vector2(16, 16)
+
+[node name="CTransformer" type="Node2D"]
+script = ExtResource("1_qc5ji")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_70f4l")
+centered = false
+region_enabled = true
+region_rect = Rect2(128, 0, 16, 16)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(8, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_qc5ji")
