@@ -1,3 +1,4 @@
+@tool
 class_name NoteResource extends Resource
 
 @export var key_number: int = 0:
