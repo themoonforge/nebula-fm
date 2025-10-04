@@ -2,19 +2,15 @@ class_name Map extends Node2D
 
 @onready var ground_layer: TileMapLayer = %GroundLayer
 @onready var obstacles_layer: TileMapLayer = %ObstaclesLayer
-@onready var obstacles: Node2D = %Obstacles
+@onready var placed_objects: Node2D = %Objects
 
 func _ready() -> void:
-	print("HALLO?????")
-	
 	generate()
-	
-	print("goodbye")
 	
 	MapManager.place_obstacle.connect(_on_place_obstacle)
 	
 func _on_place_obstacle(obstacle: Node2D) -> void:
-	obstacles.add_child(obstacle)
+	placed_objects.add_child(obstacle)
 
 func generate() -> void:
 	_fill_layer(ground_layer, Tiles.GROUND_0)
@@ -24,7 +20,7 @@ func _fill_layer(tile_map_layer: TileMapLayer, tile_id: Vector2i) -> void:
 	for y in get_viewport_rect().size.y / 16:
 		for x in get_viewport_rect().size.x / 16:
 			var cell: Vector2i = Vector2i(x, y)
-			_set_cell(tile_map_layer,cell, tile_id)
+			_set_cell(tile_map_layer, cell, tile_id)
 			
 func _place_scattered(tile_map_layer: TileMapLayer, tile_id: Vector2i) -> void:
 	for y in get_viewport_rect().size.y / 16:
@@ -33,7 +29,7 @@ func _place_scattered(tile_map_layer: TileMapLayer, tile_id: Vector2i) -> void:
 			if rng <= 0.7:
 				continue
 			var cell: Vector2i = Vector2i(x, y)
-			_set_cell(tile_map_layer, Vector2i(x, y), tile_id)
+			_set_cell(tile_map_layer, cell, tile_id)
 
 func _set_cell(layer: TileMapLayer, cell: Vector2i, tile_id: Vector2i) -> bool:
 	if !GridManager.is_cell_free(cell):

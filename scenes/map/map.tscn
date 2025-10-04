@@ -16,6 +16,6 @@ unique_name_in_owner = true
 y_sort_enabled = true
 tile_set = ExtResource("2_a2pkv")
 
-[node name="Obstacles" type="Node2D" parent="."]
+[node name="Objects" type="Node2D" parent="."]
 unique_name_in_owner = true
 y_sort_enabled = true
