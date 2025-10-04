@@ -7,18 +7,32 @@ const BUILDING_TILE_SET = 2
 	set(value):
 		building_resource = value
 		if is_node_ready():
-			_setup_resurce()
+			_setup_resource()
 
-@export var building_rotation: BuildingsUtils.BuildingRotation = BuildingsUtils.BuildingRotation.UP:
+@export var building_rotation: BuildingsUtils.BuildingRotation = BuildingsUtils.BuildingRotation.DOWN:
 	set(value):
-		building_rotation = value
+		if building_resource.has_rorations:
+			building_rotation = value
+		else:
+			building_rotation = BuildingsUtils.BuildingRotation.DOWN
 		if is_node_ready():
-			_setup_resurce()
+			_setup_resource()
+
+@export var ground_size: Vector2i = Vector2i.ZERO
 
 @onready var input_buffer: Buffer = %InputBuffer
 @onready var output_buffer: Buffer = %OutputBuffer
-@onready var background: TileMapLayer = %Backgrond
+@onready var background: TileMapLayer = %Background
 @onready var foreground: TileMapLayer = %Foreground
+@onready var connectionIndicators: TileMapLayer = %ConnectionIndicators
+@onready var label: Label = %Label
+
+@export var show_connection_indicators: bool = false:
+	set(value):
+		show_connection_indicators = value
+		if is_node_ready():
+			connectionIndicators.visible = value
+
 
 @export var production_time: float = 0.0:
 	set(value):
@@ -37,15 +51,37 @@ const BUILDING_TILE_SET = 2
 @export var output_connections: Dictionary[Vector2i, AbstractBuildingResource]
 
 func _ready() -> void:
-	_setup_resurce()
+	_setup_resource()
 
 func _process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
+
 	production_time += delta
 	if production_time >= building_resource.production_time:
 		production_time = 0.0
 		building_resource.produce(input_buffer, output_buffer)
 
-func _setup_resurce() -> void:
+func _setup_indicators(connections: Dictionary[Vector2i, BuildingsUtils.BuildingRotation]) -> void:
+	for connection in connections:
+		print("_setup_indicators: ", connection)
+		var arrow = BuildingsUtils.rotationToArrow(connections[connection])
+		var coordinate = BuildingsUtils.rotateTileBy(connection, building_rotation, building_resource.size, ground_size)
+		var rotated_arrow = BuildingsUtils.rotateArrowBy(arrow, building_rotation)
+		connectionIndicators.set_cell(coordinate, BUILDING_TILE_SET, rotated_arrow)
+
+func _setup_resource() -> void:
+	background.clear()
+	foreground.clear()
+	connectionIndicators.clear()
+
+	ground_size = BuildingsUtils.rotateSize(building_resource.size, building_rotation)
+
 	var rotation_offset = BuildingsUtils.rotationToOffset(building_rotation)
-	background.set_cell(Vector2i.ZERO, BUILDING_TILE_SET, building_resource.background_tile + rotation_offset)
-	pass
+	var atlas_coordinate = building_resource.background_tile + rotation_offset
+	#print_debug("atlas_coordinate: ", atlas_coordinate)
+	background.set_cell(Vector2i.ZERO, BUILDING_TILE_SET, atlas_coordinate)
+	_setup_indicators(building_resource.input_locations)
+	_setup_indicators(building_resource.output_locations)
+	connectionIndicators.visible = show_connection_indicators
+	label.text = building_resource.label()

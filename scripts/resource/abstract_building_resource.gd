@@ -17,9 +17,11 @@
 @export var foreground_tile: Vector2i
 
 # offsets of input / output location in relation to tile_coordinate (root location)
-@export var input_locations: Array[Vector2i]
-@export var output_locations: Array[Vector2i]
+@export var input_locations: Dictionary[Vector2i, BuildingsUtils.BuildingRotation]
+@export var output_locations: Dictionary[Vector2i, BuildingsUtils.BuildingRotation]
 
+@export var has_rorations: bool = true
 @export var production_time: float = 0.0
 
 @abstract func produce(input_buffer: Buffer, output_buffer: Buffer) -> void
+@abstract func label() -> StringName

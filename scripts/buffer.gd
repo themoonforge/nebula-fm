@@ -48,6 +48,15 @@ func consume_note_from_input_buffer(key_number: int) -> NoteResource:
 		inventory_changed.emit.call_deferred(_inventory)
 	return found_elem
 
+func consume_first_note_from_input_buffer() -> NoteResource:
+	var found_elem: NoteResource = null
+
+	var first = _buffer.pop_front()
+	if first != null:
+		found_elem = first.payload
+		_decrement_inventory(first.simple_name)
+	return found_elem
+
 func _increment_inventory(item_name: StringName) -> void:
 	if not _inventory.has(item_name):
 		_inventory[item_name] = 1

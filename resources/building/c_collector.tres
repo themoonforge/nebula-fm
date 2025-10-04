@@ -12,8 +12,12 @@ simple_name = &"C"
 metadata/_custom_type_script = "uid://bbn4jhlv481ba"
 
 [resource]
+resource_name = "cCollector"
 script = ExtResource("1_0rssy")
 note = SubResource("Resource_tmah6")
 name = &"cCollector"
 size = Vector2i(1, 1)
-background_tile = Vector2i(8, 0)
+background_tile = Vector2i(12, 0)
+output_locations = Dictionary[Vector2i, int]({
+Vector2i(0, 1): 0
+})
