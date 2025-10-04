@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dc7il20758ygn"]
+[gd_scene load_steps=4 format=3 uid="uid://dc7il20758ygn"]
 
 [ext_resource type="Script" uid="uid://hpvx6xkk5mpx" path="res://scripts/ui/main_menu.gd" id="1_d0lsa"]
 [ext_resource type="Texture2D" uid="uid://cy20l4ejmkcmg" path="res://icon.svg" id="2_6wafw"]
 [ext_resource type="Theme" uid="uid://bkxtk5gau1dbp" path="res://theme/theme.tres" id="3_bqqt6"]
-[ext_resource type="AudioStream" uid="uid://dshvxo7e8h0h8" path="res://music/bossmusicsept19.ogg" id="4_wu84c"]
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource("1_d0lsa")
@@ -238,8 +237,3 @@ text = "Programming:"
 layout_mode = 2
 size_flags_horizontal = 10
 text = "iocutus"
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("4_wu84c")
-autoplay = true
-bus = &"Music"

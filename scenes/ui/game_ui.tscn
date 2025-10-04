@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2fsm3xchosto"]
+
+[ext_resource type="PackedScene" uid="uid://csjy35oh1vki4" path="res://scenes/ui/hotbar.tscn" id="1_gwk6t"]
+
+[node name="GameUi" type="CanvasLayer"]
+
+[node name="Hotbar" parent="." instance=ExtResource("1_gwk6t")]

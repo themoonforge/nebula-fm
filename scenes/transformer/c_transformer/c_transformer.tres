@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="TransformerResource" load_steps=5 format=3 uid="uid://y353udod5p7m"]
+
+[ext_resource type="Script" uid="uid://chge2eobxnfrk" path="res://scenes/transformer/transformer_resource.gd" id="1_rx042"]
+[ext_resource type="Texture2D" uid="uid://d3re4coggfux2" path="res://sprites/transformer_animation.png" id="1_tqfis"]
+[ext_resource type="PackedScene" uid="uid://b3ygy04ylg1i5" path="res://scenes/transformer/c_transformer/c_transformer.tscn" id="2_tqfis"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tqfis"]
+atlas = ExtResource("1_tqfis")
+region = Rect2(0, 16, 16, 23)
+
+[resource]
+script = ExtResource("1_rx042")
+name = "C Transformer"
+icon = SubResource("AtlasTexture_tqfis")
+offset = Vector2i(0, -7)
+scene = ExtResource("2_tqfis")
+metadata/_custom_type_script = "uid://chge2eobxnfrk"

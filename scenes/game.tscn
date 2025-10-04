@@ -1,3 +1,10 @@
-[gd_scene format=3 uid="uid://o1s2bbplsjbf"]
+[gd_scene load_steps=3 format=3 uid="uid://o1s2bbplsjbf"]
+
+[ext_resource type="PackedScene" uid="uid://d2fsm3xchosto" path="res://scenes/ui/game_ui.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://b3lqsa7g6sa0o" path="res://scenes/map/map.tscn" id="2_yqjtg"]
 
 [node name="Game" type="Node2D"]
+
+[node name="GameUi" parent="." instance=ExtResource("1_uwrxv")]
+
+[node name="Map" parent="." instance=ExtResource("2_yqjtg")]

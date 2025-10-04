@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://csjy35oh1vki4"]
+
+[ext_resource type="Script" uid="uid://dpl7y8o8dswp0" path="res://scripts/ui/hotbar.gd" id="1_m1s8h"]
+[ext_resource type="PackedScene" uid="uid://donhenh45sal8" path="res://scenes/ui/transformer_item.tscn" id="2_6hkf2"]
+[ext_resource type="Resource" uid="uid://y353udod5p7m" path="res://scenes/transformer/c_transformer/c_transformer.tres" id="3_6hkf2"]
+
+[node name="Hotbar" type="CanvasLayer"]
+script = ExtResource("1_m1s8h")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="BottomContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="TransformerContainer" type="HBoxContainer" parent="MarginContainer/BottomContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_constants/separation = 16
+
+[node name="TransformerItem" parent="MarginContainer/BottomContainer/TransformerContainer" instance=ExtResource("2_6hkf2")]
+layout_mode = 2
+transformer_resource = ExtResource("3_6hkf2")
