@@ -30,8 +30,6 @@ func _process(delta: float) -> void:
 	
 	var hovered_cell: Vector2i = Vector2i(mouse_pos.x / 16, mouse_pos.y / 16)
 	
-	print("hovered cell: ", hovered_cell)
-	
 	if Input.is_action_just_pressed(&"ui_right_click"):
 		remove_transformer(hovered_cell)
 	
@@ -41,7 +39,6 @@ func _process(delta: float) -> void:
 	var offset: Vector2 = Vector2(transformer_ghost_instance.offset.x, transformer_ghost_instance.offset.y)
 	transformer_ghost_instance.global_position = (mouse_pos - Vector2(TILE_SIZE.x/2, TILE_SIZE.y/2)).snapped(TILE_SIZE)
 	transformer_ghost_instance.global_position = transformer_ghost_instance.global_position + offset/2
-
 	
 	if !GridManager.is_cell_free(hovered_cell):
 		transformer_ghost_instance.sprite.modulate = COLOR_OCCUPIED
