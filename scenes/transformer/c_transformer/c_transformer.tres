@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TransformerResource" load_steps=4 format=3 uid="uid://y353udod5p7m"]
+
+[ext_resource type="Texture2D" uid="uid://du4m5p2do8i0h" path="res://sprites/tileset.png" id="1_oogj5"]
+[ext_resource type="Script" uid="uid://chge2eobxnfrk" path="res://scenes/transformer/transformer_resource.gd" id="1_rx042"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tqfis"]
+atlas = ExtResource("1_oogj5")
+region = Rect2(128, 0, 16, 16)
+
+[resource]
+script = ExtResource("1_rx042")
+name = "C Transformer"
+icon = SubResource("AtlasTexture_tqfis")
+metadata/_custom_type_script = "uid://chge2eobxnfrk"

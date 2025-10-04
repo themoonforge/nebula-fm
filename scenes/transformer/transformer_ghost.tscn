@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://bumh0avxilxmk"]
+
+[ext_resource type="Script" uid="uid://ckfo0ouokltyl" path="res://scripts/transformer/transformer_ghost.gd" id="1_8lcbs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wvpsq"]
+size = Vector2(16, 16)
+
+[node name="TransformerGhost" type="Node2D"]
+z_index = 1
+y_sort_enabled = true
+script = ExtResource("1_8lcbs")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(8, 8)
+region_rect = Rect2(128, 0, 16, 16)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(8, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_wvpsq")

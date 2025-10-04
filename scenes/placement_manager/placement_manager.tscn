@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://ba6smto8fqnjg"]
+
+[ext_resource type="Script" uid="uid://xsbyght6bx8p" path="res://scripts/placement_manager/placement_manager.gd" id="1_bbivi"]
+[ext_resource type="PackedScene" uid="uid://bumh0avxilxmk" path="res://scenes/transformer/transformer_ghost.tscn" id="2_4aexc"]
+
+[node name="PlacementManager" type="Node"]
+script = ExtResource("1_bbivi")
+transformer_ghost_scene = ExtResource("2_4aexc")

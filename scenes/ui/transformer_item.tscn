@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://donhenh45sal8"]
+
+[ext_resource type="Texture2D" uid="uid://cy20l4ejmkcmg" path="res://icon.svg" id="1_lecjc"]
+[ext_resource type="Script" uid="uid://c7yqn5ulqbve2" path="res://scripts/ui/transformer_item.gd" id="1_t18cr"]
+[ext_resource type="Resource" uid="uid://y353udod5p7m" path="res://scenes/transformer/c_transformer/c_transformer.tres" id="2_tcgv8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x3q6d"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 1)
+
+[node name="TransformerItem" type="PanelContainer"]
+script = ExtResource("1_t18cr")
+transformer_resource = ExtResource("2_tcgv8")
+
+[node name="PlacementButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="HoverName" type="Label" parent="PlacementButton"]
+unique_name_in_owner = true
+z_index = 1
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 16.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_x3q6d")
+text = "INFO"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("1_lecjc")
+expand_mode = 5
