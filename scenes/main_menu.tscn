@@ -1,11 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://dc7il20758ygn"]
+[gd_scene load_steps=5 format=3 uid="uid://dc7il20758ygn"]
 
 [ext_resource type="Script" uid="uid://hpvx6xkk5mpx" path="res://scripts/ui/main_menu.gd" id="1_d0lsa"]
 [ext_resource type="Texture2D" uid="uid://cy20l4ejmkcmg" path="res://icon.svg" id="2_6wafw"]
 [ext_resource type="Theme" uid="uid://bkxtk5gau1dbp" path="res://theme/theme.tres" id="3_bqqt6"]
+[ext_resource type="AudioStream" uid="uid://dshvxo7e8h0h8" path="res://music/bossmusicsept19.ogg" id="4_wu84c"]
 
 [node name="MainMenu" type="CanvasLayer"]
-visible = false
 script = ExtResource("1_d0lsa")
 
 [node name="InnerMenu" type="PanelContainer" parent="."]
@@ -43,20 +43,24 @@ size_flags_horizontal = 2
 [node name="StarGameButton" type="Button" parent="InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_type_variation = &"GameMenuButton"
 text = "Start game"
 
 [node name="OptionsOpenButton" type="Button" parent="InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_type_variation = &"GameMenuButton"
 text = "Options"
 
 [node name="CreditsOpenButton" type="Button" parent="InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_type_variation = &"GameMenuButton"
 text = "Credits"
 
 [node name="Options" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
+visible = false
 
 [node name="InnerMenu" type="PanelContainer" parent="Options"]
 anchors_preset = 15
@@ -65,6 +69,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_bqqt6")
+theme_type_variation = &"GameMenuPanelContainer"
 
 [node name="MarginContainer" type="MarginContainer" parent="Options/InnerMenu"]
 layout_mode = 2
@@ -88,7 +93,8 @@ text = "Options"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
-text = "x"
+theme_type_variation = &"GameMenuButton"
+text = "X"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Options/InnerMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -96,6 +102,7 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="Options/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 16
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Options/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -105,10 +112,31 @@ size_flags_vertical = 10
 layout_mode = 2
 text = "Master volume"
 
-[node name="HSlider" type="HSlider" parent="Options/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="MasterVolumeSlider" type="HSlider" parent="Options/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(213, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 10
 size_flags_vertical = 1
+max_value = 1.0
+step = 0.001
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Options/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="Label" type="Label" parent="Options/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Music volume"
+
+[node name="MusicVolumeSlider" type="HSlider" parent="Options/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(213, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 1
+max_value = 1.0
+step = 0.001
 
 [node name="Credits" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
@@ -120,6 +148,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"GameMenuPanelContainer"
 
 [node name="MarginContainer" type="MarginContainer" parent="Credits/InnerMenu"]
 layout_mode = 2
@@ -143,7 +172,8 @@ text = "Credits"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
-text = "x"
+theme_type_variation = &"GameMenuButton"
+text = "X"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Credits/InnerMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -151,6 +181,7 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 16
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -158,6 +189,7 @@ size_flags_vertical = 10
 
 [node name="Label" type="Label" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8627451, 0.40392157, 1)
 text = "ART, MUSIC:"
 
 [node name="Label2" type="Label" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
@@ -171,6 +203,7 @@ size_flags_vertical = 10
 
 [node name="Label" type="Label" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer4"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8627451, 0.40392157, 1)
 text = "ART, MUSIC:"
 
 [node name="Label2" type="Label" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer4"]
@@ -184,6 +217,7 @@ size_flags_vertical = 10
 
 [node name="Label" type="Label" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.24705882, 0.75686276, 0.84705883, 1)
 text = "Programming:"
 
 [node name="Label2" type="Label" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
@@ -197,9 +231,15 @@ size_flags_vertical = 10
 
 [node name="Label" type="Label" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.24705882, 0.75686276, 0.84705883, 1)
 text = "Programming:"
 
 [node name="Label2" type="Label" parent="Credits/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 10
 text = "iocutus"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_wu84c")
+autoplay = true
+bus = &"Music"

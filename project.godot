@@ -23,7 +23,8 @@ window/stretch/mode="canvas_items"
 
 [gui]
 
-theme/custom_font="res://fonts/Robtronika-Regular.ttf"
+theme/custom="uid://bkxtk5gau1dbp"
+theme/custom_font="uid://2yivcmy44ht4"
 
 [input]
 
