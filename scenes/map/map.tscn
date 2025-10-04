@@ -1,7 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://b3lqsa7g6sa0o"]
+[gd_scene load_steps=5 format=3 uid="uid://b3lqsa7g6sa0o"]
 
 [ext_resource type="Script" uid="uid://ccd2m6lh6bgbi" path="res://scripts/map/map.gd" id="1_tqkkf"]
 [ext_resource type="TileSet" uid="uid://cbb4sityyi4us" path="res://tileset/tileset.tres" id="2_a2pkv"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_tqkkf"]
+noise_type = 2
+frequency = 0.0301
+fractal_type = 3
+fractal_gain = 0.6
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_a2pkv"]
+noise = SubResource("FastNoiseLite_tqkkf")
 
 [node name="Map" type="Node2D"]
 y_sort_enabled = true
@@ -19,3 +28,10 @@ tile_set = ExtResource("2_a2pkv")
 [node name="Objects" type="Node2D" parent="."]
 unique_name_in_owner = true
 y_sort_enabled = true
+
+[node name="NoiseRect" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("NoiseTexture2D_a2pkv")
