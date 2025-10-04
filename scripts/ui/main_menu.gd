@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-@onready var start_button: Button = %StarGameButton
+@onready var start_button: Button = %StartGameButton
 @onready var options_open_button: Button = %OptionsOpenButton
 @onready var options_close_button: Button = %OptionsCloseButton
 @onready var credits_open_button: Button = %CreditsOpenButton
@@ -45,7 +45,7 @@ func _on_music_volume_slider_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(value))
 
 func _on_start_button_pressed() -> void:
-	pass
+	SceneTransition.transition_scene("res://scenes/game.tscn")
 	
 func _on_options_open_button_pressed() -> void:
 	options_screen.show()
