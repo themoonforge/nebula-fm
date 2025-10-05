@@ -9,7 +9,7 @@ shader_parameter/spacing = 25.0
 shader_parameter/animation_progress = 0.0
 shader_parameter/dot_size = 1.0
 shader_parameter/dot_color = Color(0.19607843, 0.16470589, 0.28627452, 1)
-shader_parameter/pixel_resolution = 256.0
+shader_parameter/pixel_resolution = 640.0
 
 [sub_resource type="Animation" id="Animation_5npbh"]
 length = 0.001
@@ -59,7 +59,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.9647059, 0.54901963, 0.7411765, 1)
+color = Color(0.101960786, 0.101960786, 0.12941177, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

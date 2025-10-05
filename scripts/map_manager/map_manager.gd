@@ -1,6 +1,7 @@
 extends Node
 
 signal place_obstacle(obstacle: Node2D)
+signal place_building(building: Building)
 
 const TILE_SIZE: Vector2i = Vector2i(16, 16)
 const COLOR_FREE: Color = Color(0.0, 0.894, 0.894, 0.541)
@@ -100,6 +101,7 @@ func _process(delta: float) -> void:
 				building.global_position = building_cursor.global_position
 				building.is_active = true
 				place_obstacle.emit(building)
+				place_building.emit(building)
 
 				#if GridManager.is_cell_free(clicked_cell):
 				#	GridManager.set_cell(clicked_cell)

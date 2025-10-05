@@ -5,9 +5,9 @@ extends CanvasLayer
 var buildings_placed: int = 0
 
 func _ready():
-	MapManager.place_obstacle.connect(_on_place_buildings)
+	MapManager.place_building.connect(_on_placed_building)
 
-func _on_place_buildings(node: Node2D) -> void:
+func _on_placed_building(building: Node2D) -> void:
 	buildings_placed += 1
 	check_quest_completion("buildings_placed")
 
@@ -21,3 +21,4 @@ func check_quest_completion(signal_name : String) -> void:
 				resource.completed_requirements.append(requirement)
 			if resource.completed_requirements.size() == resource.requirements_array.size():
 				resource.complete = true
+				print("Quest Complete!")

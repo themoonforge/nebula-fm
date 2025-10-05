@@ -1,16 +1,15 @@
-[gd_scene load_steps=18 format=3 uid="uid://dc7il20758ygn"]
+[gd_scene load_steps=17 format=3 uid="uid://dc7il20758ygn"]
 
 [ext_resource type="Script" uid="uid://hpvx6xkk5mpx" path="res://scripts/ui/main_menu.gd" id="1_d0lsa"]
 [ext_resource type="Texture2D" uid="uid://bcgtdxaagvhkt" path="res://sprites/planet_bg_x_tiled.png" id="2_btxxm"]
 [ext_resource type="Script" uid="uid://dhdegvwwqihjl" path="res://scripts/ui/planet_scroll.gd" id="2_wb0q5"]
 [ext_resource type="Texture2D" uid="uid://betg7a3ip4o7b" path="res://sprites/logo_outlined.png" id="2_x2yvf"]
-[ext_resource type="Theme" uid="uid://bkxtk5gau1dbp" path="res://theme/theme.tres" id="3_bqqt6"]
+[ext_resource type="Theme" uid="uid://cnveursukjnnk" path="res://theme/theme.tres" id="3_bqqt6"]
 [ext_resource type="Texture2D" uid="uid://bgu84p0ynt576" path="res://sprites/planet_mask_dark.png" id="3_wb0q5"]
 [ext_resource type="Script" uid="uid://b6th40bbhl4o1" path="res://scripts/ui/animation_component.gd" id="4_m1kxf"]
 [ext_resource type="Shader" path="res://scenes/ui/stars.gdshader" id="5_7suek"]
 [ext_resource type="Texture2D" uid="uid://dxisvqa87ghix" path="res://sprites/stars_main_menu.png" id="5_8g5eo"]
 [ext_resource type="FontFile" uid="uid://c6h3we4j2dvbf" path="res://fonts/GravityBold8.ttf" id="5_q85j6"]
-[ext_resource type="AudioStream" uid="uid://bv16u5hhmnoeg" path="res://music/bg (1).wav" id="5_x2yvf"]
 
 [sub_resource type="Gradient" id="Gradient_q85j6"]
 interpolation_mode = 2
@@ -56,207 +55,27 @@ repeat_times = 2
 script = ExtResource("2_wb0q5")
 
 [node name="PlanetTexture" type="TextureRect" parent="InnerMenu/PlanetScroll"]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 2
-auto_translate_mode = 0
-editor_description = ""
-visible = true
-modulate = Color(1, 1, 1, 1)
-self_modulate = Color(1, 1, 1, 1)
-show_behind_parent = false
-top_level = false
-clip_children = 0
-light_mask = 1
-visibility_layer = 1
-z_index = 0
-z_as_relative = true
-y_sort_enabled = false
-texture_filter = 0
-texture_repeat = 0
-material = null
-use_parent_material = false
-clip_contents = false
-custom_minimum_size = Vector2(0, 0)
-layout_direction = 0
-layout_mode = 3
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 0.0
 offset_top = 30.0
 offset_right = 640.0
 offset_bottom = 390.0
-grow_horizontal = 1
-grow_vertical = 1
-rotation = 0.0
-scale = Vector2(1, 1)
-pivot_offset = Vector2(0, 0)
 size_flags_horizontal = 3
 size_flags_vertical = 3
-size_flags_stretch_ratio = 1.0
-localize_numeral_system = true
-tooltip_text = ""
-tooltip_auto_translate_mode = 0
-focus_neighbor_left = NodePath("")
-focus_neighbor_top = NodePath("")
-focus_neighbor_right = NodePath("")
-focus_neighbor_bottom = NodePath("")
-focus_next = NodePath("")
-focus_previous = NodePath("")
-focus_mode = 0
-focus_behavior_recursive = 0
-mouse_filter = 1
-mouse_behavior_recursive = 0
-mouse_force_pass_scroll_events = true
-mouse_default_cursor_shape = 0
-accessibility_name = ""
-accessibility_description = ""
-accessibility_live = 0
-accessibility_controls_nodes = Array[NodePath]([])
-accessibility_described_by_nodes = Array[NodePath]([])
-accessibility_labeled_by_nodes = Array[NodePath]([])
-accessibility_flow_to_nodes = Array[NodePath]([])
-theme = null
-theme_type_variation = &""
 texture = ExtResource("2_btxxm")
 expand_mode = 3
 stretch_mode = 6
-flip_h = false
-flip_v = false
-script = null
 
 [node name="PlanetMask" type="TextureRect" parent="InnerMenu"]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 2
-auto_translate_mode = 0
-editor_description = ""
-visible = true
-modulate = Color(1, 1, 1, 1)
-self_modulate = Color(1, 1, 1, 1)
-show_behind_parent = false
-top_level = false
-clip_children = 0
-light_mask = 1
-visibility_layer = 1
-z_index = 0
-z_as_relative = true
-y_sort_enabled = false
-texture_filter = 0
-texture_repeat = 0
-material = null
-use_parent_material = false
-clip_contents = false
-custom_minimum_size = Vector2(0, 0)
-layout_direction = 0
 layout_mode = 2
-size_flags_horizontal = 1
-size_flags_vertical = 1
-size_flags_stretch_ratio = 1.0
-localize_numeral_system = true
-tooltip_text = ""
-tooltip_auto_translate_mode = 0
-focus_neighbor_left = NodePath("")
-focus_neighbor_top = NodePath("")
-focus_neighbor_right = NodePath("")
-focus_neighbor_bottom = NodePath("")
-focus_next = NodePath("")
-focus_previous = NodePath("")
-focus_mode = 0
-focus_behavior_recursive = 0
-mouse_filter = 1
-mouse_behavior_recursive = 0
-mouse_force_pass_scroll_events = true
-mouse_default_cursor_shape = 0
-accessibility_name = ""
-accessibility_description = ""
-accessibility_live = 0
-accessibility_controls_nodes = Array[NodePath]([])
-accessibility_described_by_nodes = Array[NodePath]([])
-accessibility_labeled_by_nodes = Array[NodePath]([])
-accessibility_flow_to_nodes = Array[NodePath]([])
-theme = null
-theme_type_variation = &""
 texture = ExtResource("3_wb0q5")
 expand_mode = 3
 stretch_mode = 6
-flip_h = false
-flip_v = false
-script = null
 
 [node name="PlanetStars" type="TextureRect" parent="InnerMenu"]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 2
-auto_translate_mode = 0
-editor_description = ""
-visible = true
-modulate = Color(1, 1, 1, 1)
-self_modulate = Color(1, 1, 1, 1)
-show_behind_parent = false
-top_level = false
-clip_children = 0
-light_mask = 1
-visibility_layer = 1
-z_index = 0
-z_as_relative = true
-y_sort_enabled = false
-texture_filter = 0
-texture_repeat = 0
 material = SubResource("ShaderMaterial_otr3d")
-use_parent_material = false
-clip_contents = false
-custom_minimum_size = Vector2(0, 0)
-layout_direction = 0
 layout_mode = 2
-size_flags_horizontal = 1
-size_flags_vertical = 1
-size_flags_stretch_ratio = 1.0
-localize_numeral_system = true
-tooltip_text = ""
-tooltip_auto_translate_mode = 0
-focus_neighbor_left = NodePath("")
-focus_neighbor_top = NodePath("")
-focus_neighbor_right = NodePath("")
-focus_neighbor_bottom = NodePath("")
-focus_next = NodePath("")
-focus_previous = NodePath("")
-focus_mode = 0
-focus_behavior_recursive = 0
-mouse_filter = 1
-mouse_behavior_recursive = 0
-mouse_force_pass_scroll_events = true
-mouse_default_cursor_shape = 0
-accessibility_name = ""
-accessibility_description = ""
-accessibility_live = 0
-accessibility_controls_nodes = Array[NodePath]([])
-accessibility_described_by_nodes = Array[NodePath]([])
-accessibility_labeled_by_nodes = Array[NodePath]([])
-accessibility_flow_to_nodes = Array[NodePath]([])
-theme = null
-theme_type_variation = &""
 texture = ExtResource("5_8g5eo")
 expand_mode = 3
 stretch_mode = 6
-flip_h = false
-flip_v = false
-script = null
 
 [node name="HBoxContainer" type="HBoxContainer" parent="InnerMenu"]
 layout_mode = 2
@@ -343,67 +162,12 @@ theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 0
 
 [node name="Logo" type="TextureRect" parent="InnerMenu/HBoxContainer/MarginContainer"]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 2
-auto_translate_mode = 0
-editor_description = ""
-visible = true
-modulate = Color(1, 1, 1, 1)
-self_modulate = Color(1, 1, 1, 1)
-show_behind_parent = false
-top_level = false
-clip_children = 0
-light_mask = 1
-visibility_layer = 1
-z_index = 0
-z_as_relative = true
-y_sort_enabled = false
-texture_filter = 0
-texture_repeat = 0
-material = null
-use_parent_material = false
-clip_contents = false
 custom_minimum_size = Vector2(213, 213)
-layout_direction = 0
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
-size_flags_stretch_ratio = 1.0
-localize_numeral_system = true
-tooltip_text = ""
-tooltip_auto_translate_mode = 0
-focus_neighbor_left = NodePath("")
-focus_neighbor_top = NodePath("")
-focus_neighbor_right = NodePath("")
-focus_neighbor_bottom = NodePath("")
-focus_next = NodePath("")
-focus_previous = NodePath("")
-focus_mode = 0
-focus_behavior_recursive = 0
-mouse_filter = 1
-mouse_behavior_recursive = 0
-mouse_force_pass_scroll_events = true
-mouse_default_cursor_shape = 0
-accessibility_name = ""
-accessibility_description = ""
-accessibility_live = 0
-accessibility_controls_nodes = Array[NodePath]([])
-accessibility_described_by_nodes = Array[NodePath]([])
-accessibility_labeled_by_nodes = Array[NodePath]([])
-accessibility_flow_to_nodes = Array[NodePath]([])
-theme = null
-theme_type_variation = &""
 texture = ExtResource("2_x2yvf")
-expand_mode = 0
 stretch_mode = 5
-flip_h = false
-flip_v = false
-script = null
 
 [node name="Options" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
@@ -482,6 +246,24 @@ layout_mode = 2
 text = "Music volume"
 
 [node name="MusicVolumeSlider" type="HSlider" parent="Options/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(213, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 1
+theme_type_variation = &"MenuSlider"
+max_value = 1.0
+step = 0.001
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Options/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="Label" type="Label" parent="Options/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "SFX volume"
+
+[node name="SFXVolumeSlider" type="HSlider" parent="Options/InnerMenu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer3"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(213, 0)
 layout_mode = 2
@@ -595,8 +377,3 @@ text = "Programming:"
 layout_mode = 2
 size_flags_horizontal = 10
 text = "iocutus"
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_x2yvf")
-autoplay = true
-bus = &"Music"
