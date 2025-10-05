@@ -1,10 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://o1s2bbplsjbf"]
+[gd_scene load_steps=5 format=3 uid="uid://o1s2bbplsjbf"]
 
 [ext_resource type="PackedScene" uid="uid://d2fsm3xchosto" path="res://scenes/ui/game_ui.tscn" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://b3lqsa7g6sa0o" path="res://scenes/map/map.tscn" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://b5mjgreg8l3ap" path="res://scenes/building_2.tscn" id="3_lbhrr"]
+[ext_resource type="Resource" uid="uid://cqoaywxhmfw1w" path="res://resources/building/space_radio.tres" id="4_iywne"]
 
 [node name="Game" type="Node2D"]
 
 [node name="GameUi" parent="." instance=ExtResource("1_uwrxv")]
 
 [node name="Map" parent="." instance=ExtResource("2_yqjtg")]
+building_scene = ExtResource("3_lbhrr")
+radio_station_resource = ExtResource("4_iywne")
