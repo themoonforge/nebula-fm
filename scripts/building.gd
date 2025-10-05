@@ -11,7 +11,7 @@ const BUILDING_TILE_SET = 2
 
 @export var building_rotation: BuildingsUtils.BuildingRotation = BuildingsUtils.BuildingRotation.DOWN:
 	set(value):
-		if building_resource.has_rorations:
+		if building_resource.has_rotation:
 			building_rotation = value
 		else:
 			building_rotation = BuildingsUtils.BuildingRotation.DOWN
@@ -89,7 +89,7 @@ func _setup_resource() -> void:
 
 	ground_size = BuildingsUtils.rotateSize(building_resource.size, building_rotation)
 
-	var rotation_offset = BuildingsUtils.rotationToOffset(building_rotation)
+	var rotation_offset = BuildingsUtils.rotationToOffset(building_rotation, building_resource.rotation_offset)
 	var atlas_coordinate = building_resource.background_tile + rotation_offset
 	background.set_cell(Vector2i.ZERO, BUILDING_TILE_SET, atlas_coordinate)
 	var tile_data: TileData = background.get_cell_tile_data(Vector2i.ZERO)
@@ -101,7 +101,7 @@ func _setup_resource() -> void:
 	_setup_indicators(building_resource.input_locations)
 	_setup_indicators(building_resource.output_locations)
 	connectionIndicators.visible = show_connection_indicators
-	label.text = building_resource.label()
+	label.text = str(building_resource)
 
 
 func _handle_active() -> void:
@@ -109,7 +109,7 @@ func _handle_active() -> void:
 			self.add_to_group(BuildingsUtils.BUILDING_GROUP)
 		else:
 			self.remove_from_group(BuildingsUtils.BUILDING_GROUP)
-		
+
 		connectionIndicators.visible = not is_active
 		background.collision_enabled = is_active
 		background.modulate = Color.WHITE

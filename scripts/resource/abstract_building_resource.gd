@@ -20,10 +20,11 @@
 @export var input_locations: Dictionary[Vector2i, BuildingsUtils.BuildingRotation]
 @export var output_locations: Dictionary[Vector2i, BuildingsUtils.BuildingRotation]
 
-@export var has_rorations: bool = true
+@export var has_rotation: bool = true
 @export var production_time: float = 0.0
 
 @export var icon: Texture2D
 
+@export var rotation_offset: Array[Vector2i] = []
+
 @abstract func produce(input_buffer: Buffer, output_buffer: Buffer) -> void
-@abstract func label() -> StringName
