@@ -1,6 +1,6 @@
 class_name TransformerItem extends PanelContainer
 
-@export var transformer_resource: TransformerResource
+@export var transformer_resource: AbstractBuildingResource
 
 @onready var placement_button: Button = %PlacementButton
 @onready var icon: TextureRect = %Icon

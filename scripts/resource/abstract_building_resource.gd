@@ -23,5 +23,7 @@
 @export var has_rorations: bool = true
 @export var production_time: float = 0.0
 
+@export var icon: Texture2D
+
 @abstract func produce(input_buffer: Buffer, output_buffer: Buffer) -> void
 @abstract func label() -> StringName

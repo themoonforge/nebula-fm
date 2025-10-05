@@ -11,7 +11,8 @@ signal inventory_changed(inventory: Dictionary[StringName, int])
 
 func add_element(note: NoteResource) -> void:
 	filter_old_input_buffer()
-	_buffer.append(note)
+	var buffer_resource: BufferResource = BufferResource.new(note)
+	_buffer.append(buffer_resource)
 	_increment_inventory(note.simple_name)
 	inventory_changed.emit.call_deferred(_inventory)
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dpl7y8o8dswp0" path="res://scripts/ui/hotbar.gd" id="1_m1s8h"]
 [ext_resource type="PackedScene" uid="uid://donhenh45sal8" path="res://scenes/ui/transformer_item.tscn" id="2_6hkf2"]
-[ext_resource type="Resource" uid="uid://y353udod5p7m" path="res://scenes/transformer/c_transformer/c_transformer.tres" id="3_6hkf2"]
+[ext_resource type="Resource" uid="uid://cls7knxgownu5" path="res://resources/building/c_collector.tres" id="3_6hkf2"]
 
 [node name="Hotbar" type="CanvasLayer"]
 script = ExtResource("1_m1s8h")

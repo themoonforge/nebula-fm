@@ -1,8 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://ba6smto8fqnjg"]
+[gd_scene load_steps=5 format=3 uid="uid://ba6smto8fqnjg"]
 
 [ext_resource type="Script" uid="uid://xsbyght6bx8p" path="res://scripts/map_manager/map_manager.gd" id="1_m8bhj"]
-[ext_resource type="PackedScene" uid="uid://bumh0avxilxmk" path="res://scenes/transformer/transformer_ghost.tscn" id="2_11jpa"]
+[ext_resource type="Resource" uid="uid://cls7knxgownu5" path="res://resources/building/c_collector.tres" id="2_hl4el"]
+[ext_resource type="PackedScene" uid="uid://df3luqvourto4" path="res://scenes/building_cursor.tscn" id="2_m8bhj"]
+[ext_resource type="PackedScene" uid="uid://dr01at6gpkurn" path="res://scenes/delete_cursor.tscn" id="3_11jpa"]
 
-[node name="MapManager" type="Node"]
+[node name="MapManager" type="Node2D"]
 script = ExtResource("1_m8bhj")
-transformer_ghost_scene = ExtResource("2_11jpa")
+selected_building_resource = ExtResource("2_hl4el")
+mode = null
+
+[node name="DeleteCursor" parent="." instance=ExtResource("3_11jpa")]
+unique_name_in_owner = true
+
+[node name="BuildingCursor" parent="." instance=ExtResource("2_m8bhj")]
+unique_name_in_owner = true

@@ -1,7 +1,12 @@
-[gd_resource type="Resource" script_class="CollectorBuildingResource" load_steps=4 format=3 uid="uid://cls7knxgownu5"]
+[gd_resource type="Resource" script_class="CollectorBuildingResource" load_steps=6 format=3 uid="uid://cls7knxgownu5"]
 
 [ext_resource type="Script" uid="uid://c4v6sx22p8gtg" path="res://scripts/resource/collector_building_resource.gd" id="1_0rssy"]
 [ext_resource type="Script" uid="uid://bbn4jhlv481ba" path="res://scripts/resource/note_resource.gd" id="1_dcvj5"]
+[ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="1_tmah6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_50g8j"]
+atlas = ExtResource("1_tmah6")
+region = Rect2(193, 11, 14, 21)
 
 [sub_resource type="Resource" id="Resource_tmah6"]
 resource_name = "C4"
@@ -21,3 +26,4 @@ background_tile = Vector2i(12, 0)
 output_locations = Dictionary[Vector2i, int]({
 Vector2i(0, 1): 0
 })
+icon = SubResource("AtlasTexture_50g8j")

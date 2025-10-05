@@ -9,6 +9,7 @@ const ARROW_LEFT = Vector2i(11, 5)
 const TILE_PX = 16
 const HALF_TILE_PX = TILE_PX / 2
 
+const BUILDING_GROUP = "BUILDINGS"
 
 enum BuildingRotation {
 	DOWN,
@@ -80,7 +81,7 @@ static func rotateTileBy(coordinate: Vector2i, rotation: BuildingRotation, origi
 	var final_coord = rotated_relative_coord - Vector2(HALF_TILE_PX, -HALF_TILE_PX) + rotation_center_back
 	var final_tile_coord = Vector2i(roundi(final_coord.x / TILE_PX), roundi(final_coord.y / TILE_PX))
 	return final_tile_coord
-	
+
 static func rotateArrowBy(arrow: Vector2i, rotation: BuildingRotation) -> Vector2i:
 	match rotation:
 		BuildingRotation.DOWN: return arrow
