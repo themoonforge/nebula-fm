@@ -87,12 +87,10 @@ func _process(delta: float) -> void:
 			building_cursor.global_position = snapped_coordinate
 
 			if building_cursor.collider_dict.size() > 0:
-				building_cursor.building.background.modulate = COLOR_OCCUPIED
-				building_cursor.building.foreground.modulate = COLOR_OCCUPIED
+				building_cursor.building.modulate_sprite(COLOR_OCCUPIED)
 				return
-			else:
-				building_cursor.building.background.modulate = COLOR_FREE
-				building_cursor.building.foreground.modulate = COLOR_FREE
+			
+			building_cursor.building.modulate_sprite(COLOR_FREE)
 
 			if Input.is_action_just_pressed(&"ui_click"):
 				#var clicked_position: Vector2 = mouse_pos
@@ -144,7 +142,6 @@ func set_active_transformer_ghost(transformer_resource: AbstractBuildingResource
 	if !building_cursor:
 		return
 
-	building_cursor.building.background.modulate = COLOR_FREE
-	building_cursor.building.foreground.modulate = COLOR_FREE
+	building_cursor.building.modulate_sprite(COLOR_FREE)
 	building_cursor.building.show_connection_indicators = true
 	mode = Mode.BUILD

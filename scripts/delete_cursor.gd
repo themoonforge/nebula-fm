@@ -12,9 +12,9 @@ class_name DeleteCursor extends Area2D
 	set(value):
 		is_active = value
 		if is_node_ready():
-			shape.disabled = not is_active 
+			shape.disabled = not is_active
 			for building in collider_dict:
-				building.modulate = hover_color if is_active else Color.WHITE
+				building.modulate_sprite(hover_color if is_active else Color.WHITE)
 
 signal on_collision(collision: bool)
 
@@ -23,7 +23,7 @@ func _ready() -> void:
 	area_exited.connect(_on_area_exited)
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
-	shape.disabled = not is_active 
+	shape.disabled = not is_active
 
 func _on_body_entered(body: Node2D) -> void:
 	_increment_collider(body)
@@ -49,7 +49,7 @@ func _increment_collider(item: Node2D) -> void:
 		#print("_increment_collider: ", building)
 		if not collider_dict.has(item):
 			collider_dict[building] = 1
-			building.modulate = hover_color if is_active else Color.WHITE
+			building.modulate_sprite(hover_color if is_active else Color.WHITE)
 		else:
 			collider_dict[building] += 1
 		on_collision.emit(true)
@@ -62,7 +62,7 @@ func _decrement_collider(item: Node2D) -> void:
 			var value = collider_dict[building] - 1
 			if value == 0:
 				collider_dict.erase(building)
-				building.modulate = Color.WHITE
+				building.modulate_sprite(Color.WHITE)
 			else:
 				collider_dict[building] = value
 		on_collision.emit(collider_dict.size() > 0)

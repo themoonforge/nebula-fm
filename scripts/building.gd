@@ -114,3 +114,9 @@ func _handle_active() -> void:
 		background.collision_enabled = is_active
 		background.modulate = Color.WHITE
 		foreground.modulate = Color.WHITE
+		shapeCollisionPolygon.disabled = not is_active
+		groundCollisionPolygon.disabled = is_active
+
+func modulate_sprite(color: Color) -> void:
+	background.modulate = color
+	foreground.modulate = color
