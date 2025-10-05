@@ -46,11 +46,6 @@ var last_snapped_coordinate: Vector2i = Vector2i(-1, -1) # this is not a snapped
 
 func _ready() -> void:
 	building_cursor.hide()
-	
-	# no idea why we need this, but otherwise it complains about the cursor being added twice...?
-	if !has_node(building_cursor.get_path()):
-		add_child(building_cursor)
-
 	building_cursor.building.building_resource = selected_building_resource
 
 func _process(delta: float) -> void:

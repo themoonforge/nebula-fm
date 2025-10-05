@@ -11,6 +11,7 @@ class_name Map extends Node2D
 @onready var note_sources_layer: TileMapLayer = %NoteSourcesLayer
 @onready var placed_objects: Node2D = %Objects
 @onready var noise_rect: TextureRect = %NoiseRect
+@onready var midi_player: MidiPlayer = %GodotMIDIPlayer
 
 var noise_texture: NoiseTexture2D
 var noise_grid: Dictionary[Vector2i, float]
@@ -56,7 +57,7 @@ func _ready() -> void:
 	camera.set_bounds()
 	
 	MapManager.place_obstacle.connect(_on_place_obstacle)
-	
+		
 func _on_place_obstacle(obstacle: Node2D) -> void:
 	placed_objects.add_child(obstacle)
 	
@@ -131,6 +132,7 @@ func _place_radio_station(sub_grid: SubGrid) -> void:
 	
 	var radio_station: Building = building_scene.instantiate()
 	radio_station.building_resource = radio_station_resource
+	radio_station.is_active = true
 	placed_objects.add_child(radio_station)
 	
 	var spawn_cell = Vector2i(

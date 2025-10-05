@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://b5mjgreg8l3ap"]
+[gd_scene load_steps=9 format=3 uid="uid://b5mjgreg8l3ap"]
 
 [ext_resource type="Script" uid="uid://o0f20sinybbj" path="res://scripts/building.gd" id="1_nlxt7"]
 [ext_resource type="Resource" uid="uid://cn6kon66bh7gm" path="res://resources/building/splitter.tres" id="2_nlxt7"]
+[ext_resource type="PackedScene" uid="uid://cpedi8rmqle25" path="res://scenes/connection_gate.tscn" id="3_hu0v8"]
 [ext_resource type="Script" uid="uid://d37e4wlqbw6gr" path="res://scripts/buffer.gd" id="3_ixa1u"]
 [ext_resource type="TileSet" uid="uid://cbb4sityyi4us" path="res://tileset/tileset.tres" id="4_hu0v8"]
 [ext_resource type="Texture2D" uid="uid://cogn2e21kqel" path="res://sprites/pivot_debug.png" id="5_a6xvv"]
+[ext_resource type="Script" uid="uid://f53i8e6t5r1k" path="res://scripts/connection_manager.gd" id="6_gwn2p"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_mkjfx"]
 font_size = 1
@@ -12,6 +14,7 @@ font_size = 1
 [node name="Building" type="Area2D"]
 script = ExtResource("1_nlxt7")
 building_resource = ExtResource("2_nlxt7")
+connection_scene = ExtResource("3_hu0v8")
 ground_size = Vector2i(2, 1)
 show_connection_indicators = true
 current_production_percentage = -1.0
@@ -29,7 +32,7 @@ metadata/_custom_type_script = "uid://d37e4wlqbw6gr"
 [node name="ConnectionIndicators" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 position = Vector2(0, -16)
-tile_map_data = PackedByteArray(0, 0, 1, 0, 255, 255, 2, 0, 10, 0, 5, 0, 0, 0, 1, 0, 1, 0, 2, 0, 10, 0, 5, 0, 0, 0, 0, 0, 255, 255, 2, 0, 10, 0, 5, 0, 0, 0)
+tile_map_data = PackedByteArray(0, 0, 1, 0, 1, 0, 2, 0, 10, 0, 5, 0, 0, 0, 0, 0, 255, 255, 2, 0, 10, 0, 5, 0, 0, 0, 1, 0, 255, 255, 2, 0, 10, 0, 5, 0, 0, 0)
 tile_set = ExtResource("4_hu0v8")
 collision_enabled = false
 navigation_enabled = false
@@ -61,7 +64,7 @@ visible = false
 offset_top = -13.0
 offset_right = 16.0
 offset_bottom = 3.0
-text = "Space Radio"
+text = "<Resource#-9223369714871219845>"
 label_settings = SubResource("LabelSettings_mkjfx")
 horizontal_alignment = 1
 
@@ -75,3 +78,20 @@ disabled = true
 unique_name_in_owner = true
 position = Vector2(8, -8)
 polygon = PackedVector2Array(-4, -4, -4, 4, 20, 4, 20, -4)
+
+[node name="Inputs" type="Node2D" parent="." node_paths=PackedStringArray("connection_gate_dict")]
+unique_name_in_owner = true
+position = Vector2(0, -16)
+script = ExtResource("6_gwn2p")
+connection_gate_dict = {
+Vector2i(1, 1): NodePath("Connection")
+}
+
+[node name="Outputs" type="Node2D" parent="." node_paths=PackedStringArray("connection_gate_dict")]
+unique_name_in_owner = true
+position = Vector2(0, -16)
+script = ExtResource("6_gwn2p")
+connection_gate_dict = {
+Vector2i(0, -1): NodePath("Connection"),
+Vector2i(1, -1): NodePath("@Area2D@21246")
+}

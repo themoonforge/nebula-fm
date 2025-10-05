@@ -419,6 +419,8 @@ func _ready():
 
 	if self.playing:
 		self.play()
+		
+	EventBus.midi_input.connect(on_midi_input)
 
 ## 通知
 ## @param	what	通知要因

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cpedi8rmqle25"]
+
+[ext_resource type="Script" uid="uid://di4fgwqcsolli" path="res://scripts/connection_gate.gd" id="1_6yrf8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dbnlc"]
+size = Vector2(16, 16)
+
+[node name="Connection" type="Area2D"]
+script = ExtResource("1_6yrf8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+shape = SubResource("RectangleShape2D_dbnlc")
+disabled = true
