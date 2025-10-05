@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=13 format=3 uid="uid://bkxtk5gau1dbp"]
+[gd_resource type="Theme" load_steps=19 format=3 uid="uid://bkxtk5gau1dbp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nrt0f"]
 
@@ -25,6 +25,27 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lcjcl"]
 bg_color = Color(0, 0, 0, 0.78431374)
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_lcjcl"]
+load_path = "res://.godot/imported/circle.png-44b524053929f94dd1566f087585a590.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8ab6e"]
+load_path = "res://.godot/imported/circle.png-44b524053929f94dd1566f087585a590.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nrt0f"]
+load_path = "res://.godot/imported/circle.png-44b524053929f94dd1566f087585a590.ctex"
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_8ab6e"]
+color = Color(0.9647059, 0.54901963, 0.7411765, 1)
+thickness = 4
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_nrt0f"]
+color = Color(0.9647059, 0.54901963, 0.7411765, 1)
+thickness = 4
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_lcjcl"]
+color = Color(0.9607843, 0.93333334, 0.8509804, 1)
+thickness = 4
+
 [resource]
 GameMenuButton/base_type = &"Button"
 GameMenuButton/colors/font_color = Color(0.9607843, 0.93333334, 0.8509804, 1)
@@ -42,3 +63,10 @@ GameMenuButton/styles/pressed = SubResource("StyleBoxEmpty_5wxyd")
 GameMenuButton/styles/pressed_mirrored = SubResource("StyleBoxEmpty_fppmr")
 GameMenuPanelContainer/base_type = &"PanelContainer"
 GameMenuPanelContainer/styles/panel = SubResource("StyleBoxFlat_lcjcl")
+MenuSlider/base_type = &"HSlider"
+MenuSlider/icons/grabber = SubResource("CompressedTexture2D_lcjcl")
+MenuSlider/icons/grabber_disabled = SubResource("CompressedTexture2D_8ab6e")
+MenuSlider/icons/grabber_highlight = SubResource("CompressedTexture2D_nrt0f")
+MenuSlider/styles/grabber_area = SubResource("StyleBoxLine_8ab6e")
+MenuSlider/styles/grabber_area_highlight = SubResource("StyleBoxLine_nrt0f")
+MenuSlider/styles/slider = SubResource("StyleBoxLine_lcjcl")
