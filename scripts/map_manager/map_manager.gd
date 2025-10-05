@@ -5,12 +5,14 @@ signal place_obstacle(obstacle: Node2D)
 const TILE_SIZE: Vector2i = Vector2i(16, 16)
 const COLOR_FREE: Color = Color(0.0, 0.894, 0.894, 0.541)
 const COLOR_OCCUPIED: Color = Color(1.0, 0.68, 0.744, 0.541)
+const COLOR_ADD: Color = Color(0.976, 0.827, 0.416, 0.773)
 
 @export var transformer_ghost_scene: PackedScene
 
 var transformer_ghost_instance: TransformerGhost
 var transformer_ghost_active: bool
 var placed_transformers: Dictionary[Vector2i, Transformer]
+var note_sources: Array[Vector2i]
 
 func _ready() -> void:
 	if !transformer_ghost_scene:
@@ -40,7 +42,11 @@ func _process(delta: float) -> void:
 	transformer_ghost_instance.global_position = (mouse_pos - Vector2(TILE_SIZE.x/2, TILE_SIZE.y/2)).snapped(TILE_SIZE)
 	transformer_ghost_instance.global_position = transformer_ghost_instance.global_position + offset/2
 	
-	if !GridManager.is_cell_free(hovered_cell):
+	if _borders_note_source(hovered_cell):
+		# todo: check if current ghost is a note extractor
+		# if so, it can be placed on this note_source cell
+		transformer_ghost_instance.sprite.modulate = COLOR_ADD
+	elif !GridManager.is_cell_free(hovered_cell):
 		transformer_ghost_instance.sprite.modulate = COLOR_OCCUPIED
 		return
 	
@@ -53,6 +59,24 @@ func _process(delta: float) -> void:
 			place_transformer(transformer_ghost_instance, clicked_cell)
 			#hide_ghost()
 			
+func _borders_note_source(cell: Vector2i) -> bool:
+	for note_cell in note_sources:
+		if note_cell == cell + Vector2i(0, -1):
+			return true
+		if note_cell == cell + Vector2i(0, 1):
+			return true
+		if note_cell == cell + Vector2i(-1, 0):
+			return true
+		if note_cell == cell + Vector2i(1, 0):
+			return true
+	return false
+
+func add_note_source(cell: Vector2i):
+	if note_sources.has(cell):
+		return
+		
+	note_sources.append(cell)
+
 func free_buildings() -> void:
 	placed_transformers = {}
 			

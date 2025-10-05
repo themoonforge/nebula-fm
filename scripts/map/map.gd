@@ -1,6 +1,7 @@
 class_name Map extends Node2D
 
 @export var radio_station_scene: PackedScene
+@export var note_source_scene: PackedScene
 @onready var ground_layer: TileMapLayer = %GroundLayer
 @onready var obstacles_layer: TileMapLayer = %ObstaclesLayer
 @onready var note_sources_layer: TileMapLayer = %NoteSourcesLayer
@@ -14,6 +15,15 @@ var min_noise = INF
 var max_noise = -INF
 
 var tree_pattern_choices: Dictionary[int, Array]
+
+enum SubGrid {
+	TOP_LEFT,
+	TOP_RIGHT,
+	BOTTOM_LEFT,
+	BOTTOM_RIGHT
+}
+
+var station_subgrid: SubGrid
 
 func _ready() -> void:
 	tree_pattern_choices[Tiles.SOURCE_1] = [
@@ -59,8 +69,8 @@ func generate() -> void:
 	_generate_noise()
 	
 	_fill_layer(ground_layer, Tiles.SOURCE_0, Tiles.GROUND_0)
-	_place_radio_station()
-	_place_note_sources(note_sources_layer, Tiles.SOURCE_2, Tiles.NOTE_SOURCE, Vector2i(6, 6), 3)
+	_place_radio_station(SubGrid.BOTTOM_LEFT)
+	_place_note_sources(3)
 	_place_with_noise(obstacles_layer, Tiles.SOURCE_0, Tiles.ROCK_SMALL, Vector2(0.2, 0.25))
 	_place_patterns(obstacles_layer, tree_pattern_choices, Vector2(0.25, 0.3))
 	
@@ -86,56 +96,113 @@ func _fill_layer(tile_map_layer: TileMapLayer, source_id: int, tile_id: Vector2i
 			var cell: Vector2i = Vector2i(x, y)
 			_set_cell(tile_map_layer, cell, source_id, tile_id)
 
-func _place_radio_station() -> void:
+func _place_radio_station(sub_grid: SubGrid) -> void:
+	station_subgrid = sub_grid
+	
 	var radio_station: RadioStation = radio_station_scene.instantiate()
 	placed_objects.add_child(radio_station)
 	
 	var screen_size = get_viewport_rect().size / 16
+	var sub_grid_rect = _get_subgrid_rect(sub_grid, screen_size)
+	
 	var station_rect = radio_station.tiles.get_used_rect()
 	
 	var spawn_cell = Vector2i(
-		randi_range(0, int(screen_size.x) - station_rect.size.x),
-		randi_range(0, int(screen_size.y) - station_rect.size.y)
+		randi_range(sub_grid_rect.position.x, sub_grid_rect.position.x + sub_grid_rect.size.x - station_rect.size.x),
+		randi_range(sub_grid_rect.position.y, sub_grid_rect.position.y + sub_grid_rect.size.y - station_rect.size.y)
 	)
 	
 	radio_station.global_position = Vector2(spawn_cell * 16)
 	
 	for cell in radio_station.tiles.get_used_cells():
 		GridManager.set_cell(cell + spawn_cell)
+		
 
-func _place_note_sources(tile_map_layer: TileMapLayer, source_id: int, tile_id: Vector2i, offset: Vector2i, count: int) -> void:
-	var screen_size = get_viewport_rect().size
+func _get_subgrid_rect(sub_grid, screen_size: Vector2) -> Rect2i:
+	match sub_grid:
+		SubGrid.TOP_LEFT:
+			return Rect2i(0, 0, screen_size.x / 2, screen_size.y / 2)
+		SubGrid.TOP_RIGHT:
+			return Rect2i(screen_size.x / 2, 0, screen_size.x / 2, screen_size.y / 2)
+		SubGrid.BOTTOM_LEFT:
+			return Rect2i(0, screen_size.y / 2, screen_size.x / 2, screen_size.y / 2)
+		SubGrid.BOTTOM_RIGHT:
+			return Rect2i(screen_size.x / 2, screen_size.y / 2, screen_size.x / 2, screen_size.y / 2)
+		_:
+			return Rect2i(0, 0, screen_size.x / 2, screen_size.y / 2)
+			
+func _is_in_rect(cell: Vector2i, rect: Rect2i) -> bool:
+	return rect.has_point(cell)
+
+func _place_note_sources(count: int) -> void:	
+	var screen_size = get_viewport_rect().size / 16
 	
-	var grid_cols = int(screen_size.x / 16)
-	var grid_rows = int(screen_size.y / 16)
+	var grid_cols = screen_size.x
+	var grid_rows = screen_size.y
 	
 	var grid_cells: Array[Vector2i] = []
-	for row in range(0, grid_rows):
-		for col in range(0, grid_cols):
-			if row == 0 or col == 0 or row == grid_rows-1 or col == grid_cols-1:
-				continue
-
-			grid_cells.append(Vector2i(col, row))
 	
+	var station_rect = _get_subgrid_rect(station_subgrid, screen_size)
+	
+	for col in range(0, grid_cols):
+		for row in range(0, grid_rows):
+			if _is_in_rect(Vector2i(col, row), station_rect):
+				print(Vector2i(col, row), " is in statioc subgrid")
+				continue
+				
+			grid_cells.append(Vector2i(col, row))
+			
 	grid_cells.shuffle()
 	
-	var used_rows: Array[int] = []
-	var used_cols: Array[int] = []
 	var placed_count = 0
 	
 	for grid_cell in grid_cells:
 		if placed_count >= count:
 			break
-			
-		var cell = Vector2i(grid_cell.x, grid_cell.y)
+		var note_source: NoteSource = note_source_scene.instantiate()
+		placed_objects.add_child(note_source)
+		var spawn_cell = Vector2i(grid_cell.x, grid_cell.y)
+		note_source.global_position = Vector2(spawn_cell * 16)
+		for cell in note_source.tiles.get_used_cells():
+			GridManager.set_cell(cell + spawn_cell)
+			MapManager.add_note_source(cell + spawn_cell)
 		
-		if cell.y in used_rows or cell.x in used_cols:
-			continue
-		
-		_set_cell(tile_map_layer, cell, source_id, tile_id)
-		used_rows.append(cell.y)
-		used_cols.append(cell.x)
 		placed_count += 1
+
+# todo: rewrite. this doesn't actually correctly always spawn count amount of note sources
+#func _place_note_sources(tile_map_layer: TileMapLayer, source_id: int, tile_id: Vector2i, offset: Vector2i, count: int) -> void:
+	#var screen_size = get_viewport_rect().size
+	#
+	#var grid_cols = int(screen_size.x / 16)
+	#var grid_rows = int(screen_size.y / 16)
+	#
+	#var grid_cells: Array[Vector2i] = []
+	#for row in range(0, grid_rows):
+		#for col in range(0, grid_cols):
+			#if row == 0 or col == 0 or row == grid_rows-1 or col == grid_cols-1:
+				#continue
+#
+			#grid_cells.append(Vector2i(col, row))
+	#
+	#grid_cells.shuffle()
+	#
+	#var used_rows: Array[int] = []
+	#var used_cols: Array[int] = []
+	#var placed_count = 0
+	#
+	#for grid_cell in grid_cells:
+		#if placed_count >= count:
+			#break
+			#
+		#var cell = Vector2i(grid_cell.x, grid_cell.y)
+		#
+		#if cell.y in used_rows or cell.x in used_cols:
+			#continue
+		#
+		#_set_cell(tile_map_layer, cell, source_id, tile_id)
+		#used_rows.append(cell.y)
+		#used_cols.append(cell.x)
+		#placed_count += 1
 			
 func _place_with_noise(tile_map_layer: TileMapLayer, source_id: int, tile_id: Vector2i, noise_range: Vector2) -> void:
 	for y in get_viewport_rect().size.y / 16:
@@ -199,18 +266,18 @@ func _set_cell(layer: TileMapLayer, cell: Vector2i, source_id: int, tile_id: Vec
 	
 	layer.set_cell(cell, source_id, tile_id)
 	
-	if is_obstacle_tile(layer, cell):
+	if is_meta_tile(layer, cell, &"is_obstacle"):
 		GridManager.set_cell(cell)
 		
 	return true
 
-func is_obstacle_tile(layer: TileMapLayer, cell: Vector2i) -> bool:
+func is_meta_tile(layer: TileMapLayer, cell: Vector2i, meta_name: StringName) -> bool:
 	var tile_data: TileData = layer.get_cell_tile_data(cell)
 	if !tile_data:
 		return false
 		
-	if tile_data && tile_data.has_custom_data(&"is_obstacle"):
-		var is_obstacle: bool = tile_data.get_custom_data(&"is_obstacle")
+	if tile_data && tile_data.has_custom_data(meta_name):
+		var is_obstacle: bool = tile_data.get_custom_data(meta_name)
 		if is_obstacle:
 			return true
 			
