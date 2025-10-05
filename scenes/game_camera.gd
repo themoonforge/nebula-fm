@@ -5,9 +5,11 @@ class_name GameCamera extends Node2D
 
 var bounds_rect: Rect2i
 var is_mouse_pressed: bool
+var full_viewport_size: Vector2i
 
 func _ready() -> void:
 	camera.zoom = Vector2(1,1)
+	full_viewport_size = get_viewport().get_visible_rect().size
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and is_mouse_pressed:

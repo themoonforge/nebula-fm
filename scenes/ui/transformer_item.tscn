@@ -9,7 +9,12 @@ content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
-bg_color = Color(0, 0, 0, 1)
+bg_color = Color(0.23137255, 0.23921569, 0.5294118, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+anti_aliasing = false
 
 [node name="TransformerItem" type="PanelContainer"]
 script = ExtResource("1_t18cr")
@@ -24,10 +29,14 @@ layout_mode = 2
 unique_name_in_owner = true
 z_index = 1
 layout_mode = 0
-offset_right = 64.0
-offset_bottom = 16.0
+offset_top = -32.0
+offset_right = 72.0
+offset_bottom = -8.0
+theme_override_font_sizes/font_size = 12
 theme_override_styles/normal = SubResource("StyleBoxFlat_x3q6d")
 text = "INFO"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2

@@ -1,9 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://csjy35oh1vki4"]
+[gd_scene load_steps=7 format=3 uid="uid://csjy35oh1vki4"]
 
 [ext_resource type="Script" uid="uid://dpl7y8o8dswp0" path="res://scripts/ui/hotbar.gd" id="1_m1s8h"]
 [ext_resource type="PackedScene" uid="uid://donhenh45sal8" path="res://scenes/ui/transformer_item.tscn" id="2_6hkf2"]
+[ext_resource type="Texture2D" uid="uid://b20nmqa002u5u" path="res://sprites/panel_tile_bright.png" id="2_pikvf"]
 [ext_resource type="Resource" uid="uid://cls7knxgownu5" path="res://resources/building/c_collector.tres" id="3_6hkf2"]
 [ext_resource type="Resource" uid="uid://cn6kon66bh7gm" path="res://resources/building/splitter.tres" id="4_tyl16"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_miglr"]
+texture = ExtResource("2_pikvf")
+axis_stretch_horizontal = 1
 
 [node name="Hotbar" type="CanvasLayer"]
 script = ExtResource("1_m1s8h")
@@ -20,15 +25,27 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_vertical = 8
 
-[node name="TransformerContainer" type="HBoxContainer" parent="MarginContainer/BottomContainer"]
+[node name="Panel" type="PanelContainer" parent="MarginContainer/BottomContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_miglr")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/BottomContainer/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="TransformerContainer" type="HBoxContainer" parent="MarginContainer/BottomContainer/Panel/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 theme_override_constants/separation = 16
 
-[node name="TransformerItem" parent="MarginContainer/BottomContainer/TransformerContainer" instance=ExtResource("2_6hkf2")]
+[node name="TransformerItem" parent="MarginContainer/BottomContainer/Panel/MarginContainer/TransformerContainer" instance=ExtResource("2_6hkf2")]
 layout_mode = 2
 transformer_resource = ExtResource("3_6hkf2")
 
-[node name="TransformerItem2" parent="MarginContainer/BottomContainer/TransformerContainer" instance=ExtResource("2_6hkf2")]
+[node name="TransformerItem2" parent="MarginContainer/BottomContainer/Panel/MarginContainer/TransformerContainer" instance=ExtResource("2_6hkf2")]
 layout_mode = 2
 transformer_resource = ExtResource("4_tyl16")

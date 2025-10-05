@@ -1,21 +1,44 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://bkxtk5gau1dbp"]
+[gd_resource type="Theme" load_steps=13 format=3 uid="uid://bkxtk5gau1dbp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nrt0f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4yjuo"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lcjcl"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ab6e"]
-content_margin_left = 8.0
-content_margin_top = 8.0
-content_margin_right = 8.0
-content_margin_bottom = 8.0
-bg_color = Color(1, 0.8627451, 0.40392157, 1)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gco77"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6l1ye"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4ytkp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rucdj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8ab6e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_omiwu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5wxyd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fppmr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lcjcl"]
 bg_color = Color(0, 0, 0, 0.78431374)
 
 [resource]
 GameMenuButton/base_type = &"Button"
-GameMenuButton/colors/font_color = Color(0, 0, 0, 1)
+GameMenuButton/colors/font_color = Color(0.9607843, 0.93333334, 0.8509804, 1)
+GameMenuButton/colors/font_hover_color = Color(0.9647059, 0.54901963, 0.7411765, 1)
+GameMenuButton/styles/disabled = SubResource("StyleBoxEmpty_nrt0f")
+GameMenuButton/styles/disabled_mirrored = SubResource("StyleBoxEmpty_4yjuo")
 GameMenuButton/styles/focus = SubResource("StyleBoxEmpty_lcjcl")
-GameMenuButton/styles/normal = SubResource("StyleBoxFlat_8ab6e")
+GameMenuButton/styles/hover = SubResource("StyleBoxEmpty_gco77")
+GameMenuButton/styles/hover_mirrored = SubResource("StyleBoxEmpty_6l1ye")
+GameMenuButton/styles/hover_pressed = SubResource("StyleBoxEmpty_4ytkp")
+GameMenuButton/styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rucdj")
+GameMenuButton/styles/normal = SubResource("StyleBoxEmpty_8ab6e")
+GameMenuButton/styles/normal_mirrored = SubResource("StyleBoxEmpty_omiwu")
+GameMenuButton/styles/pressed = SubResource("StyleBoxEmpty_5wxyd")
+GameMenuButton/styles/pressed_mirrored = SubResource("StyleBoxEmpty_fppmr")
 GameMenuPanelContainer/base_type = &"PanelContainer"
 GameMenuPanelContainer/styles/panel = SubResource("StyleBoxFlat_lcjcl")
