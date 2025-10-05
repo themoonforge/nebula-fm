@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=13 format=3 uid="uid://cbb4sityyi4us"]
+[gd_resource type="TileSet" load_steps=17 format=3 uid="uid://cbb4sityyi4us"]
 
 [ext_resource type="Texture2D" uid="uid://du4m5p2do8i0h" path="res://sprites/tileset.png" id="1_3ysh4"]
 [ext_resource type="Texture2D" uid="uid://8en1m8oqbs46" path="res://sprites/tileset_w_template.png" id="2_qsv6y"]
@@ -19,8 +19,20 @@ tile_data = PackedInt32Array(65536, 2, 14, 131072, 2, 15, 1, 65538, 13, 65537, 6
 [sub_resource type="TileMapPattern" id="TileMapPattern_cqrvf"]
 tile_data = PackedInt32Array(0, 131074, 16, 65536, 131074, 16, 1, 131074, 16, 131075, 131074, 16)
 
-[sub_resource type="TileMapPattern" id="TileMapPattern_0ey5m"]
-tile_data = PackedInt32Array(0, 2, 13)
+[sub_resource type="TileMapPattern" id="TileMapPattern_p81du"]
+tile_data = PackedInt32Array(0, 1048578, 19, 65536, 1048578, 20, 1, 1114114, 19, 65537, 1114114, 20, 2, 1179650, 19, 65538, 1179650, 20)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_2b6fw"]
+tile_data = PackedInt32Array(0, 1245186, 19, 65536, 1245186, 20, 1, 1310722, 19, 65537, 1310722, 20)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_e6yxa"]
+tile_data = PackedInt32Array(0, 1376258, 19, 1, 1441794, 19, 65537, 1441794, 20)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_qwnaw"]
+tile_data = PackedInt32Array(0, 1376258, 21)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_uqicw"]
+tile_data = PackedInt32Array(0, 1441794, 21)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lnu2h"]
 texture = ExtResource("1_3ysh4")
@@ -253,6 +265,45 @@ texture = ExtResource("3_0w1j7")
 1:16/0 = 0
 1:16/0/custom_data_0 = true
 1:16/0/custom_data_1 = true
+16:19/0 = 0
+16:19/0/custom_data_1 = true
+16:20/0 = 0
+16:20/0/custom_data_1 = true
+17:20/0 = 0
+17:20/0/custom_data_1 = true
+17:19/0 = 0
+17:19/0/custom_data_1 = true
+18:19/0 = 0
+18:19/0/custom_data_1 = true
+18:20/0 = 0
+18:20/0/custom_data_1 = true
+19:19/0 = 0
+19:19/0/custom_data_1 = true
+19:20/0 = 0
+19:20/0/custom_data_1 = true
+20:20/0 = 0
+20:20/0/custom_data_1 = true
+20:19/0 = 0
+20:19/0/custom_data_1 = true
+21:19/0 = 0
+21:19/0/custom_data_1 = true
+22:19/0 = 0
+22:19/0/custom_data_1 = true
+22:20/0 = 0
+22:20/0/custom_data_1 = true
+21:21/0 = 0
+21:21/0/custom_data_1 = true
+22:21/0 = 0
+22:21/0/custom_data_1 = true
+20:21/0 = 0
+20:21/0/custom_data_1 = true
+19:18/0 = 0
+19:18/0/custom_data_1 = true
+20:18/0 = 0
+20:18/0/custom_data_1 = true
+21:18/0 = 0
+21:18/0/custom_data_1 = true
+22:18/0 = 0
 
 [resource]
 physics_layer_0/collision_layer = 1
@@ -275,4 +326,8 @@ pattern_1 = SubResource("TileMapPattern_difrn")
 pattern_2 = SubResource("TileMapPattern_uc3to")
 pattern_3 = SubResource("TileMapPattern_jt506")
 pattern_4 = SubResource("TileMapPattern_cqrvf")
-pattern_5 = SubResource("TileMapPattern_0ey5m")
+pattern_5 = SubResource("TileMapPattern_p81du")
+pattern_6 = SubResource("TileMapPattern_2b6fw")
+pattern_7 = SubResource("TileMapPattern_e6yxa")
+pattern_8 = SubResource("TileMapPattern_qwnaw")
+pattern_9 = SubResource("TileMapPattern_uqicw")

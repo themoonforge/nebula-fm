@@ -1,14 +1,17 @@
 [gd_scene load_steps=5 format=3 uid="uid://o1s2bbplsjbf"]
 
+[ext_resource type="Script" uid="uid://b6035n41w43nd" path="res://scripts/game.gd" id="1_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://d2fsm3xchosto" path="res://scenes/ui/game_ui.tscn" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://b3lqsa7g6sa0o" path="res://scenes/map/map.tscn" id="2_yqjtg"]
-[ext_resource type="PackedScene" uid="uid://b5mjgreg8l3ap" path="res://scenes/building_2.tscn" id="3_lbhrr"]
-[ext_resource type="Resource" uid="uid://cqoaywxhmfw1w" path="res://resources/building/space_radio.tres" id="4_iywne"]
+[ext_resource type="Script" uid="uid://b5wotk8vacxcj" path="res://scripts/camera_2d.gd" id="3_lnu2h"]
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_lbhrr")
 
 [node name="GameUi" parent="." instance=ExtResource("1_uwrxv")]
 
-[node name="Map" parent="." instance=ExtResource("2_yqjtg")]
-building_scene = ExtResource("3_lbhrr")
-radio_station_resource = ExtResource("4_iywne")
+[node name="Map" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_yqjtg")]
+camera = NodePath("../Camera2D")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("3_lnu2h")

@@ -3,7 +3,10 @@ class_name Map extends Node2D
 @export var building_scene: PackedScene
 @export var radio_station_resource: SpaceRadioResource
 @export var note_source_scene: PackedScene
+@export var camera: GameCamera
 @onready var ground_layer: TileMapLayer = %GroundLayer
+@onready var small_blob_layer: TileMapLayer = %SmallBlobLayer
+@onready var big_blob_layer: TileMapLayer = %BigBlobLayer
 @onready var obstacles_layer: TileMapLayer = %ObstaclesLayer
 @onready var note_sources_layer: TileMapLayer = %NoteSourcesLayer
 @onready var placed_objects: Node2D = %Objects
@@ -16,6 +19,8 @@ var min_noise = INF
 var max_noise = -INF
 
 var tree_pattern_choices: Dictionary[int, Array]
+var small_blob_pattern_choices: Dictionary[int, Array]
+var big_blob_pattern_choices: Dictionary[int, Array]
 
 enum SubGrid {
 	TOP_LEFT,
@@ -26,15 +31,29 @@ enum SubGrid {
 
 var station_subgrid: SubGrid
 
-func _ready() -> void:
-	tree_pattern_choices[Tiles.SOURCE_1] = [
+func _ready() -> void:	
+	tree_pattern_choices[Tiles.SOURCE_2] = [
 		Tiles.PATTERN_TREE_1, 
 		Tiles.PATTERN_TREE_2,
 		Tiles.PATTERN_TREE_3,
 		Tiles.PATTERN_TREE_4
 	]
 	
+	small_blob_pattern_choices[Tiles.SOURCE_2] = [
+		Tiles.PATTERN_BLOB_4,
+		Tiles.PATTERN_BLOB_5
+	]
+	
+	big_blob_pattern_choices[Tiles.SOURCE_2] = [
+		Tiles.PATTERN_BLOB_1, 
+		Tiles.PATTERN_BLOB_2,
+		Tiles.PATTERN_BLOB_3
+	]
+	
 	generate()
+	
+	camera.bounds_rect = ground_layer.get_used_rect()
+	camera.set_bounds()
 	
 	MapManager.place_obstacle.connect(_on_place_obstacle)
 	
@@ -51,6 +70,9 @@ func _process(delta: float) -> void:
 		print("freed buildings")
 		ground_layer.clear()
 		print("cleared ground layer")
+		small_blob_layer.clear()
+		big_blob_layer.clear()
+		print("cleared blob layer")
 		obstacles_layer.clear()
 		print("cleared obstacles layer")
 		note_sources_layer.clear()
@@ -73,6 +95,8 @@ func generate() -> void:
 	_place_radio_station(SubGrid.TOP_RIGHT)
 	_place_note_sources(3)
 	_place_with_noise(obstacles_layer, Tiles.SOURCE_0, Tiles.ROCK_SMALL, Vector2(0.2, 0.25))
+	_place_patterns(big_blob_layer, big_blob_pattern_choices, Vector2(0.18, 0.19), 0.5)
+	_place_patterns(small_blob_layer, small_blob_pattern_choices, Vector2(0.3, 0.5), 0.1)
 	_place_patterns(obstacles_layer, tree_pattern_choices, Vector2(0.25, 0.3))
 	
 	GridManager.free_temporary_cells()
@@ -240,7 +264,7 @@ func _place_with_noise(tile_map_layer: TileMapLayer, source_id: int, tile_id: Ve
 			else:
 				continue
 				
-func _place_patterns(tile_map_layer: TileMapLayer, patterns: Dictionary[int, Array], noise_range: Vector2) -> void:
+func _place_patterns(tile_map_layer: TileMapLayer, patterns: Dictionary[int, Array], noise_range: Vector2, placement_bias: float = 1.0) -> void:
 	for y in get_viewport_rect().size.y / 16:
 		for x in get_viewport_rect().size.x / 16:
 			var pattern_source = patterns.keys()[randi() % patterns.size()]
@@ -252,12 +276,16 @@ func _place_patterns(tile_map_layer: TileMapLayer, patterns: Dictionary[int, Arr
 			var normalized = (raw_noise - min_noise) / (max_noise - min_noise)
 
 			if normalized >= noise_range.x and normalized <= noise_range.y:
-				_set_pattern(tile_map_layer, cell, pattern_source, pattern_id)
+				var rng = randf()
+				if rng <= placement_bias:
+					_set_pattern(tile_map_layer, cell, pattern_source, pattern_id)
 			else:
 				continue
 				
 func _set_pattern(layer: TileMapLayer, cell: Vector2i, source_id: int, pattern_id: int) -> bool:
 	var pattern = layer.tile_set.get_pattern(pattern_id)
+	
+	print("get pattern with id ", pattern_id)
 	
 	if !_pattern_fits(cell, pattern):
 		return false

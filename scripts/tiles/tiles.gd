@@ -22,3 +22,9 @@ const PATTERN_TREE_1 = 0
 const PATTERN_TREE_2 = 1
 const PATTERN_TREE_3 = 2
 const PATTERN_TREE_4 = 3
+
+const PATTERN_BLOB_1 = 5
+const PATTERN_BLOB_2 = 6
+const PATTERN_BLOB_3 = 7
+const PATTERN_BLOB_4 = 8
+const PATTERN_BLOB_5 = 9

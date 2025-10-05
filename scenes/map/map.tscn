@@ -25,7 +25,14 @@ note_source_scene = ExtResource("3_ph54e")
 
 [node name="GroundLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
-tile_map_data = PackedByteArray(0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 13, 0, 0, 0)
+tile_set = ExtResource("2_a2pkv")
+
+[node name="BigBlobLayer" type="TileMapLayer" parent="."]
+unique_name_in_owner = true
+tile_set = ExtResource("2_a2pkv")
+
+[node name="SmallBlobLayer" type="TileMapLayer" parent="."]
+unique_name_in_owner = true
 tile_set = ExtResource("2_a2pkv")
 
 [node name="NoteSourcesLayer" type="TileMapLayer" parent="."]
