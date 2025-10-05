@@ -7,6 +7,7 @@ class_name CollectorBuildingResource extends AbstractBuildingResource
 
 func produce(input_buffer: Buffer, output_buffer: Buffer) -> void:
 	output_buffer.add_element(note)
+	#print("produce: ", note.simple_name)
 
 func _to_string() -> String:
 	if note:

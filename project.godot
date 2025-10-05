@@ -89,6 +89,8 @@ build_continue={
 
 2d_physics/layer_1="Ground_Layer"
 2d_physics/layer_2="Shape_Layer"
+2d_physics/layer_3="Input_Layer"
+2d_physics/layer_4="Output_Layer"
 
 [rendering]
 

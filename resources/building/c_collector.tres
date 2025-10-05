@@ -9,11 +9,11 @@ atlas = ExtResource("1_tmah6")
 region = Rect2(193, 11, 14, 21)
 
 [sub_resource type="Resource" id="Resource_tmah6"]
-resource_name = "C4"
+resource_name = "D4"
 script = ExtResource("1_dcvj5")
-key_number = 60
-name = &"C4"
-simple_name = &"C"
+key_number = 62
+name = &"D4"
+simple_name = &"D"
 metadata/_custom_type_script = "uid://bbn4jhlv481ba"
 
 [resource]
@@ -26,6 +26,6 @@ background_tile = Vector2i(12, 0)
 output_locations = Dictionary[Vector2i, int]({
 Vector2i(0, 1): 0
 })
-has_rotation = null
+production_time = 0.5
 icon = SubResource("AtlasTexture_50g8j")
 rotation_offset = Array[Vector2i]([Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0)])

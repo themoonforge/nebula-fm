@@ -8,9 +8,10 @@ func _ready() -> void:
 	pass
 
 func _input(event: InputEvent) -> void:
-	print(event)
+	pass
+	#print(event)
 
-func set_bounds() -> void:    
+func set_bounds() -> void:
 	limit_left = bounds_rect.position.x * 16 / zoom.x
 	limit_right = bounds_rect.end.x * 16 / zoom.x
 	limit_top = bounds_rect.position.y * 16 / zoom.y

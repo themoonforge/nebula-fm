@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://b3lqsa7g6sa0o"]
+[gd_scene load_steps=10 format=3 uid="uid://b3lqsa7g6sa0o"]
 
 [ext_resource type="Script" uid="uid://ccd2m6lh6bgbi" path="res://scripts/map/map.gd" id="1_tqkkf"]
 [ext_resource type="TileSet" uid="uid://cbb4sityyi4us" path="res://tileset/tileset.tres" id="2_a2pkv"]
 [ext_resource type="PackedScene" uid="uid://b5mjgreg8l3ap" path="res://scenes/building_2.tscn" id="2_jcaow"]
 [ext_resource type="Resource" uid="uid://cqoaywxhmfw1w" path="res://resources/building/space_radio.tres" id="3_04w0f"]
 [ext_resource type="PackedScene" uid="uid://bmd4pfvtpw7pf" path="res://scenes/note_source/note_source.tscn" id="3_ph54e"]
+[ext_resource type="Script" uid="uid://8g273shyfey2" path="res://addons/midi/MidiPlayer.gd" id="5_04w0f"]
 [ext_resource type="PackedScene" uid="uid://tpmfvg35idiu" path="res://scenes/mister_nebula_fm/mister_nebula_fm.tscn" id="5_fcby6"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_tqkkf"]
@@ -22,6 +23,15 @@ script = ExtResource("1_tqkkf")
 building_scene = ExtResource("2_jcaow")
 radio_station_resource = ExtResource("3_04w0f")
 note_source_scene = ExtResource("3_ph54e")
+
+[node name="GodotMIDIPlayer" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_04w0f")
+file = "res://midi/alle_meine_entchen.mid"
+playing = true
+volume_db = -5.0
+loop = true
+soundfont = "res://soundfont/Aspirin-Stereo.sf2"
 
 [node name="GroundLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true

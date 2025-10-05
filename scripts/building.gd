@@ -3,6 +3,10 @@ class_name Building extends Area2D
 
 const BUILDING_TILE_SET = 2
 
+enum ConnectionType {
+	INPUT, OUTPUT
+}
+
 @export var building_resource: AbstractBuildingResource = null:
 	set(value):
 		building_resource = value
@@ -18,6 +22,8 @@ const BUILDING_TILE_SET = 2
 		if is_node_ready():
 			_setup_resource()
 
+@export var connection_scene: PackedScene
+
 @export var ground_size: Vector2i = Vector2i.ZERO
 
 @onready var input_buffer: Buffer = %InputBuffer
@@ -28,14 +34,14 @@ const BUILDING_TILE_SET = 2
 @onready var label: Label = %Label
 @onready var groundCollisionPolygon: CollisionPolygon2D = %GroundCollisionPolygon2D
 @onready var shapeCollisionPolygon: CollisionPolygon2D = %ShapeCollisionPolygon2D
-
+@onready var inputs: ConnectionManager = %Inputs
+@onready var outputs: ConnectionManager = %Outputs
 
 @export var show_connection_indicators: bool = false:
 	set(value):
 		show_connection_indicators = value
 		if is_node_ready():
 			connectionIndicators.visible = value
-
 
 @export var production_time: float = 0.0:
 	set(value):
@@ -48,12 +54,6 @@ const BUILDING_TILE_SET = 2
 @export var current_production_percentage: float = 0.0:
 	set(value):
 		current_production_percentage = value
-
-# map of connection based on input and output locations
-@export var input_connections: Dictionary[Vector2i, AbstractBuildingResource]
-@export var output_connections: Dictionary[Vector2i, AbstractBuildingResource]
-
-#@export var shape: ConcavePolygonShape2D = ConcavePolygonShape2D.new()
 
 @export var is_active: bool = false:
 	set(value):
@@ -70,17 +70,59 @@ func _process(delta: float) -> void:
 		return
 
 	production_time += delta
+	#print("production_time: ", production_time)
 	if production_time >= building_resource.production_time:
 		production_time = 0.0
 		building_resource.produce(input_buffer, output_buffer)
+		
+	for connection_tile in outputs.connection_dict:
+		var connection_gate = outputs.connection_dict[connection_tile]
+		var found_elem = output_buffer.consume_first_note_from_buffer(connection_gate.buffer_index)
+		if found_elem != null:
+			#print("fround elem: ", found_elem)
+			connection_gate.handover(found_elem)
 
-func _setup_indicators(connections: Dictionary[Vector2i, BuildingsUtils.BuildingRotation]) -> void:
+func _setup_connections(connections: Dictionary[Vector2i, BuildingsUtils.BuildingRotation], connection_type: ConnectionType) -> void:
+	var nodes: Array[Node] = []
+	match connection_type:
+		ConnectionType.INPUT:
+			inputs.clear()
+			nodes = inputs.get_children()
+		ConnectionType.OUTPUT:
+			outputs.clear()
+			nodes = outputs.get_children()
+	
+	for node in nodes:
+		node.queue_free()
+					
+	var i: int = -1
 	for connection in connections:
+		i += 1
 		#print("_setup_indicators: ", connection)
 		var arrow = BuildingsUtils.rotationToArrow(connections[connection])
 		var coordinate = BuildingsUtils.rotateTileBy(connection, building_rotation, building_resource.size, ground_size)
 		var rotated_arrow = BuildingsUtils.rotateArrowBy(arrow, building_rotation)
 		connectionIndicators.set_cell(coordinate, BUILDING_TILE_SET, rotated_arrow)
+		_generate_connetion_gate(coordinate, connection_type, i)
+
+func _generate_connetion_gate(tile_coordinate: Vector2i, connection_type: ConnectionType, buffer_index: int) -> void:
+	var connection_gate_position = background.map_to_local(tile_coordinate)
+	
+	var connection_gate: ConnectionGate = connection_scene.instantiate()
+	connection_gate.is_active = is_active
+	connection_gate.mode = connection_type
+	connection_gate.tile_coordinate = tile_coordinate
+	connection_gate.buffer_index = buffer_index
+	
+	connection_gate.incomming.connect(_on_incoming, Object.ConnectFlags.CONNECT_DEFERRED)
+	
+	match connection_type:
+		ConnectionType.INPUT:
+			inputs.add_child(connection_gate)
+		ConnectionType.OUTPUT:
+			outputs.add_child(connection_gate)
+	
+	connection_gate.position = connection_gate_position
 
 func _setup_resource() -> void:
 	background.clear()
@@ -96,27 +138,34 @@ func _setup_resource() -> void:
 	var groundPoints: PackedVector2Array = tile_data.get_collision_polygon_points(0, 0)
 	groundCollisionPolygon.polygon = groundPoints
 	var shapePoints: PackedVector2Array = tile_data.get_collision_polygon_points(1, 0)
-	shapeCollisionPolygon.polygon = shapePoints
-
-	_setup_indicators(building_resource.input_locations)
-	_setup_indicators(building_resource.output_locations)
-	connectionIndicators.visible = show_connection_indicators
+	shapeCollisionPolygon.polygon = shapePoints	
 	label.text = str(building_resource)
-
+	_setup_connections(building_resource.input_locations, ConnectionType.INPUT)
+	_setup_connections(building_resource.output_locations, ConnectionType.OUTPUT)
+	connectionIndicators.visible = show_connection_indicators
 
 func _handle_active() -> void:
 		if is_active:
 			self.add_to_group(BuildingsUtils.BUILDING_GROUP)
 		else:
 			self.remove_from_group(BuildingsUtils.BUILDING_GROUP)
-
 		connectionIndicators.visible = not is_active
 		background.collision_enabled = is_active
-		background.modulate = Color.WHITE
-		foreground.modulate = Color.WHITE
+		modulate_sprite(Color.WHITE)
 		shapeCollisionPolygon.disabled = not is_active
 		groundCollisionPolygon.disabled = is_active
+		
+		for input in inputs.get_children():
+			if input is ConnectionGate:
+				input.is_active = is_active
+		for output in outputs.get_children():
+			if output is ConnectionGate:
+				output.is_active = is_active
 
 func modulate_sprite(color: Color) -> void:
 	background.modulate = color
 	foreground.modulate = color
+
+func _on_incoming(gate: ConnectionGate, payload: NoteResource) -> void:
+	#print("_on_incoming : ", gate, " ", payload)
+	input_buffer.add_element(payload)
