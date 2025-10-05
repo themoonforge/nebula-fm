@@ -22,8 +22,6 @@ var transformer_ghost_active: bool
 var placed_transformers: Dictionary[Vector2i, Transformer]
 var note_sources: Array[Vector2i]
 
-var note_sources: Array[Vector2i]
-
 @export var mode: Mode = Mode.IDLE:
 	set(value):
 		mode = value
