@@ -1,14 +1,6 @@
 @tool
 class_name BuildingsUtils extends Node
 
-const ARROW_DOWN = Vector2i(8, 5)
-const ARROW_RIGHT = Vector2i(9, 5)
-const ARROW_UP = Vector2i(10, 5)
-const ARROW_LEFT = Vector2i(11, 5)
-
-const TILE_PX = 16
-const HALF_TILE_PX = TILE_PX / 2
-
 const BUILDING_GROUP = "BUILDINGS"
 
 enum BuildingRotation {
@@ -26,12 +18,12 @@ static func rotateSize(ground_size: Vector2i, rotation: BuildingRotation) -> Vec
 		BuildingRotation.LEFT: return Vector2i(ground_size.y, ground_size.x)
 		_: return ground_size
 
-static func rotationToOffset(building_rotation: BuildingRotation) -> Vector2i:
+static func rotationToOffset(building_rotation: BuildingRotation, rotation_offsets: Array[Vector2i]) -> Vector2i:
 	match building_rotation:
-		BuildingRotation.DOWN: return Vector2i(0, 0)
-		BuildingRotation.RIGHT: return Vector2i(1, 0)
-		BuildingRotation.UP: return Vector2i(2, 0)
-		BuildingRotation.LEFT: return Vector2i(3, 0)
+		BuildingRotation.DOWN: return Vector2i.ZERO
+		BuildingRotation.RIGHT: return rotation_offsets[0]
+		BuildingRotation.UP: return rotation_offsets[1]
+		BuildingRotation.LEFT: return rotation_offsets[2]
 		_: return Vector2i.ZERO
 
 static func rotationToName(building_rotation: BuildingRotation) -> StringName:
@@ -59,10 +51,10 @@ static func leftRotation(building_rotation: BuildingRotation) -> BuildingRotatio
 		_: return BuildingRotation.RIGHT
 
 static func rotateTileBy(coordinate: Vector2i, rotation: BuildingRotation, original_ground_size: Vector2i, ground_size: Vector2i) -> Vector2i:
-	var rotation_center = Vector2(original_ground_size.x, -original_ground_size.y) * HALF_TILE_PX
-	var rotation_center_back = Vector2(ground_size.x, -ground_size.y) * HALF_TILE_PX
+	var rotation_center = Vector2(original_ground_size.x, -original_ground_size.y) * Tiles.HALF_TILE_PX
+	var rotation_center_back = Vector2(ground_size.x, -ground_size.y) * Tiles.HALF_TILE_PX
 
-	var coord = Vector2(coordinate) * TILE_PX + Vector2(HALF_TILE_PX, -HALF_TILE_PX)
+	var coord = Vector2(coordinate) * Tiles.TILE_PX + Vector2(Tiles.HALF_TILE_PX, -Tiles.HALF_TILE_PX)
 
 	var relative_coord = coord - rotation_center
 	var rotated_relative_coord: Vector2
@@ -78,22 +70,22 @@ static func rotateTileBy(coordinate: Vector2i, rotation: BuildingRotation, origi
 		_:
 			rotated_relative_coord = relative_coord
 
-	var final_coord = rotated_relative_coord - Vector2(HALF_TILE_PX, -HALF_TILE_PX) + rotation_center_back
-	var final_tile_coord = Vector2i(roundi(final_coord.x / TILE_PX), roundi(final_coord.y / TILE_PX))
+	var final_coord = rotated_relative_coord - Vector2(Tiles.HALF_TILE_PX, -Tiles.HALF_TILE_PX) + rotation_center_back
+	var final_tile_coord = Vector2i(roundi(final_coord.x / Tiles.TILE_PX), roundi(final_coord.y / Tiles.TILE_PX))
 	return final_tile_coord
 
 static func rotateArrowBy(arrow: Vector2i, rotation: BuildingRotation) -> Vector2i:
 	match rotation:
 		BuildingRotation.DOWN: return arrow
-		BuildingRotation.RIGHT: return Vector2i((arrow.x + 1) % 4 + ARROW_DOWN.x, arrow.y)
-		BuildingRotation.UP: return Vector2i((arrow.x + 2) % 4 + ARROW_DOWN.x, arrow.y)
-		BuildingRotation.LEFT: return Vector2i((arrow.x + 3) % 4 + ARROW_DOWN.x, arrow.y)
+		BuildingRotation.RIGHT: return Vector2i((arrow.x + 1) % 4 + Tiles.ARROW_DOWN.x, arrow.y)
+		BuildingRotation.UP: return Vector2i((arrow.x + 2) % 4 + Tiles.ARROW_DOWN.x, arrow.y)
+		BuildingRotation.LEFT: return Vector2i((arrow.x + 3) % 4 + Tiles.ARROW_DOWN.x, arrow.y)
 		_: return arrow
 
 static func rotationToArrow(rotation: BuildingRotation) -> Vector2i:
 	match rotation:
-		BuildingRotation.DOWN: return ARROW_DOWN
-		BuildingRotation.RIGHT: return ARROW_RIGHT
-		BuildingRotation.UP: return ARROW_UP
-		BuildingRotation.LEFT: return ARROW_LEFT
-		_: return ARROW_DOWN
+		BuildingRotation.DOWN: return Tiles.ARROW_DOWN
+		BuildingRotation.RIGHT: return Tiles.ARROW_RIGHT
+		BuildingRotation.UP: return Tiles.ARROW_UP
+		BuildingRotation.LEFT: return Tiles.ARROW_LEFT
+		_: return Tiles.ARROW_DOWN

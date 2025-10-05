@@ -13,5 +13,5 @@ Vector2i(3, -7): 0,
 Vector2i(3, 1): 2,
 Vector2i(7, -3): 3
 })
-has_rorations = false
+has_rotation = null
 metadata/_custom_type_script = "uid://cd0agy2rihr7p"
