@@ -71,9 +71,6 @@ func generate() -> void:
 	
 	_fill_layer(ground_layer, Tiles.SOURCE_0, Tiles.GROUND_0)
 	_place_radio_station(SubGrid.TOP_RIGHT)
-	_place_radio_station(SubGrid.TOP_LEFT)
-	_place_radio_station(SubGrid.BOTTOM_LEFT)
-	_place_radio_station(SubGrid.BOTTOM_RIGHT)
 	_place_note_sources(3)
 	_place_with_noise(obstacles_layer, Tiles.SOURCE_0, Tiles.ROCK_SMALL, Vector2(0.2, 0.25))
 	_place_patterns(obstacles_layer, tree_pattern_choices, Vector2(0.25, 0.3))
@@ -175,7 +172,6 @@ func _place_note_sources(count: int) -> void:
 	for col in range(0, grid_cols):
 		for row in range(0, grid_rows):
 			if _is_in_rect(Vector2i(col, row), station_rect):
-				print(Vector2i(col, row), " is in statioc subgrid")
 				continue
 				
 			grid_cells.append(Vector2i(col, row))

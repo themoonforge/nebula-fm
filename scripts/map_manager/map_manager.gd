@@ -69,14 +69,6 @@ func _process(delta: float) -> void:
 		mode = Mode.DELETE
 		return
 
-	#if _borders_note_source(hovered_cell):
-	#	# todo: check if current ghost is a note extractor
-	#	# if so, it can be placed on this note_source cell
-	#	transformer_ghost_instance.sprite.modulate = COLOR_ADD
-	#elif !GridManager.is_cell_free(hovered_cell):
-	#	transformer_ghost_instance.sprite.modulate = COLOR_OCCUPIED
-	#	return
-
 	match mode:
 		Mode.BUILD:
 			if Input.is_action_just_pressed(&"rotate_right"):
@@ -90,8 +82,15 @@ func _process(delta: float) -> void:
 			if building_cursor.collider_dict.size() > 0:
 				building_cursor.building.modulate_sprite(COLOR_OCCUPIED)
 				return
-			
-			building_cursor.building.modulate_sprite(COLOR_FREE)
+					
+			if building_cursor.building.building_resource is CollectorBuildingResource:
+				if _borders_note_source(hovered_cell):
+					building_cursor.building.modulate_sprite(COLOR_ADD)
+				else:
+					building_cursor.building.modulate_sprite(COLOR_OCCUPIED)
+					return
+			else:
+				building_cursor.building.modulate_sprite(COLOR_FREE)
 
 			if Input.is_action_just_pressed(&"ui_click"):
 				#var clicked_position: Vector2 = mouse_pos
@@ -143,7 +142,8 @@ func hide_ghost() -> void:
 func set_active_transformer_ghost(transformer_resource: AbstractBuildingResource) -> void:
 	if !building_cursor:
 		return
-
+	
+	building_cursor.building.building_resource = transformer_resource
 	building_cursor.building.modulate_sprite(COLOR_FREE)
 	building_cursor.building.show_connection_indicators = true
 	mode = Mode.BUILD
