@@ -46,6 +46,7 @@ var last_snapped_coordinate: Vector2i = Vector2i(-1, -1) # this is not a snapped
 
 func _ready() -> void:
 	building_cursor.hide()
+	print("called")
 	add_child(building_cursor)
 
 	building_cursor.building.building_resource = selected_building_resource
@@ -91,7 +92,7 @@ func _process(delta: float) -> void:
 					return
 			else:
 				building_cursor.building.modulate_sprite(COLOR_FREE)
-
+				
 			if Input.is_action_just_pressed(&"ui_click"):
 				#var clicked_position: Vector2 = mouse_pos
 				#var clicked_cell: Vector2i = Vector2i(mouse_pos.x / 16, mouse_pos.y / 16)

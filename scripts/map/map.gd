@@ -297,7 +297,7 @@ func _set_pattern(layer: TileMapLayer, cell: Vector2i, source_id: int, pattern_i
 		
 		if is_meta_tile(layer, cell_in_world, &"is_obstacle"):
 			GridManager.set_cell(cell_in_world)
-		elif is_meta_tile(layer, cell_in_world, &"is_generation_blocked"):
+		if is_meta_tile(layer, cell_in_world, &"is_generation_blocked"):
 			GridManager.set_temporary_cell(cell_in_world)
 	
 	return true
