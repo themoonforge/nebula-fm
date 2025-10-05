@@ -11,10 +11,12 @@ region = Rect2(0, 16, 16, 23)
 size = Vector2(16, 16)
 
 [node name="CTransformer" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_qc5ji")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
+y_sort_enabled = true
 texture = SubResource("AtlasTexture_1vr5w")
 centered = false
 offset = Vector2(0, -7)
