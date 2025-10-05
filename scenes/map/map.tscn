@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://b3lqsa7g6sa0o"]
+[gd_scene load_steps=7 format=3 uid="uid://b3lqsa7g6sa0o"]
 
 [ext_resource type="Script" uid="uid://ccd2m6lh6bgbi" path="res://scripts/map/map.gd" id="1_tqkkf"]
 [ext_resource type="TileSet" uid="uid://cbb4sityyi4us" path="res://tileset/tileset.tres" id="2_a2pkv"]
-[ext_resource type="PackedScene" uid="uid://stnjqos5hcmo" path="res://scenes/radio_station_test.tscn" id="2_ph54e"]
 [ext_resource type="PackedScene" uid="uid://bmd4pfvtpw7pf" path="res://scenes/note_source/note_source.tscn" id="3_ph54e"]
 [ext_resource type="PackedScene" uid="uid://tpmfvg35idiu" path="res://scenes/mister_nebula_fm/mister_nebula_fm.tscn" id="5_fcby6"]
 
@@ -18,7 +17,6 @@ noise = SubResource("FastNoiseLite_tqkkf")
 [node name="Map" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_tqkkf")
-radio_station_scene = ExtResource("2_ph54e")
 note_source_scene = ExtResource("3_ph54e")
 
 [node name="GroundLayer" type="TileMapLayer" parent="."]

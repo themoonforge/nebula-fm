@@ -15,6 +15,7 @@ const MUSHROOM = Vector2i(2,16)
 # tileset source 2 tiles
 const SOURCE_2 = 2
 const NOTE_SOURCE = Vector2i(13,3)
+const C_NOTE = Vector2i(8,7)
 
 # tileset patterns
 const PATTERN_TREE_1 = 0

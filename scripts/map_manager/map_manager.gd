@@ -59,6 +59,7 @@ func _process(delta: float) -> void:
 
 	var hovered_cell: Vector2i = Vector2i(mouse_pos.x / 16, mouse_pos.y / 16)
 	var snapped_coordinate: Vector2i = (mouse_pos - Vector2(TILE_SIZE.x / 2, TILE_SIZE.y / 2)).snapped(TILE_SIZE)
+	snapped_coordinate = snapped_coordinate - Vector2i(0, -16)
 
 	if Input.is_action_just_pressed(&"escape"):
 		mode = Mode.IDLE
