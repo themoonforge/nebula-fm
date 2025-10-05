@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://bxnbp5rniddi8"]
+
+[ext_resource type="Theme" uid="uid://bkxtk5gau1dbp" path="res://theme/theme.tres" id="1_g03nd"]
+[ext_resource type="Script" path="res://scripts/ui/quest_checklist.gd" id="1_ss3m1"]
+[ext_resource type="Script" path="res://quest_resource.gd" id="2_wtq8e"]
+[ext_resource type="Script" path="res://quest_requirement.gd" id="3_lb0fv"]
+
+[sub_resource type="Resource" id="Resource_knh3f"]
+script = ExtResource("3_lb0fv")
+signal_name = "buildings_placed"
+amount = 2
+metadata/_custom_type_script = "uid://scy0e6iognox"
+
+[sub_resource type="Resource" id="Resource_lb0fv"]
+script = ExtResource("2_wtq8e")
+requirements_array = Array[ExtResource("3_lb0fv")]([SubResource("Resource_knh3f")])
+metadata/_custom_type_script = "uid://dd674gtune7s5"
+
+[node name="QuestChecklist" type="CanvasLayer"]
+script = ExtResource("1_ss3m1")
+quest_resources = Array[ExtResource("2_wtq8e")]([SubResource("Resource_lb0fv")])
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_g03nd")
+theme_type_variation = &"QuestLabel"
+theme_override_font_sizes/font_size = 10
+text = "Tutorial"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme = ExtResource("1_g03nd")
+theme_type_variation = &"QuestCheckbox"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_g03nd")
+theme_type_variation = &"QuestRichTextLabel"
+bbcode_enabled = true
+text = "Place 1 Miner on an Ore Node"
+horizontal_alignment = 1
+vertical_alignment = 1
