@@ -9,11 +9,11 @@ atlas = ExtResource("1_tmah6")
 region = Rect2(193, 11, 14, 21)
 
 [sub_resource type="Resource" id="Resource_tmah6"]
-resource_name = "D4"
+resource_name = "C4"
 script = ExtResource("1_dcvj5")
-key_number = 62
-name = &"D4"
-simple_name = &"D"
+key_number = 60
+name = &"C4"
+simple_name = &"C"
 metadata/_custom_type_script = "uid://bbn4jhlv481ba"
 
 [resource]

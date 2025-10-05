@@ -92,7 +92,7 @@ func generate() -> void:
 	
 	_generate_noise()
 	
-	_fill_layer(ground_layer, Tiles.SOURCE_0, Tiles.GROUND_0)
+	_fill_layer(ground_layer, Tiles.SOURCE_2, Tiles.GROUND_4)
 	_place_radio_station(SubGrid.TOP_RIGHT)
 	_place_note_sources(3)
 	_place_with_noise(obstacles_layer, Tiles.SOURCE_0, Tiles.ROCK_SMALL, Vector2(0.2, 0.25))

@@ -53,10 +53,13 @@ func _process(delta: float) -> void:
 		return
 
 	var mouse_pos = get_viewport().get_mouse_position()
-	building_cursor.global_position = mouse_pos
+	var canvas_transform = get_viewport().get_canvas_transform()
+	var world_mouse_pos = canvas_transform.affine_inverse() * mouse_pos
 
-	var hovered_cell: Vector2i = Vector2i(mouse_pos.x / 16, mouse_pos.y / 16)
-	var snapped_coordinate: Vector2i = (mouse_pos - Vector2(TILE_SIZE.x / 2, TILE_SIZE.y / 2)).snapped(TILE_SIZE)
+	building_cursor.global_position = world_mouse_pos
+
+	var hovered_cell: Vector2i = Vector2i(world_mouse_pos.x / 16, world_mouse_pos.y / 16)
+	var snapped_coordinate: Vector2i = (world_mouse_pos - Vector2(TILE_SIZE.x / 2, TILE_SIZE.y / 2)).snapped(TILE_SIZE)
 	snapped_coordinate = snapped_coordinate - Vector2i(0, -16)
 
 	if Input.is_action_just_pressed(&"escape"):
@@ -66,14 +69,6 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed(&"delete"):
 		mode = Mode.DELETE
 		return
-
-	#if _borders_note_source(hovered_cell):
-	#	# todo: check if current ghost is a note extractor
-	#	# if so, it can be placed on this note_source cell
-	#	transformer_ghost_instance.sprite.modulate = COLOR_ADD
-	#elif !GridManager.is_cell_free(hovered_cell):
-	#	transformer_ghost_instance.sprite.modulate = COLOR_OCCUPIED
-	#	return
 
 	match mode:
 		Mode.BUILD:
@@ -88,9 +83,16 @@ func _process(delta: float) -> void:
 			if building_cursor.collider_dict.size() > 0:
 				building_cursor.building.modulate_sprite(COLOR_OCCUPIED)
 				return
-			
-			building_cursor.building.modulate_sprite(COLOR_FREE)
-
+					
+			if building_cursor.building.building_resource is CollectorBuildingResource:
+				if _borders_note_source(hovered_cell):
+					building_cursor.building.modulate_sprite(COLOR_ADD)
+				else:
+					building_cursor.building.modulate_sprite(COLOR_OCCUPIED)
+					return
+			else:
+				building_cursor.building.modulate_sprite(COLOR_FREE)
+				
 			if Input.is_action_just_pressed(&"ui_click"):
 				#var clicked_position: Vector2 = mouse_pos
 				#var clicked_cell: Vector2i = Vector2i(mouse_pos.x / 16, mouse_pos.y / 16)
@@ -141,7 +143,8 @@ func hide_ghost() -> void:
 func set_active_transformer_ghost(transformer_resource: AbstractBuildingResource) -> void:
 	if !building_cursor:
 		return
-
+	
+	building_cursor.building.building_resource = transformer_resource
 	building_cursor.building.modulate_sprite(COLOR_FREE)
 	building_cursor.building.show_connection_indicators = true
 	mode = Mode.BUILD
