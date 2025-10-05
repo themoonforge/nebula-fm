@@ -1,0 +1,1 @@
+extends Parallax2D
