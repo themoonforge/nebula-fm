@@ -32,16 +32,16 @@ func set_bounds() -> void:
 	camera.limit_bottom = bounds_rect.end.y * 16
 
 func _clamp_position() -> void:
-	var viewport_size = get_viewport().get_visible_rect().size / camera.zoom
+	var viewport_size = get_viewport().get_visible_rect().size
 	var half_viewport = viewport_size / 2.0
 	
 	global_position.x = clamp(
 		global_position.x,
-		camera.limit_left + half_viewport.x,
-		camera.limit_right - half_viewport.x
+		camera.limit_left,
+		camera.limit_right
 	)
 	global_position.y = clamp(
 		global_position.y,
-		camera.limit_top + half_viewport.y,
-		camera.limit_bottom - half_viewport.y
+		camera.limit_top,
+		camera.limit_bottom
 	)
