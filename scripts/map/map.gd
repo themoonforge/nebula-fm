@@ -74,6 +74,8 @@ func generate() -> void:
 	_place_with_noise(obstacles_layer, Tiles.SOURCE_0, Tiles.ROCK_SMALL, Vector2(0.2, 0.25))
 	_place_patterns(obstacles_layer, tree_pattern_choices, Vector2(0.25, 0.3))
 	
+	GridManager.free_temporary_cells()
+	
 func _generate_noise() -> void:
 	noise_texture.noise.seed = randi()
 	# generate noise grid
@@ -242,7 +244,11 @@ func _set_pattern(layer: TileMapLayer, cell: Vector2i, source_id: int, pattern_i
 	
 	for pattern_cell in pattern.get_used_cells():
 		var cell_in_world: Vector2i = cell + pattern_cell
-		GridManager.set_cell(cell_in_world)
+		
+		if is_meta_tile(layer, cell_in_world, &"is_obstacle"):
+			GridManager.set_cell(cell_in_world)
+		elif is_meta_tile(layer, cell_in_world, &"is_generation_blocked"):
+			GridManager.set_temporary_cell(cell_in_world)
 	
 	return true
 	
@@ -268,6 +274,8 @@ func _set_cell(layer: TileMapLayer, cell: Vector2i, source_id: int, tile_id: Vec
 	
 	if is_meta_tile(layer, cell, &"is_obstacle"):
 		GridManager.set_cell(cell)
+	elif is_meta_tile(layer, cell, &"is_generation_blocked"):
+		GridManager.set_temporary_cell(cell)
 		
 	return true
 
@@ -277,8 +285,8 @@ func is_meta_tile(layer: TileMapLayer, cell: Vector2i, meta_name: StringName) ->
 		return false
 		
 	if tile_data && tile_data.has_custom_data(meta_name):
-		var is_obstacle: bool = tile_data.get_custom_data(meta_name)
-		if is_obstacle:
+		var is_meta: bool = tile_data.get_custom_data(meta_name)
+		if is_meta:
 			return true
 			
 	return false

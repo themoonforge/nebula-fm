@@ -4,9 +4,11 @@
 [ext_resource type="TileSet" uid="uid://cbb4sityyi4us" path="res://tileset/tileset.tres" id="2_0rh23"]
 
 [node name="NoteSource" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_bd72m")
 
 [node name="Tiles" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
+y_sort_enabled = true
 tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 2, 0, 8, 0, 9, 0, 0, 0)
 tile_set = ExtResource("2_0rh23")
