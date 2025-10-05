@@ -1,11 +1,7 @@
-<<<<<<< Updated upstream
 [gd_resource type="Theme" load_steps=19 format=3 uid="uid://bkxtk5gau1dbp"]
-=======
-[gd_resource type="Theme" load_steps=15 format=3 uid="uid://bkxtk5gau1dbp"]
 
 [ext_resource type="Texture2D" uid="uid://bkye0qatrb70" path="res://sprites/checkbox_checked.png" id="1_nrt0f"]
 [ext_resource type="Texture2D" uid="uid://doq3m5pe1wgyx" path="res://sprites/checkbox_unchecked.png" id="2_4yjuo"]
->>>>>>> Stashed changes
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nrt0f"]
 
@@ -70,7 +66,6 @@ GameMenuButton/styles/pressed = SubResource("StyleBoxEmpty_5wxyd")
 GameMenuButton/styles/pressed_mirrored = SubResource("StyleBoxEmpty_fppmr")
 GameMenuPanelContainer/base_type = &"PanelContainer"
 GameMenuPanelContainer/styles/panel = SubResource("StyleBoxFlat_lcjcl")
-<<<<<<< Updated upstream
 MenuSlider/base_type = &"HSlider"
 MenuSlider/icons/grabber = SubResource("CompressedTexture2D_lcjcl")
 MenuSlider/icons/grabber_disabled = SubResource("CompressedTexture2D_8ab6e")
@@ -78,7 +73,6 @@ MenuSlider/icons/grabber_highlight = SubResource("CompressedTexture2D_nrt0f")
 MenuSlider/styles/grabber_area = SubResource("StyleBoxLine_8ab6e")
 MenuSlider/styles/grabber_area_highlight = SubResource("StyleBoxLine_nrt0f")
 MenuSlider/styles/slider = SubResource("StyleBoxLine_lcjcl")
-=======
 QuestCheckbox/base_type = &"CheckBox"
 QuestCheckbox/icons/checked = ExtResource("1_nrt0f")
 QuestCheckbox/icons/unchecked = ExtResource("2_4yjuo")
@@ -91,4 +85,3 @@ QuestRichTextLabel/font_sizes/bold_italics_font_size = 16
 QuestRichTextLabel/font_sizes/italics_font_size = 16
 QuestRichTextLabel/font_sizes/mono_font_size = 16
 QuestRichTextLabel/font_sizes/normal_font_size = 5
->>>>>>> Stashed changes

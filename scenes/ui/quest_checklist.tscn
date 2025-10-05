@@ -1,18 +1,9 @@
-<<<<<<< Updated upstream
 [gd_scene load_steps=7 format=3 uid="uid://bxnbp5rniddi8"]
 
 [ext_resource type="Theme" uid="uid://bkxtk5gau1dbp" path="res://theme/theme.tres" id="1_g03nd"]
 [ext_resource type="Script" path="res://scripts/ui/quest_checklist.gd" id="1_ss3m1"]
 [ext_resource type="Script" path="res://quest_resource.gd" id="2_wtq8e"]
 [ext_resource type="Script" path="res://quest_requirement.gd" id="3_lb0fv"]
-=======
-[gd_scene load_steps=7 format=3 uid="uid://buhew34n7rgym"]
-
-[ext_resource type="Theme" uid="uid://bkxtk5gau1dbp" path="res://theme/theme.tres" id="1_g03nd"]
-[ext_resource type="Script" uid="uid://b8eu8xvtilanj" path="res://scripts/ui/quest_checklist.gd" id="1_ss3m1"]
-[ext_resource type="Script" uid="uid://dd674gtune7s5" path="res://quest_resource.gd" id="2_wtq8e"]
-[ext_resource type="Script" uid="uid://scy0e6iognox" path="res://quest_requirement.gd" id="3_lb0fv"]
->>>>>>> Stashed changes
 
 [sub_resource type="Resource" id="Resource_knh3f"]
 script = ExtResource("3_lb0fv")
