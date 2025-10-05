@@ -106,6 +106,7 @@ theme_override_constants/separation = 32
 [node name="StartGameButton" type="Button" parent="InnerMenu/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("3_bqqt6")
 theme_type_variation = &"GameMenuButton"
 theme_override_fonts/font = ExtResource("5_q85j6")
 theme_override_font_sizes/font_size = 18
@@ -122,6 +123,7 @@ theme_override_constants/separation = 16
 [node name="OptionsOpenButton" type="Button" parent="InnerMenu/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("3_bqqt6")
 theme_type_variation = &"GameMenuButton"
 text = "Options"
 
@@ -132,6 +134,7 @@ metadata/_custom_type_script = "uid://b6th40bbhl4o1"
 [node name="CreditsOpenButton" type="Button" parent="InnerMenu/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("3_bqqt6")
 theme_type_variation = &"GameMenuButton"
 text = "Credits"
 
