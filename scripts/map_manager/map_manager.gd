@@ -102,7 +102,8 @@ func _process(delta: float) -> void:
 
 				#if GridManager.is_cell_free(clicked_cell):
 				#	GridManager.set_cell(clicked_cell)
-				mode = Mode.IDLE
+				if !Input.is_action_pressed(&"build_continue"):
+					mode = Mode.IDLE
 		Mode.DELETE:
 			delete_cursor.global_position = snapped_coordinate
 			if Input.is_action_just_pressed(&"ui_click"):

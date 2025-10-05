@@ -68,7 +68,7 @@ horizontal_alignment = 1
 [node name="ShapeCollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(8, -8)
-polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+polygon = PackedVector2Array(-8, -12, -8, 8, 8, 8, 8, -12)
 
 [node name="GroundCollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 unique_name_in_owner = true
