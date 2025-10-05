@@ -21,9 +21,6 @@ const SOURCE_2 = 2
 const NOTE_SOURCE = Vector2i(13,3)
 const C_NOTE = Vector2i(8,7)
 const GROUND_4 = Vector2i(18,18)
-const NOTE_SOURCE = Vector2i(13, 3)
-const C_NOTE = Vector2i(8, 7)
-
 const ARROW_DOWN = Vector2i(8, 5)
 const ARROW_RIGHT = Vector2i(9, 5)
 const ARROW_UP = Vector2i(10, 5)

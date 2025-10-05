@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="SplitterBuildingResource" load_steps=4 format=3 uid="uid://cn6kon66bh7gm"]
 
 [ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="1_0ffke"]
-[ext_resource type="Script" path="res://scripts/resource/splitter_resource.gd" id="1_m7yki"]
+[ext_resource type="Script" uid="uid://0i4s0mv6jlsp" path="res://scripts/resource/splitter_resource.gd" id="1_m7yki"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mi8d6"]
 atlas = ExtResource("1_0ffke")
@@ -21,3 +21,4 @@ Vector2i(1, -1): 2
 })
 icon = SubResource("AtlasTexture_mi8d6")
 rotation_offset = Array[Vector2i]([Vector2i(2, 0), Vector2i(3, 0), Vector2i(5, 0)])
+metadata/_custom_type_script = "uid://0i4s0mv6jlsp"
