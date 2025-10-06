@@ -75,9 +75,11 @@ func _process(delta: float) -> void:
 		Mode.BUILD:
 			if Input.is_action_just_pressed(&"rotate_right"):
 				building_cursor.building.building_rotation = BuildingsUtils.rightRotation(building_cursor.building.building_rotation)
+				MusicPlayer.play_sfx("ui_click_tsk")
 
 			if Input.is_action_just_pressed(&"rotate_left"):
 				building_cursor.building.building_rotation = BuildingsUtils.leftRotation(building_cursor.building.building_rotation)
+				MusicPlayer.play_sfx("ui_click_tsk")
 
 			building_cursor.global_position = snapped_coordinate
 
@@ -102,6 +104,7 @@ func _process(delta: float) -> void:
 				building.is_active = true
 				place_obstacle.emit(building)
 				place_building.emit(building)
+				MusicPlayer.play_sfx("ui_click_pop")
 
 				#if GridManager.is_cell_free(clicked_cell):
 				#	GridManager.set_cell(clicked_cell)
