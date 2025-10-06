@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://c2mlgrhh2xj57"]
+[gd_scene load_steps=3 format=3 uid="uid://c2mlgrhh2xj57"]
 
-[ext_resource type="Texture2D" uid="uid://bf518h8jcs7m6" path="res://sprites/grid_cursor.png" id="1_jh03i"]
+[ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="1_jh03i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mcmys"]
+atlas = ExtResource("1_jh03i")
+region = Rect2(80, 256, 48, 48)
 
 [node name="GridCursor" type="Node2D"]
 z_index = 1
@@ -9,6 +13,6 @@ y_sort_enabled = true
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.3882353)
 y_sort_enabled = true
-texture = ExtResource("1_jh03i")
+texture = SubResource("AtlasTexture_mcmys")
 centered = false
 offset = Vector2(-16, -32)

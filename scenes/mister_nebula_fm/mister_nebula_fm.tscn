@@ -1,8 +1,19 @@
-[gd_scene load_steps=11 format=3 uid="uid://tpmfvg35idiu"]
+[gd_scene load_steps=14 format=3 uid="uid://tpmfvg35idiu"]
 
 [ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="1_prrqs"]
 [ext_resource type="Script" uid="uid://r6qwte4sr255" path="res://scripts/mister_nebula_fm/mister_nebula_fm.gd" id="1_sbe3x"]
 [ext_resource type="Texture2D" uid="uid://s3cn5lmy3x8i" path="res://sprites/circle.png" id="3_pxqns"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pxqns"]
+atlas = ExtResource("1_prrqs")
+region = Rect2(128, 192, 16, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_riyiq"]
+load_path = "res://.godot/imported/tileset2.png-72bfd1449e7da33365664eeea85cd2aa.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n05gw"]
+atlas = SubResource("CompressedTexture2D_riyiq")
+region = Rect2(144, 192, 16, 16)
 
 [sub_resource type="Animation" id="Animation_prrqs"]
 length = 0.001
@@ -94,6 +105,8 @@ _data = {
 y_sort_enabled = true
 input_pickable = true
 script = ExtResource("1_sbe3x")
+emote_heart = SubResource("AtlasTexture_pxqns")
+emote_note = SubResource("AtlasTexture_n05gw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 6

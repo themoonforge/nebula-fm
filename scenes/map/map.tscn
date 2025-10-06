@@ -21,6 +21,7 @@ noise = SubResource("FastNoiseLite_tqkkf")
 y_sort_enabled = true
 script = ExtResource("1_tqkkf")
 building_scene = ExtResource("2_jcaow")
+mister_nebula = ExtResource("5_fcby6")
 radio_station_resource = ExtResource("3_04w0f")
 note_source_scene = ExtResource("3_ph54e")
 
@@ -70,6 +71,3 @@ visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 texture = SubResource("NoiseTexture2D_a2pkv")
-
-[node name="MisterNebulaFm" parent="." instance=ExtResource("5_fcby6")]
-position = Vector2(279, 130)

@@ -1,6 +1,7 @@
 class_name Map extends Node2D
 
 @export var building_scene: PackedScene
+@export var mister_nebula: PackedScene
 @export var radio_station_resource: SpaceRadioResource
 @export var note_source_scene: PackedScene
 @export var camera: GameCamera
@@ -93,7 +94,8 @@ func generate() -> void:
 	_generate_noise()
 	
 	_fill_layer(ground_layer, Tiles.SOURCE_2, Tiles.GROUND_4)
-	_place_radio_station(SubGrid.TOP_RIGHT)
+	
+	_place_radio_station(SubGrid.values()[randi() % SubGrid.size()])
 	_place_note_sources(3)
 	_place_with_noise(obstacles_layer, Tiles.SOURCE_0, Tiles.ROCK_SMALL, Vector2(0.2, 0.25), 0.5)
 	_place_patterns(big_blob_layer, big_blob_pattern_choices, Vector2(0.18, 0.19), 0.5)
@@ -140,34 +142,29 @@ func _place_radio_station(sub_grid: SubGrid) -> void:
 		randi_range(sub_grid_rect.position.y + radio_station.building_resource.size.y + 2, sub_grid_rect.position.y + sub_grid_rect.size.y - 2)
 	)
 	
+	var mister_nebula_instance = mister_nebula.instantiate()
+	placed_objects.add_child(mister_nebula_instance)
+	
 	radio_station.global_position = Vector2(spawn_cell * 16)
+	mister_nebula_instance.global_position = Vector2i(spawn_cell * 16)
+	
+	match station_subgrid:
+		SubGrid.TOP_LEFT:
+			mister_nebula_instance.global_position.x += radio_station.building_resource.size.x * 16
+			mister_nebula_instance.global_position.y -= 16
+			mister_nebula_instance.global_position.x -= 16
+		SubGrid.BOTTOM_LEFT:
+			mister_nebula_instance.global_position.y -= radio_station.building_resource.size.y * 16
+			mister_nebula_instance.global_position.x += radio_station.building_resource.size.y * 16
+			mister_nebula_instance.global_position.x -= 16
+		SubGrid.TOP_RIGHT:
+			mister_nebula_instance.global_position.y -= 16
+		SubGrid.BOTTOM_RIGHT:
+			mister_nebula_instance.global_position.y -= radio_station.building_resource.size.x * 16
 	
 	for y in radio_station.building_resource.size.y:
 		for x in radio_station.building_resource.size.x:
-			#ground_layer.set_cell(Vector2i(x, -y - 1) + spawn_cell, Tiles.SOURCE_2, Tiles.C_NOTE)
 			GridManager.set_cell(Vector2i(x, -y - 1) + spawn_cell)
-
-#func _place_radio_station(sub_grid: SubGrid) -> void:
-	#station_subgrid = sub_grid
-	#
-	#var radio_station: RadioStation = radio_station_scene.instantiate()
-	#placed_objects.add_child(radio_station)
-	#
-	#var screen_size = get_viewport_rect().size / 16
-	#var sub_grid_rect = _get_subgrid_rect(sub_grid, screen_size)
-	#
-	#var station_rect = radio_station.tiles.get_used_rect()
-	#
-	#var spawn_cell = Vector2i(
-		#randi_range(sub_grid_rect.position.x, sub_grid_rect.position.x + sub_grid_rect.size.x - station_rect.size.x),
-		#randi_range(sub_grid_rect.position.y, sub_grid_rect.position.y + sub_grid_rect.size.y - station_rect.size.y)
-	#)
-	#
-	#radio_station.global_position = Vector2(spawn_cell * 16)
-	#
-	#for cell in radio_station.tiles.get_used_cells():
-		#GridManager.set_cell(cell + spawn_cell)
-		
 
 func _get_subgrid_rect(sub_grid, screen_size: Vector2) -> Rect2i:
 	match sub_grid:
