@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dg1518v4gcb14"]
+
+[ext_resource type="Shader" uid="uid://b8ii3my8cpbic" path="res://shaders/smooth_outline.gdshader" id="1_nty2u"]
+
+[resource]
+shader = ExtResource("1_nty2u")
+shader_parameter/Smooth = true
+shader_parameter/width = 23.7770011294075
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/pixel_size = 4
+shader_parameter/width_speed = 1.0

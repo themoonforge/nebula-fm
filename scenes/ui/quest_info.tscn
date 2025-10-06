@@ -1,14 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://b8mf3yganqkp3"]
+[gd_scene load_steps=6 format=3 uid="uid://b8mf3yganqkp3"]
 
 [ext_resource type="Texture2D" uid="uid://bkye0qatrb70" path="res://sprites/checkbox_checked.png" id="1_j0bvc"]
 [ext_resource type="Script" uid="uid://dryt3df6bot7r" path="res://scripts/ui/quest_info.gd" id="1_js0s1"]
 [ext_resource type="Texture2D" uid="uid://doq3m5pe1wgyx" path="res://sprites/checkbox_unchecked.png" id="2_js0s1"]
 [ext_resource type="Theme" uid="uid://cnveursukjnnk" path="res://theme/theme.tres" id="3_dfj0a"]
+[ext_resource type="FontFile" uid="uid://c6h3we4j2dvbf" path="res://fonts/GravityBold8.ttf" id="4_66dqj"]
 
 [node name="QuestInfo" type="HBoxContainer"]
 size_flags_vertical = 2
 theme = ExtResource("3_dfj0a")
-theme_override_constants/separation = 0
+theme_override_constants/separation = 8
 alignment = 1
 script = ExtResource("1_js0s1")
 
@@ -32,6 +33,7 @@ size_flags_horizontal = 3
 theme = ExtResource("3_dfj0a")
 theme_type_variation = &"HudLabel"
 theme_override_colors/font_color = Color(0.19215687, 0.16078432, 0.28235295, 1)
+theme_override_fonts/font = ExtResource("4_66dqj")
 text = "Place 1 Miner on an Ore Node"
 horizontal_alignment = 1
 vertical_alignment = 1

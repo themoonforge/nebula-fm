@@ -30,9 +30,26 @@ func _ready() -> void:
 	MapManager.place_building.connect(_on_placed_building)
 	_render_quest_info_items()
 	
-func _on_quest_complete() -> void:
-	var tween = create_tween()
-	tween.tween_property(show_tutorial_button, "scale", Vector2(1.2, 1.2), 0.5)
+func _on_quest_complete(quest_resource: QuestResource) -> void:
+	var button_font_color = show_tutorial_button.get_theme_color("font_color")
+
+	var tween1 = create_tween()
+	tween1.set_ease(Tween.EASE_IN_OUT)
+	var darken_parallel = tween1.parallel()
+	darken_parallel.tween_property(show_tutorial_button, "modulate", Color(0.192, 0.161, 0.282, 1.0), 0.25)
+	darken_parallel.tween_method(_set_button_font_color, button_font_color, Color(0.9, 0.85, 0.75, 1.0), 0.25)
+
+	await tween1.finished
+
+	var tween2 = create_tween()
+	tween2.set_ease(Tween.EASE_IN_OUT)
+	var lighten_parallel = tween2.parallel()
+	lighten_parallel.tween_property(show_tutorial_button, "modulate", Color.WHITE, 1.0)
+	lighten_parallel.tween_method(_set_button_font_color, Color(0.9, 0.85, 0.75, 1.0), button_font_color, 1.0)
+
+
+func _set_button_font_color(color: Color) -> void:
+	show_tutorial_button.add_theme_color_override("font_color", color)
 	
 func _on_show_tutorial_button_mouse_entered() -> void:
 	tutorial_panel.show()

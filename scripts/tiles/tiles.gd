@@ -25,6 +25,10 @@ const ARROW_DOWN = Vector2i(8, 5)
 const ARROW_RIGHT = Vector2i(9, 5)
 const ARROW_UP = Vector2i(10, 5)
 const ARROW_LEFT = Vector2i(11, 5)
+const DUST_1 = Vector2i(19, 18)
+const DUST_2 = Vector2i(20, 18)
+const DUST_3 = Vector2i(21, 18)
+const DUST_4 = Vector2i(22, 18)
 
 # tileset patterns
 const PATTERN_TREE_1 = 0
@@ -37,3 +41,13 @@ const PATTERN_BLOB_2 = 6
 const PATTERN_BLOB_3 = 7
 const PATTERN_BLOB_4 = 8
 const PATTERN_BLOB_5 = 9
+
+const PATTERN_PUDDLE_1 = 10
+const PATTERN_PUDDLE_2 = 11
+
+const PATTERN_CRATER_1 = 12
+const PATTERN_CRATER_2 = 13
+const PATTERN_DUST_1 = 14
+const PATTERN_DUST_2 = 15
+const PATTERN_DUST_3 = 16
+const PATTERN_DUST_4 = 17
