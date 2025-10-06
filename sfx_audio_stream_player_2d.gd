@@ -7,6 +7,7 @@ var sfx_sounds = {
 	"ui_click_pop": preload("res://sfx/ui/ui_click_pop.ogg"),
 	"ui_click_tsk": preload("res://sfx/ui/ui_click_tsk.ogg"),
 	"ui_click_confirm": preload("res://sfx/ui/ui_click_confirm.ogg"),
+	"build_placed": preload("res://sfx/building/build_placed.ogg"),
 }
 
 func play_sfx(sfx_name: String):

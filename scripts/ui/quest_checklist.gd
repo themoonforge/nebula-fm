@@ -7,6 +7,7 @@ extends CanvasLayer
 @onready var show_tutorial_button: Button = %ShowTutorialButton
 
 var buildings_placed: Dictionary[String, int]
+var notes_played: Dictionary[String, int]
 
 var button_style_normal: StyleBoxFlat
 var button_style_hover: StyleBoxFlat
@@ -15,7 +16,6 @@ var is_hovering_button: bool
 
 func _ready() -> void:
 	QuestTracker.quest_completed.connect(_on_quest_complete)
-	
 	
 	tutorial_panel.hide()
 	
@@ -27,26 +27,16 @@ func _ready() -> void:
 	tutorial_panel.mouse_entered.connect(_on_tutorial_panel_mouse_entered)
 	tutorial_panel.mouse_exited.connect(_on_tutorial_panel_mouse_exited)
 	
+	EventBus.note_played.connect(_on_note_played)
 	MapManager.place_building.connect(_on_placed_building)
 	_render_quest_info_items()
 	
 func _on_quest_complete(quest_resource: QuestResource) -> void:
-	var button_font_color = show_tutorial_button.get_theme_color("font_color")
-
-	var tween1 = create_tween()
-	tween1.set_ease(Tween.EASE_IN_OUT)
-	var darken_parallel = tween1.parallel()
-	darken_parallel.tween_property(show_tutorial_button, "modulate", Color(0.192, 0.161, 0.282, 1.0), 0.25)
-	darken_parallel.tween_method(_set_button_font_color, button_font_color, Color(0.9, 0.85, 0.75, 1.0), 0.25)
-
-	await tween1.finished
-
-	var tween2 = create_tween()
-	tween2.set_ease(Tween.EASE_IN_OUT)
-	var lighten_parallel = tween2.parallel()
-	lighten_parallel.tween_property(show_tutorial_button, "modulate", Color.WHITE, 1.0)
-	lighten_parallel.tween_method(_set_button_font_color, Color(0.9, 0.85, 0.75, 1.0), button_font_color, 1.0)
-
+	# todo just fade an icon in or something
+	pass
+	
+func _on_note_played(note_resource: MidiInputNoteResource) -> void:
+	check_quest_completion(QuestRequirement.QuestSignal.NOTE_PLAYED)
 
 func _set_button_font_color(color: Color) -> void:
 	show_tutorial_button.add_theme_color_override("font_color", color)
@@ -86,7 +76,6 @@ func check_quest_completion(quest_signal : QuestRequirement.QuestSignal, buildin
 			continue
 		for requirement in resource.requirements_array:
 			if building:
-				
 				if requirement.associated_building_name != building.building_resource.name:
 					continue
 			
@@ -106,9 +95,13 @@ func _increase_required_amount(requirement: QuestRequirement) -> int:
 				buildings_placed[requirement.associated_building_name] = 0
 
 			buildings_placed[requirement.associated_building_name] += 1
-			
-			print(buildings_placed)
-			
 			return buildings_placed[requirement.associated_building_name]
+			
+		QuestRequirement.QuestSignal.NOTE_PLAYED:
+			if !notes_played.has(requirement.associated_note_name):
+				notes_played[requirement.associated_note_name] = 0
+
+			notes_played[requirement.associated_note_name] += 1
+			return notes_played[requirement.associated_note_name]
 		
 	return 0

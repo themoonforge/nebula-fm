@@ -95,7 +95,7 @@ func _process(delta: float) -> void:
 				return
 					
 			if building_cursor.building.building_resource is CollectorBuildingResource:
-				if _borders_note_source(hovered_cell):
+				if _borders_note_source(hovered_cell) && GridManager.is_cell_free(hovered_cell):
 					building_cursor.building.modulate_sprite(COLOR_ADD)
 				else:
 					building_cursor.building.modulate_sprite(COLOR_OCCUPIED)
@@ -112,7 +112,7 @@ func _process(delta: float) -> void:
 				building.is_active = true
 				place_obstacle.emit(building)
 				place_building.emit(building)
-				MusicPlayer.play_sfx("ui_click_pop")
+				MusicPlayer.play_sfx("build_placed")
 
 				#if GridManager.is_cell_free(clicked_cell):
 				#	GridManager.set_cell(clicked_cell)

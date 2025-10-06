@@ -178,6 +178,16 @@ func _place_radio_station(sub_grid: SubGrid) -> void:
 	var mister_nebula_instance = mister_nebula.instantiate()
 	placed_objects.add_child(mister_nebula_instance)
 	
+	match station_subgrid:
+		SubGrid.TOP_LEFT:
+			spawn_cell.y += 2
+		SubGrid.BOTTOM_LEFT:
+			spawn_cell.y -= 2
+		SubGrid.TOP_RIGHT:
+			spawn_cell.y += 2
+		SubGrid.BOTTOM_RIGHT:
+			spawn_cell.y -= 2
+			
 	radio_station.global_position = Vector2(spawn_cell * 16)
 	mister_nebula_instance.global_position = Vector2i(spawn_cell * 16)
 	

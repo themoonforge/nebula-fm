@@ -878,6 +878,7 @@ func _process_track_event_note_on(channel: GodotMIDIPlayerChannelStatus, note: i
 				note_on = true
 
 	if note_on:
+		EventBus.note_played.emit(elem)
 		var current_frame = Engine.get_frames_drawn()
 		var bus = self.midi_channel_bus_name % channel.number
 		var instrument_name = Utility.program_names[channel.program]

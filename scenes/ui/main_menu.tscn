@@ -1,7 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://dc7il20758ygn"]
+[gd_scene load_steps=19 format=3 uid="uid://dc7il20758ygn"]
 
 [ext_resource type="Script" uid="uid://hpvx6xkk5mpx" path="res://scripts/ui/main_menu.gd" id="1_d0lsa"]
+[ext_resource type="Texture2D" uid="uid://ck8usqqks8b60" path="res://sprites/splash_screen.png" id="2_7suek"]
 [ext_resource type="Texture2D" uid="uid://bcgtdxaagvhkt" path="res://sprites/planet_bg_x_tiled.png" id="2_btxxm"]
+[ext_resource type="Script" uid="uid://bdh3s45fm7tfl" path="res://scenes/ui/splash_screen.gd" id="2_otr3d"]
 [ext_resource type="Script" uid="uid://dhdegvwwqihjl" path="res://scripts/ui/planet_scroll.gd" id="2_wb0q5"]
 [ext_resource type="Texture2D" uid="uid://betg7a3ip4o7b" path="res://sprites/logo_outlined.png" id="2_x2yvf"]
 [ext_resource type="Theme" uid="uid://cnveursukjnnk" path="res://theme/theme.tres" id="3_bqqt6"]
@@ -38,6 +40,20 @@ bg_color = Color(0.23137255, 0.23921569, 0.5254902, 1)
 [node name="MainMenu" type="CanvasLayer"]
 layer = 0
 script = ExtResource("1_d0lsa")
+
+[node name="SplashScreen" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_otr3d")
+
+[node name="SplashScreenTexture" type="TextureRect" parent="SplashScreen"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_7suek")
 
 [node name="InnerMenu" type="PanelContainer" parent="."]
 anchors_preset = 15

@@ -13,6 +13,7 @@ config_version=5
 config/name="harmony"
 run/main_scene="res://scenes/ui/main_menu.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
+boot_splash/image="uid://ck8usqqks8b60"
 config/icon="res://icon.svg"
 
 [autoload]

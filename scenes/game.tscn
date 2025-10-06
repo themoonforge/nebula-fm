@@ -30,5 +30,6 @@ drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="GameCamera"]
+visible = false
 texture = ExtResource("5_iywne")
 centered = false
