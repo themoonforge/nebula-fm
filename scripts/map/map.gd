@@ -7,8 +7,12 @@ class_name Map extends Node2D
 @export var camera: GameCamera
 @onready var ground_layer: TileMapLayer = %GroundLayer
 @onready var small_blob_layer: TileMapLayer = %SmallBlobLayer
+@onready var water_layer: TileMapLayer = %WaterLayer
 @onready var big_blob_layer: TileMapLayer = %BigBlobLayer
 @onready var obstacles_layer: TileMapLayer = %ObstaclesLayer
+@onready var border_layer: TileMapLayer = %BorderLayer
+@onready var crater_layer: TileMapLayer = %CraterLayer
+@onready var dust_layer: TileMapLayer = %DustLayer
 @onready var note_sources_layer: TileMapLayer = %NoteSourcesLayer
 @onready var placed_objects: Node2D = %Objects
 @onready var noise_rect: TextureRect = %NoiseRect
@@ -23,6 +27,8 @@ var max_noise = -INF
 var tree_pattern_choices: Dictionary[int, Array]
 var small_blob_pattern_choices: Dictionary[int, Array]
 var big_blob_pattern_choices: Dictionary[int, Array]
+var water_pattern_choices: Dictionary[int, Array]
+var crater_pattern_choices: Dictionary[int, Array]
 
 enum SubGrid {
 	TOP_LEFT,
@@ -52,6 +58,16 @@ func _ready() -> void:
 		Tiles.PATTERN_BLOB_3
 	]
 	
+	water_pattern_choices[Tiles.SOURCE_2] = [
+		Tiles.PATTERN_PUDDLE_1, 
+		Tiles.PATTERN_PUDDLE_2
+	]
+	
+	crater_pattern_choices[Tiles.SOURCE_2] = [
+		Tiles.PATTERN_CRATER_1, 
+		Tiles.PATTERN_CRATER_2
+	]
+	
 	generate()
 	
 	camera.bounds_rect = ground_layer.get_used_rect()
@@ -79,25 +95,42 @@ func _process(delta: float) -> void:
 		print("cleared obstacles layer")
 		note_sources_layer.clear()
 		print("cleared note sources layer")
+		water_layer.clear()
+		print("cleared water sources layer")
+		crater_layer.clear()
+		print("cleared crater sources layer")
+		dust_layer.clear()
+		print("cleared dust sources layer")
 		for object in placed_objects.get_children():
 			object.queue_free()
 		
 		await get_tree().physics_frame
 		generate()
 		print("called generate again")
+		
+func register_static_layer(layer: TileMapLayer) -> void:
+	for y in get_viewport_rect().size.y / 16:
+		for x in get_viewport_rect().size.x / 16:
+			var cell: Vector2i = Vector2i(x, y)
+			if is_meta_tile(layer, cell, &"is_obstacle"):
+				GridManager.set_cell(cell)
 
 func generate() -> void:
-	print("inside generated, called it")
-	
 	noise_texture = noise_rect.texture
 	
 	_generate_noise()
 	
 	_fill_layer(ground_layer, Tiles.SOURCE_2, Tiles.GROUND_4)
-	
+	_place_with_noise(dust_layer, Tiles.SOURCE_2, Tiles.DUST_1, Vector2(0.5, 0.55), 0.5)
+	_place_with_noise(dust_layer, Tiles.SOURCE_2, Tiles.DUST_2, Vector2(0.55, 0.6), 0.5)
+	_place_with_noise(dust_layer, Tiles.SOURCE_2, Tiles.DUST_3, Vector2(0.6, 0.65), 0.5)
+	_place_with_noise(dust_layer, Tiles.SOURCE_2, Tiles.DUST_4, Vector2(0.65, 0.7), 0.5)
+	register_static_layer(border_layer)
 	_place_radio_station(SubGrid.values()[randi() % SubGrid.size()])
 	_place_note_sources(3)
 	_place_with_noise(obstacles_layer, Tiles.SOURCE_0, Tiles.ROCK_SMALL, Vector2(0.2, 0.25), 0.5)
+	_place_patterns(crater_layer, crater_pattern_choices, Vector2(0.3, 0.5), 0.1)
+	_place_patterns(water_layer, water_pattern_choices, Vector2(0.5, 0.6), 0.1)
 	_place_patterns(big_blob_layer, big_blob_pattern_choices, Vector2(0.18, 0.19), 0.5)
 	_place_patterns(small_blob_layer, small_blob_pattern_choices, Vector2(0.3, 0.5), 0.1)
 	_place_patterns(obstacles_layer, tree_pattern_choices, Vector2(0.25, 0.3))
@@ -194,7 +227,7 @@ func _place_note_sources(count: int) -> void:
 	
 	for col in range(0, grid_cols):
 		for row in range(0, grid_rows):
-			if _is_in_rect(Vector2i(col, row), station_rect):
+			if _is_in_rect(Vector2i(col, row), station_rect) or !GridManager.is_cell_free(Vector2i(col, row)):
 				continue
 				
 			grid_cells.append(Vector2i(col, row))

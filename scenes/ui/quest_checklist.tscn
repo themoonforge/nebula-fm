@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bv4engl26kj82"]
+[gd_scene load_steps=10 format=3 uid="uid://bv4engl26kj82"]
 
 [ext_resource type="Script" uid="uid://b8eu8xvtilanj" path="res://scripts/ui/quest_checklist.gd" id="1_ss3m1"]
 [ext_resource type="Script" uid="uid://dd674gtune7s5" path="res://scripts/resource/quest_resource.gd" id="2_wtq8e"]
@@ -13,7 +13,7 @@ metadata/_custom_type_script = "uid://scy0e6iognox"
 
 [sub_resource type="Resource" id="Resource_lb0fv"]
 script = ExtResource("2_wtq8e")
-description = "Place 4 collectors on a note source"
+description = "Collect some frequencies"
 requirements_array = Array[ExtResource("3_lb0fv")]([SubResource("Resource_knh3f")])
 metadata/_custom_type_script = "uid://dd674gtune7s5"
 
@@ -25,13 +25,18 @@ metadata/_custom_type_script = "uid://scy0e6iognox"
 
 [sub_resource type="Resource" id="Resource_7qd3y"]
 script = ExtResource("2_wtq8e")
-description = "Place 1 splitter"
+description = "Transmit to the station: 16x C"
 requirements_array = Array[ExtResource("3_lb0fv")]([SubResource("Resource_xi4mx")])
+metadata/_custom_type_script = "uid://dd674gtune7s5"
+
+[sub_resource type="Resource" id="Resource_4et1r"]
+script = ExtResource("2_wtq8e")
+description = "Transmit to the station: 32x G"
 metadata/_custom_type_script = "uid://dd674gtune7s5"
 
 [node name="QuestChecklist" type="CanvasLayer"]
 script = ExtResource("1_ss3m1")
-quest_resources = Array[ExtResource("2_wtq8e")]([SubResource("Resource_lb0fv"), SubResource("Resource_7qd3y")])
+quest_resources = Array[ExtResource("2_wtq8e")]([SubResource("Resource_lb0fv"), SubResource("Resource_7qd3y"), SubResource("Resource_4et1r")])
 quest_info_scene = ExtResource("5_knh3f")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -41,10 +46,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
