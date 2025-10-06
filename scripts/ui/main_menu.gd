@@ -71,7 +71,7 @@ func _on_sfx_volume_slider_value_changed(value: float) -> void:
 func _on_start_button_pressed() -> void:
 	if is_blocked:
 		return
-	
+	start_button.disabled = true
 	MusicPlayer.play_sfx("ui_click_confirm")
 	await MusicPlayer.sfx_player.finished
 	SceneTransition.transition_scene("res://scenes/game.tscn")
