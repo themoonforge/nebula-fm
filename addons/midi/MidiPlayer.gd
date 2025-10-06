@@ -832,7 +832,7 @@ func _process_track_event_note_on(channel: GodotMIDIPlayerChannelStatus, note: i
 	#filter_old_input_buffer(10000000)
 	var elem = consume_note_from_input_buffer(key_number)
 	if elem == null:
-		print_debug("note not in input buffer: ", MidiUtility.key_number_to_note_name_with_octave(key_number), " skip");
+		#print_debug("note not in input buffer: ", MidiUtility.key_number_to_note_name_with_octave(key_number), " skip");
 		return
 
 	var preset: Bank.Preset = self.bank.get_preset(channel.program, channel.bank)

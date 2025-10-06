@@ -1,17 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://ba6smto8fqnjg"]
+[gd_scene load_steps=6 format=3 uid="uid://ba6smto8fqnjg"]
 
 [ext_resource type="Script" uid="uid://xsbyght6bx8p" path="res://scripts/map_manager/map_manager.gd" id="1_m8bhj"]
 [ext_resource type="Resource" uid="uid://cls7knxgownu5" path="res://resources/building/c_collector.tres" id="2_hl4el"]
 [ext_resource type="PackedScene" uid="uid://df3luqvourto4" path="res://scenes/building_cursor.tscn" id="2_m8bhj"]
 [ext_resource type="PackedScene" uid="uid://dr01at6gpkurn" path="res://scenes/delete_cursor.tscn" id="3_11jpa"]
+[ext_resource type="PackedScene" uid="uid://c2mlgrhh2xj57" path="res://scenes/grid_cursor.tscn" id="5_to63b"]
 
 [node name="MapManager" type="Node2D"]
 script = ExtResource("1_m8bhj")
 selected_building_resource = ExtResource("2_hl4el")
-mode = null
 
 [node name="DeleteCursor" parent="." instance=ExtResource("3_11jpa")]
 unique_name_in_owner = true
 
 [node name="BuildingCursor" parent="." instance=ExtResource("2_m8bhj")]
+unique_name_in_owner = true
+
+[node name="GridCursor" parent="." instance=ExtResource("5_to63b")]
 unique_name_in_owner = true

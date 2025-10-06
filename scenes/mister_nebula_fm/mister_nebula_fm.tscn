@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://tpmfvg35idiu"]
+[gd_scene load_steps=11 format=3 uid="uid://tpmfvg35idiu"]
 
 [ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="1_prrqs"]
 [ext_resource type="Script" uid="uid://r6qwte4sr255" path="res://scripts/mister_nebula_fm/mister_nebula_fm.gd" id="1_sbe3x"]
+[ext_resource type="Texture2D" uid="uid://s3cn5lmy3x8i" path="res://sprites/circle.png" id="3_pxqns"]
 
 [sub_resource type="Animation" id="Animation_prrqs"]
 length = 0.001
@@ -87,11 +88,15 @@ _data = {
 &"right_up": SubResource("Animation_sbe3x")
 }
 
-[node name="MisterNebulaFm" type="Node2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sbe3x"]
+
+[node name="MisterNebulaFm" type="CharacterBody2D"]
 y_sort_enabled = true
+input_pickable = true
 script = ExtResource("1_sbe3x")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 6
 y_sort_enabled = true
 position = Vector2(8, 16)
 texture = ExtResource("1_prrqs")
@@ -100,8 +105,19 @@ offset = Vector2(-8, -32)
 region_enabled = true
 region_rect = Rect2(128, 160, 16, 32)
 
+[node name="Emote" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+z_index = 1
+y_sort_enabled = true
+position = Vector2(8, -16)
+texture = ExtResource("3_pxqns")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_riyiq")
 }
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8, 8)
+shape = SubResource("CapsuleShape2D_sbe3x")

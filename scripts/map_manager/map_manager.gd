@@ -42,10 +42,12 @@ var note_sources: Array[Vector2i]
 
 @onready var building_cursor: BuildingCursor = %BuildingCursor
 @onready var delete_cursor: DeleteCursor = %DeleteCursor
+@onready var grid_cursor: Node2D = %GridCursor
 
 var last_snapped_coordinate: Vector2i = Vector2i(-1, -1) # this is not a snapped coordinate!
 
 func _ready() -> void:
+	grid_cursor.hide()
 	building_cursor.hide()
 	building_cursor.building.building_resource = selected_building_resource
 
@@ -72,7 +74,7 @@ func _process(delta: float) -> void:
 		return
 
 	match mode:
-		Mode.BUILD:
+		Mode.BUILD:			
 			if Input.is_action_just_pressed(&"rotate_right"):
 				building_cursor.building.building_rotation = BuildingsUtils.rightRotation(building_cursor.building.building_rotation)
 				MusicPlayer.play_sfx("ui_click_tsk")
@@ -82,8 +84,13 @@ func _process(delta: float) -> void:
 				MusicPlayer.play_sfx("ui_click_tsk")
 
 			building_cursor.global_position = snapped_coordinate
+			grid_cursor.show()
+			grid_cursor.global_position = snapped_coordinate
 
 			if building_cursor.collider_dict.size() > 0:
+				# todo:
+				# delete farbe nicht anzeigen, wenn SpaceStation gehovered wird
+						
 				building_cursor.building.modulate_sprite(COLOR_OCCUPIED)
 				return
 					
@@ -97,6 +104,7 @@ func _process(delta: float) -> void:
 				building_cursor.building.modulate_sprite(COLOR_FREE)
 				
 			if Input.is_action_just_pressed(&"ui_click"):
+				grid_cursor.hide()
 				#var clicked_position: Vector2 = mouse_pos
 				#var clicked_cell: Vector2i = Vector2i(mouse_pos.x / 16, mouse_pos.y / 16)
 				var building = building_cursor.building.duplicate()
@@ -114,6 +122,8 @@ func _process(delta: float) -> void:
 			delete_cursor.global_position = snapped_coordinate
 			if Input.is_action_just_pressed(&"ui_click"):
 				for building in delete_cursor.collider_dict:
+					if building.building_resource is SpaceRadioResource:
+						continue
 					#print("free: ", building.is_active)
 					building.queue_free()
 		Mode.IDLE:

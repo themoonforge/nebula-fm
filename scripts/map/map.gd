@@ -95,7 +95,7 @@ func generate() -> void:
 	_fill_layer(ground_layer, Tiles.SOURCE_2, Tiles.GROUND_4)
 	_place_radio_station(SubGrid.TOP_RIGHT)
 	_place_note_sources(3)
-	_place_with_noise(obstacles_layer, Tiles.SOURCE_0, Tiles.ROCK_SMALL, Vector2(0.2, 0.25))
+	_place_with_noise(obstacles_layer, Tiles.SOURCE_0, Tiles.ROCK_SMALL, Vector2(0.2, 0.25), 0.5)
 	_place_patterns(big_blob_layer, big_blob_pattern_choices, Vector2(0.18, 0.19), 0.5)
 	_place_patterns(small_blob_layer, small_blob_pattern_choices, Vector2(0.3, 0.5), 0.1)
 	_place_patterns(obstacles_layer, tree_pattern_choices, Vector2(0.25, 0.3))
@@ -136,8 +136,8 @@ func _place_radio_station(sub_grid: SubGrid) -> void:
 	placed_objects.add_child(radio_station)
 	
 	var spawn_cell = Vector2i(
-		randi_range(sub_grid_rect.position.x + 1, sub_grid_rect.position.x + sub_grid_rect.size.x - radio_station.building_resource.size.x - 1),
-		randi_range(sub_grid_rect.position.y + radio_station.building_resource.size.y + 1, sub_grid_rect.position.y + sub_grid_rect.size.y - 1)
+		randi_range(sub_grid_rect.position.x + 2, sub_grid_rect.position.x + sub_grid_rect.size.x - radio_station.building_resource.size.x - 2),
+		randi_range(sub_grid_rect.position.y + radio_station.building_resource.size.y + 2, sub_grid_rect.position.y + sub_grid_rect.size.y - 2)
 	)
 	
 	radio_station.global_position = Vector2(spawn_cell * 16)
@@ -254,7 +254,7 @@ func _place_note_sources(count: int) -> void:
 		#used_cols.append(cell.x)
 		#placed_count += 1
 			
-func _place_with_noise(tile_map_layer: TileMapLayer, source_id: int, tile_id: Vector2i, noise_range: Vector2) -> void:
+func _place_with_noise(tile_map_layer: TileMapLayer, source_id: int, tile_id: Vector2i, noise_range: Vector2, placement_bias: float = 1.0) -> void:
 	for y in get_viewport_rect().size.y / 16:
 		for x in get_viewport_rect().size.x / 16:
 			var cell: Vector2i = Vector2i(x, y)
@@ -262,7 +262,9 @@ func _place_with_noise(tile_map_layer: TileMapLayer, source_id: int, tile_id: Ve
 			var normalized = (raw_noise - min_noise) / (max_noise - min_noise)
 
 			if normalized >= noise_range.x and normalized <= noise_range.y:
-				_set_cell(tile_map_layer, cell, source_id, tile_id)
+				var rng = randf()
+				if rng <= placement_bias:
+					_set_cell(tile_map_layer, cell, source_id, tile_id)
 			else:
 				continue
 				

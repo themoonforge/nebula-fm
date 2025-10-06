@@ -1,24 +1,38 @@
-[gd_scene load_steps=7 format=3 uid="uid://bv4engl26kj82"]
+[gd_scene load_steps=9 format=3 uid="uid://bv4engl26kj82"]
 
-[ext_resource type="Theme" uid="uid://cnveursukjnnk" path="res://theme/theme.tres" id="1_g03nd"]
 [ext_resource type="Script" uid="uid://b8eu8xvtilanj" path="res://scripts/ui/quest_checklist.gd" id="1_ss3m1"]
 [ext_resource type="Script" uid="uid://dd674gtune7s5" path="res://scripts/resource/quest_resource.gd" id="2_wtq8e"]
 [ext_resource type="Script" uid="uid://scy0e6iognox" path="res://scripts/quest_requirement.gd" id="3_lb0fv"]
+[ext_resource type="PackedScene" uid="uid://b8mf3yganqkp3" path="res://scenes/ui/quest_info.tscn" id="5_knh3f"]
 
 [sub_resource type="Resource" id="Resource_knh3f"]
 script = ExtResource("3_lb0fv")
-signal_name = "buildings_placed"
-amount = 2
+associated_building_name = "cCollector"
+amount = 4
 metadata/_custom_type_script = "uid://scy0e6iognox"
 
 [sub_resource type="Resource" id="Resource_lb0fv"]
 script = ExtResource("2_wtq8e")
+description = "Place 4 collectors on a note source"
 requirements_array = Array[ExtResource("3_lb0fv")]([SubResource("Resource_knh3f")])
+metadata/_custom_type_script = "uid://dd674gtune7s5"
+
+[sub_resource type="Resource" id="Resource_xi4mx"]
+script = ExtResource("3_lb0fv")
+associated_building_name = "Splitter"
+amount = 1
+metadata/_custom_type_script = "uid://scy0e6iognox"
+
+[sub_resource type="Resource" id="Resource_7qd3y"]
+script = ExtResource("2_wtq8e")
+description = "Place 1 splitter"
+requirements_array = Array[ExtResource("3_lb0fv")]([SubResource("Resource_xi4mx")])
 metadata/_custom_type_script = "uid://dd674gtune7s5"
 
 [node name="QuestChecklist" type="CanvasLayer"]
 script = ExtResource("1_ss3m1")
-quest_resources = Array[ExtResource("2_wtq8e")]([SubResource("Resource_lb0fv")])
+quest_resources = Array[ExtResource("2_wtq8e")]([SubResource("Resource_lb0fv"), SubResource("Resource_7qd3y")])
+quest_info_scene = ExtResource("5_knh3f")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -36,33 +50,33 @@ theme_override_constants/margin_bottom = 8
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("1_g03nd")
-theme_type_variation = &"QuestLabel"
-theme_override_font_sizes/font_size = 10
-text = "Tutorial"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="CheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
 mouse_filter = 2
-theme = ExtResource("1_g03nd")
-theme_type_variation = &"QuestCheckbox"
+theme_override_constants/separation = 0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(150, 0)
+[node name="ShowTutorialButton" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("1_g03nd")
-theme_type_variation = &"QuestRichTextLabel"
-bbcode_enabled = true
-text = "Place 1 Miner on an Ore Node"
-horizontal_alignment = 1
-vertical_alignment = 1
+size_flags_horizontal = 8
+theme_type_variation = &"TutorialButton"
+text = "Tutorial"
+
+[node name="TutorialPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 2
+theme_type_variation = &"HudPanelAlt"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/TutorialPanel"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="QuestInfoContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TutorialPanel/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
