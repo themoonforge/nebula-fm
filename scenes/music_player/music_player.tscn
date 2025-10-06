@@ -1,14 +1,14 @@
 [gd_scene load_steps=4 format=3 uid="uid://b36onlvw61n8b"]
 
-[ext_resource type="AudioStream" uid="uid://bv16u5hhmnoeg" path="res://music/bg (1).wav" id="1_38sxc"]
 [ext_resource type="AudioStream" uid="uid://nriyc533j13x" path="res://sfx/ui/ui_click.ogg" id="2_6snej"]
+[ext_resource type="AudioStream" uid="uid://7sf0kylb8mka" path="res://music/bg.wav" id="2_7oq6m"]
 [ext_resource type="Script" uid="uid://bo5fni4qsrsrb" path="res://sfx_audio_stream_player_2d.gd" id="3_7oq6m"]
 
 [node name="MusicPlayer" type="Node"]
 script = ExtResource("3_7oq6m")
 
 [node name="BackgroundAtmosphere" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("1_38sxc")
+stream = ExtResource("2_7oq6m")
 autoplay = true
 bus = &"Music"
 
