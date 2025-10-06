@@ -73,7 +73,11 @@ func _ready() -> void:
 	camera.bounds_rect = ground_layer.get_used_rect()
 	camera.set_bounds()
 	
+	MapManager.regenerate.connect(_on_regenerate)
 	MapManager.place_obstacle.connect(_on_place_obstacle)
+	
+func _on_regenerate() -> void:
+	_regenerate()
 		
 func _on_place_obstacle(obstacle: Node2D) -> void:
 	placed_objects.add_child(obstacle)
@@ -81,32 +85,34 @@ func _on_place_obstacle(obstacle: Node2D) -> void:
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed(&"generate"):
 		print("SHOULD GENERATE")
+		_regenerate()
 		
-		GridManager.free_grid()
-		print("freed grid")
-		MapManager.free_buildings()
-		print("freed buildings")
-		ground_layer.clear()
-		print("cleared ground layer")
-		small_blob_layer.clear()
-		big_blob_layer.clear()
-		print("cleared blob layer")
-		obstacles_layer.clear()
-		print("cleared obstacles layer")
-		note_sources_layer.clear()
-		print("cleared note sources layer")
-		water_layer.clear()
-		print("cleared water sources layer")
-		crater_layer.clear()
-		print("cleared crater sources layer")
-		dust_layer.clear()
-		print("cleared dust sources layer")
-		for object in placed_objects.get_children():
-			object.queue_free()
-		
-		await get_tree().physics_frame
-		generate()
-		print("called generate again")
+func _regenerate() -> void:
+	GridManager.free_grid()
+	print("freed grid")
+	MapManager.free_buildings()
+	print("freed buildings")
+	ground_layer.clear()
+	print("cleared ground layer")
+	small_blob_layer.clear()
+	big_blob_layer.clear()
+	print("cleared blob layer")
+	obstacles_layer.clear()
+	print("cleared obstacles layer")
+	note_sources_layer.clear()
+	print("cleared note sources layer")
+	water_layer.clear()
+	print("cleared water sources layer")
+	crater_layer.clear()
+	print("cleared crater sources layer")
+	dust_layer.clear()
+	print("cleared dust sources layer")
+	for object in placed_objects.get_children():
+		object.queue_free()
+	
+	await get_tree().physics_frame
+	generate()
+	print("called generate again")
 		
 func register_static_layer(layer: TileMapLayer) -> void:
 	for y in get_viewport_rect().size.y / 16:

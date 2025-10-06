@@ -15,6 +15,7 @@ var button_style_hover: StyleBoxFlat
 var is_hovering_button: bool
 
 func _ready() -> void:
+	MapManager.regenerate.connect(_on_map_regenerate)
 	QuestTracker.quest_completed.connect(_on_quest_complete)
 	
 	tutorial_panel.hide()
@@ -30,6 +31,15 @@ func _ready() -> void:
 	EventBus.note_played.connect(_on_note_played)
 	MapManager.place_building.connect(_on_placed_building)
 	_render_quest_info_items()
+	
+func _on_map_regenerate() -> void:
+	buildings_placed = {}
+	notes_played = {}
+	
+	for resource in quest_resources:
+		resource.complete = false
+		for requirement in resource.completed_requirements:
+			requirement.complete = false
 	
 func _on_quest_complete(quest_resource: QuestResource) -> void:
 	# todo just fade an icon in or something

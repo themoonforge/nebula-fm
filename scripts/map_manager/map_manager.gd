@@ -2,6 +2,7 @@ extends Node
 
 signal place_obstacle(obstacle: Node2D)
 signal place_building(building: Building)
+signal regenerate()
 
 const TILE_SIZE: Vector2i = Vector2i(16, 16)
 const COLOR_FREE: Color = Color(0.0, 0.894, 0.894, 0.541)

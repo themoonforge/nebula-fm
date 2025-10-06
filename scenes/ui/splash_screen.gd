@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+signal splash_done()
+
 @onready var splash_screen_texture: TextureRect = %SplashScreenTexture
 
 func _ready() -> void:
@@ -8,3 +10,5 @@ func _ready() -> void:
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(splash_screen_texture, "modulate", Color.TRANSPARENT, 2.0)
+	await tween.finished
+	splash_done.emit()

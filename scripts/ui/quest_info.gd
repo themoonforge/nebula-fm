@@ -7,8 +7,13 @@ class_name QuestInfo extends HBoxContainer
 var attached_quest_resource: QuestResource
 
 func _ready() -> void:
+	MapManager.regenerate.connect(_on_map_regenerate)
 	QuestTracker.quest_completed.connect(_on_quest_completed)
 	checked.hide()
+	
+func _on_map_regenerate() -> void:
+	checked.hide()
+	not_checked.show()
 	
 func _on_quest_completed(resource: QuestResource) -> void:
 	if resource != attached_quest_resource:
