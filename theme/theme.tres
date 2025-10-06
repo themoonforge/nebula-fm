@@ -1,7 +1,39 @@
-[gd_resource type="Theme" load_steps=21 format=3 uid="uid://cnveursukjnnk"]
+[gd_resource type="Theme" load_steps=26 format=3 uid="uid://cnveursukjnnk"]
 
+[ext_resource type="FontFile" uid="uid://c6h3we4j2dvbf" path="res://fonts/GravityBold8.ttf" id="1_4yjuo"]
 [ext_resource type="Texture2D" uid="uid://bkye0qatrb70" path="res://sprites/checkbox_checked.png" id="1_nrt0f"]
 [ext_resource type="Texture2D" uid="uid://doq3m5pe1wgyx" path="res://sprites/checkbox_unchecked.png" id="2_4yjuo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yw8fc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gco77"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.19215687, 0.16078432, 0.28235295, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nrt0f"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.19215687, 0.16078432, 0.28235295, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4yjuo"]
+bg_color = Color(0.19215687, 0.16078432, 0.28235295, 1)
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+anti_aliasing = false
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nrt0f"]
 
@@ -50,6 +82,17 @@ color = Color(0.9607843, 0.93333334, 0.8509804, 1)
 thickness = 4
 
 [resource]
+ControlsButton/base_type = &"Button"
+ControlsButton/font_sizes/font_size = 6
+ControlsButton/fonts/font = ExtResource("1_4yjuo")
+ControlsButton/styles/focus = SubResource("StyleBoxEmpty_yw8fc")
+ControlsButton/styles/hover = SubResource("StyleBoxFlat_gco77")
+ControlsButton/styles/normal = SubResource("StyleBoxFlat_nrt0f")
+ControlsLabel/base_type = &"Label"
+ControlsLabel/font_sizes/font_size = 6
+ControlsLabel/fonts/font = ExtResource("1_4yjuo")
+ControlsPanel/base_type = &"PanelContainer"
+ControlsPanel/styles/panel = SubResource("StyleBoxFlat_4yjuo")
 GameMenuButton/base_type = &"Button"
 GameMenuButton/colors/font_color = Color(0.9607843, 0.93333334, 0.8509804, 1)
 GameMenuButton/colors/font_hover_color = Color(0.9647059, 0.54901963, 0.7411765, 1)

@@ -35,7 +35,7 @@ enabled=PackedStringArray("res://addons/midi/plugin.cfg")
 
 [gui]
 
-theme/custom="uid://bkxtk5gau1dbp"
+theme/custom="uid://cnveursukjnnk"
 theme/custom_font="uid://2yivcmy44ht4"
 
 [input]
