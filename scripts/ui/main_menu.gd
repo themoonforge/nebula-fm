@@ -41,7 +41,6 @@ func _ready() -> void:
 	credits_screen.hide()
 	
 func _on_splash_done() -> void:
-	print("HELLO")
 	is_blocked = false
 	
 func _process(delta: float) -> void:
