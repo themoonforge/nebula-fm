@@ -61,6 +61,9 @@ enum ConnectionType {
 		if is_node_ready():
 			_handle_active()
 
+
+var tile_coord: Vector2i # location on the tilemap
+
 func _ready() -> void:
 	_setup_resource()
 	_handle_active()

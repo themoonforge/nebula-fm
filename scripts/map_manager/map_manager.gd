@@ -10,8 +10,8 @@ const COLOR_OCCUPIED: Color = Color(1.0, 0.68, 0.744, 0.541)
 const COLOR_ADD: Color = Color(0.976, 0.827, 0.416, 0.773)
 
 # dict with key: tiled_coord, value: object on the map
-# for fast access of objects bei tile coord
-var map_data: Dictionary[Vector2i, Node2D]
+# for fast access of belts
+var map_data: Dictionary[Vector2i, Node2D] # BELTS ONLY
 
 # just for tile map coord calculation
 var ground_layer: TileMapLayer
@@ -124,10 +124,15 @@ func _process(delta: float) -> void:
 				building.global_position = building_cursor.global_position
 				building.is_active = true
 				var tile_coordinate = ground_layer.local_to_map(building_cursor.global_position)
-				map_data[tile_coordinate] = building
+				
+				building.tile_coord = tile_coordinate
 				# TODO this is dangerous! improve!
+				print(map_data)
 				if building.building_resource.name == StringName("Conveyor Belt"):
+					building.name = building.name + "_BELT"
+					#map_data[tile_coordinate] = building
 					_evaluate_conveyor_belt_direction(tile_coordinate, building)
+					map_data[tile_coordinate] = building
 
 				
 				# signal for mister nebula?
@@ -186,7 +191,7 @@ func set_active_transformer_ghost(transformer_resource: AbstractBuildingResource
 	mode = Mode.BUILD
 
 # checks if building (or belt) has neighbour belts
-func has_neighbour_belts(building: Building, root_position):
+func has_neighbours(root_position):
 	var top = root_position + Vector2i(0, -1)
 	var right = root_position + Vector2i(1, 0)
 	var bottom = root_position + Vector2i(0, 1)
@@ -194,7 +199,7 @@ func has_neighbour_belts(building: Building, root_position):
 			
 	var has_neighbour = map_data.has(top) or map_data.has(right) or map_data.has(bottom) or map_data.has(left)
 
-func has_neighbour_belts(building: Building, root_position):
+func count_neighbours(root_position):
 	var top = root_position + Vector2i(0, -1)
 	var right = root_position + Vector2i(1, 0)
 	var bottom = root_position + Vector2i(0, 1)
@@ -209,9 +214,9 @@ func has_neighbour_belts(building: Building, root_position):
 		count_neighbours += 1
 	if map_data.has(left):
 		count_neighbours += 1
-			
-	#var has_neighbour = map_data.has(top) or map_data.has(right) or map_data.has(bottom) or map_data.has(left)
-	return false
+	
+	print("count neighbours", count_neighbours)
+	return count_neighbours
 
 func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Building):
 	# check 4 directions
@@ -226,7 +231,7 @@ func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Buildi
 		data = map_data.get(top)
 		
 		#check if the belt to connect with already has connections
-		if data is Building and !has_neighbour_belts(data, top):
+		if data is Building and count_neighbours(top) <= 1:
 			# check rotation
 			building.building_rotation = BuildingsUtils.BuildingRotation.DOWN
 			#_find_corner(data.building_rotation, building.building_rotation)
@@ -235,7 +240,7 @@ func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Buildi
 		data = map_data.get(right)
 		
 		#check if the belt to connect with already has connections		
-		if data is Building and !has_neighbour_belts(data, right):
+		if data is Building and count_neighbours(right) <= 1:
 			# check rotation
 			building.building_rotation = BuildingsUtils.BuildingRotation.LEFT
 			
@@ -243,7 +248,7 @@ func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Buildi
 		data = map_data.get(left)
 		
 		#check if the belt to connect with already has connections
-		if data is Building and !has_neighbour_belts(data, left):
+		if data is Building and count_neighbours(left) <= 1:
 			# check rotation
 			building.building_rotation = BuildingsUtils.BuildingRotation.RIGHT
 
@@ -251,9 +256,14 @@ func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Buildi
 		data = map_data.get(bottom)
 		
 		#check if the belt to connect with already has connections
-		if data is Building and !has_neighbour_belts(data, bottom):
+		if data is Building and count_neighbours(bottom) <= 1:
 			# check rotation
 			building.building_rotation = BuildingsUtils.BuildingRotation.UP
+	else:
+		return
+	
+	var tile_coordinate = ground_layer.local_to_map(data.global_position)
+	data.tile_coord = tile_coordinate
 	
 	_find_corner(data, building)
 		
@@ -261,33 +271,62 @@ func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Buildi
 
 ## checks if corner was created (pairwise)
 #func _find_corner(a_rotation: BuildingsUtils.BuildingRotation, b_rotation: BuildingsUtils.BuildingRotation):
-func _find_corner(building_a: Building, building_b: Building):
-	var building_tuple = [building_a, building_b]
+func _find_corner(present_building: Building, new_building: Building):
+	#var building_tuple = [present_building, new_building]
 	# check pair wise for new conveyorbelts
-	var tuple = [building_a.building_rotation, building_b.building_rotation]
+	var tuple = [present_building.building_rotation, new_building.building_rotation]
+	
+	# HOW the two buildings are located to each other 
+	var a = present_building.tile_coord
+	var b = new_building.tile_coord
+	
+	var is_a_right_of_b = a.x > b.x
+	var is_a_left_of_b = a.x < b.x
+	var is_a_above_b = a.y < b.y
+	var is_a_below_b = a.y > b.y
+	
+	# LOCATION STATES (THESE ARE THE ROTATIONS!)
+	var a_is_right = present_building.building_rotation == BuildingsUtils.BuildingRotation.RIGHT
+	var a_is_left = present_building.building_rotation == BuildingsUtils.BuildingRotation.LEFT
+	var a_is_up = present_building.building_rotation == BuildingsUtils.BuildingRotation.UP
+	var a_is_down = present_building.building_rotation == BuildingsUtils.BuildingRotation.DOWN
+	
+	var b_is_right = new_building.building_rotation == BuildingsUtils.BuildingRotation.RIGHT
+	var b_is_left = new_building.building_rotation == BuildingsUtils.BuildingRotation.LEFT
+	var b_is_up = new_building.building_rotation == BuildingsUtils.BuildingRotation.UP
+	var b_is_down = new_building.building_rotation == BuildingsUtils.BuildingRotation.DOWN
+	
+	# CORNER STATES
+	var is_top_right_corner_f = (is_a_above_b and a_is_right and b_is_down) or (is_a_below_b and a_is_down and b_is_right)
+	var is_botton_right_corner_f = (is_a_right_of_b and a_is_down and b_is_left) or (is_a_left_of_b and a_is_left and b_is_down)
+	var is_bottom_left_f = (is_a_above_b and a_is_up and b_is_left) or (is_a_below_b and a_is_left and b_is_up)
+	var is_top_left_f = (is_a_right_of_b and a_is_right and b_is_up) or (is_a_left_of_b and a_is_up and b_is_right)
+
+	#var is_top_right_corner_b = has_left and has_up
+	#var is_botton_right_corner_b = has_right and has_up
+	#var is_bottom_left_b = has_right and has_down
+	#var is_top_left_b = has_left and has_down
 	
 	# helper bools
-	var has_right = BuildingsUtils.BuildingRotation.RIGHT in tuple
-	var has_left = BuildingsUtils.BuildingRotation.LEFT in tuple
-	var has_up = BuildingsUtils.BuildingRotation.UP in tuple
-	var has_down = BuildingsUtils.BuildingRotation.DOWN in tuple
+	#var has_right = BuildingsUtils.BuildingRotation.RIGHT in tuple
+	#var has_left = BuildingsUtils.BuildingRotation.LEFT in tuple
+	#var has_up = BuildingsUtils.BuildingRotation.UP in tuple
+	#var has_down = BuildingsUtils.BuildingRotation.DOWN in tuple
 	
 	# CORNER STATES
 	# "f" stands for forward, "b" for backward
-	var is_top_right_corner_f = has_right and has_down
-	var is_botton_right_corner_f = has_left and has_down
-	var is_bottom_left_f = has_left and has_up
-	var is_top_left_f = has_right and has_up
-
-	var is_top_right_corner_b = has_left and has_up
-	var is_botton_right_corner_b = has_right and has_up
-	var is_bottom_left_b = has_right and has_down
-	var is_top_left_b = has_left and has_down
+	#var is_top_right_corner_f = has_right and has_down
+	#var is_botton_right_corner_f = has_left and has_down
+	#var is_bottom_left_f = has_left and has_up
+	#var is_top_left_f = has_right and has_up
+#
+	#var is_top_right_corner_b = has_left and has_up
+	#var is_botton_right_corner_b = has_right and has_up
+	#var is_bottom_left_b = has_right and has_down
+	#var is_top_left_b = has_left and has_down
 	
-	#var building_tuple = [building_a, building_b]
 	
 	#if is_top_right_corner_f:
-	# TODO retrieve belt rotate
 	# changes the resource of the belt: conveyor belt -> conveyo belt corner <flow direction>
 	var belt_to_replace: Building
 	
@@ -299,10 +338,10 @@ func _find_corner(building_a: Building, building_b: Building):
 	if is_top_right_corner_f:
 		
 		# retrieve the building to replace the resource of
-		if building_a.building_rotation == BuildingsUtils.BuildingRotation.RIGHT:
-			belt_to_replace = building_a
-		else:
-			belt_to_replace = building_b
+		if is_a_above_b:
+			belt_to_replace = present_building
+		elif is_a_below_b:
+			belt_to_replace = new_building
 				
 		belt_to_replace.building_resource = conveyor_belt_corner_f
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.DOWN
@@ -310,10 +349,10 @@ func _find_corner(building_a: Building, building_b: Building):
 	elif is_botton_right_corner_f:
 		
 		# retrieve the building to replace the resource of
-		if building_a.building_rotation == BuildingsUtils.BuildingRotation.DOWN:
-			belt_to_replace = building_a
-		else:
-			belt_to_replace = building_b
+		if is_a_right_of_b:
+			belt_to_replace = present_building
+		elif is_a_left_of_b:
+			belt_to_replace = new_building
 				
 		belt_to_replace.building_resource = conveyor_belt_corner_f
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.LEFT	
@@ -321,10 +360,10 @@ func _find_corner(building_a: Building, building_b: Building):
 	elif is_bottom_left_f:
 		
 		# retrieve the building to replace the resource of
-		if building_a.building_rotation == BuildingsUtils.BuildingRotation.LEFT:
-			belt_to_replace = building_a
-		else:
-			belt_to_replace = building_b
+		if is_a_below_b:
+			belt_to_replace = present_building
+		elif is_a_above_b:
+			belt_to_replace = new_building
 				
 		belt_to_replace.building_resource = conveyor_belt_corner_f
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.UP	
@@ -332,10 +371,10 @@ func _find_corner(building_a: Building, building_b: Building):
 	elif is_top_left_f:
 		
 		# retrieve the building to replace the resource of
-		if building_a.building_rotation == BuildingsUtils.BuildingRotation.UP:
-			belt_to_replace = building_a
-		else:
-			belt_to_replace = building_b
+		if is_a_left_of_b:
+			belt_to_replace = present_building
+		elif is_a_right_of_b:
+			belt_to_replace = new_building
 				
 		belt_to_replace.building_resource = conveyor_belt_corner_f
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.RIGHT	
