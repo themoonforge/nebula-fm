@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://b3lqsa7g6sa0o"]
+[gd_scene load_steps=16 format=4 uid="uid://b3lqsa7g6sa0o"]
 
 [ext_resource type="Script" uid="uid://ccd2m6lh6bgbi" path="res://scripts/map/map.gd" id="1_tqkkf"]
 [ext_resource type="TileSet" uid="uid://cbb4sityyi4us" path="res://tileset/tileset.tres" id="2_a2pkv"]
@@ -8,6 +8,9 @@
 [ext_resource type="Script" uid="uid://8g273shyfey2" path="res://addons/midi/MidiPlayer.gd" id="5_04w0f"]
 [ext_resource type="PackedScene" uid="uid://tpmfvg35idiu" path="res://scenes/mister_nebula_fm/mister_nebula_fm.tscn" id="5_fcby6"]
 [ext_resource type="Script" uid="uid://wde3xbyqm6uu" path="res://addons/midi/addition/midi_input_note_resource.gd" id="7_sqgf4"]
+[ext_resource type="PackedScene" uid="uid://c7b6b1h52gyyp" path="res://scenes/map/ground_layer_ref.tscn" id="9_vvrx0"]
+[ext_resource type="Script" uid="uid://bonu1rlmnev4q" path="res://scripts/map_manager/conveyor_belt_container.gd" id="10_f17u5"]
+[ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="11_b56te"]
 
 [sub_resource type="Resource" id="Resource_vvrx0"]
 resource_name = "D4"
@@ -17,6 +20,10 @@ creation_time = 2826291
 name = &"D4"
 simple_name = &"D"
 metadata/_custom_type_script = "uid://wde3xbyqm6uu"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x2kg6"]
+atlas = ExtResource("11_b56te")
+region = Rect2(128, 112, 16, 16)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_tqkkf"]
 noise_type = 2
@@ -48,6 +55,9 @@ input_buffer = Array[ExtResource("7_sqgf4")]([SubResource("Resource_vvrx0")])
 [node name="GroundLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 tile_set = ExtResource("2_a2pkv")
+
+[node name="GroundLayerRef" parent="." instance=ExtResource("9_vvrx0")]
+unique_name_in_owner = true
 
 [node name="DustLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
@@ -88,6 +98,17 @@ tile_set = ExtResource("2_a2pkv")
 unique_name_in_owner = true
 z_index = 1
 y_sort_enabled = true
+
+[node name="ConveyorBeltManager" type="Node2D" parent="." node_paths=PackedStringArray("ground_layer")]
+y_sort_enabled = true
+script = ExtResource("10_f17u5")
+note_texture = SubResource("AtlasTexture_x2kg6")
+ground_layer = NodePath("../GroundLayerRef")
+
+[node name="ConveyorBeltContainer" type="Node2D" parent="ConveyorBeltManager"]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(0, -16)
 
 [node name="NoiseRect" type="TextureRect" parent="."]
 unique_name_in_owner = true

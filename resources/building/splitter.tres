@@ -9,7 +9,7 @@ region = Rect2(192, 72, 32, 24)
 
 [resource]
 script = ExtResource("1_m7yki")
-name = &"Conveyor"
+name = &"Merger"
 size = Vector2i(2, 1)
 background_tile = Vector2i(12, 4)
 input_locations = Dictionary[Vector2i, int]({
