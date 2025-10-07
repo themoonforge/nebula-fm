@@ -128,3 +128,19 @@ texture = ExtResource("4_b8x2d")
 layout_mode = 2
 theme_type_variation = &"HudLabel"
 text = "Leave delete mode"
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ControlsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/ControlsPanel/MarginContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+theme_type_variation = &"HudLabel"
+text = "Right-mouse down: Drag to pan"
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ControlsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/ControlsPanel/MarginContainer/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+theme_type_variation = &"HudLabel"
+text = "Scroll-wheel: ZOOM IN/OUT"
