@@ -9,6 +9,13 @@ const COLOR_FREE: Color = Color(0.0, 0.894, 0.894, 0.541)
 const COLOR_OCCUPIED: Color = Color(1.0, 0.68, 0.744, 0.541)
 const COLOR_ADD: Color = Color(0.976, 0.827, 0.416, 0.773)
 
+# dict with key: tiled_coord, value: object on the map
+# for fast access of objects bei tile coord
+var map_data: Dictionary[Vector2i, Node2D]
+
+# just for tile map coord calculation
+var ground_layer: TileMapLayer
+
 @export var selected_building_resource: AbstractBuildingResource = null:
 	set(value):
 		selected_building_resource = value
@@ -51,6 +58,8 @@ func _ready() -> void:
 	grid_cursor.hide()
 	building_cursor.hide()
 	building_cursor.building.building_resource = selected_building_resource
+	
+	ground_layer = load("res://scenes/map/ground_layer_ref.tscn").instantiate()
 
 func _process(delta: float) -> void:
 	if !building_cursor:
@@ -88,12 +97,13 @@ func _process(delta: float) -> void:
 			grid_cursor.show()
 			grid_cursor.global_position = snapped_coordinate
 
-			if building_cursor.collider_dict.size() > 0:
-				# todo:
-				# delete farbe nicht anzeigen, wenn SpaceStation gehovered wird
-						
-				building_cursor.building.modulate_sprite(COLOR_OCCUPIED)
-				return
+			# CASE: position occupied	
+			#if building_cursor.collider_dict.size() > 0:
+				## todo:
+				## delete farbe nicht anzeigen, wenn SpaceStation gehovered wird
+						#
+				#building_cursor.building.modulate_sprite(COLOR_OCCUPIED)
+				#return
 					
 			if building_cursor.building.building_resource is CollectorBuildingResource:
 				if _borders_note_source(hovered_cell) && GridManager.is_cell_free(hovered_cell):
@@ -108,9 +118,19 @@ func _process(delta: float) -> void:
 				grid_cursor.hide()
 				#var clicked_position: Vector2 = mouse_pos
 				#var clicked_cell: Vector2i = Vector2i(mouse_pos.x / 16, mouse_pos.y / 16)
-				var building = building_cursor.building.duplicate()
+				
+				# place buildings or belts (which are also buildings technically)
+				var building = building_cursor.building.duplicate()				
 				building.global_position = building_cursor.global_position
 				building.is_active = true
+				var tile_coordinate = ground_layer.local_to_map(building_cursor.global_position)
+				map_data[tile_coordinate] = building
+				# TODO this is dangerous! improve!
+				if building.building_resource.name == StringName("Conveyor Belt"):
+					_evaluate_conveyor_belt_direction(tile_coordinate, building)
+
+				
+				# signal for mister nebula?
 				place_obstacle.emit(building)
 				place_building.emit(building)
 				MusicPlayer.play_sfx("build_placed")
@@ -164,3 +184,199 @@ func set_active_transformer_ghost(transformer_resource: AbstractBuildingResource
 	building_cursor.building.modulate_sprite(COLOR_FREE)
 	building_cursor.building.show_connection_indicators = true
 	mode = Mode.BUILD
+
+# checks if building (or belt) has neighbour belts
+func has_neighbour_belts(building: Building, root_position):
+	var top = root_position + Vector2i(0, -1)
+	var right = root_position + Vector2i(1, 0)
+	var bottom = root_position + Vector2i(0, 1)
+	var left = root_position + Vector2i(-1, 0)
+			
+	var has_neighbour = map_data.has(top) or map_data.has(right) or map_data.has(bottom) or map_data.has(left)
+
+func has_neighbour_belts(building: Building, root_position):
+	var top = root_position + Vector2i(0, -1)
+	var right = root_position + Vector2i(1, 0)
+	var bottom = root_position + Vector2i(0, 1)
+	var left = root_position + Vector2i(-1, 0)
+	
+	var count_neighbours = 0
+	if map_data.has(top):
+		count_neighbours += 1
+	if map_data.has(right):
+		count_neighbours += 1	
+	if map_data.has(bottom):
+		count_neighbours += 1
+	if map_data.has(left):
+		count_neighbours += 1
+			
+	#var has_neighbour = map_data.has(top) or map_data.has(right) or map_data.has(bottom) or map_data.has(left)
+	return false
+
+func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Building):
+	# check 4 directions
+	var top = root_position + Vector2i(0, -1)
+	var right = root_position + Vector2i(1, 0)
+	var bottom = root_position + Vector2i(0, 1)
+	var left = root_position + Vector2i(-1, 0)
+	
+	# local variable for data of the map. data is a building
+	var data
+	if map_data.has(top):
+		data = map_data.get(top)
+		
+		#check if the belt to connect with already has connections
+		if data is Building and !has_neighbour_belts(data, top):
+			# check rotation
+			building.building_rotation = BuildingsUtils.BuildingRotation.DOWN
+			#_find_corner(data.building_rotation, building.building_rotation)
+	
+	elif map_data.has(right):
+		data = map_data.get(right)
+		
+		#check if the belt to connect with already has connections		
+		if data is Building and !has_neighbour_belts(data, right):
+			# check rotation
+			building.building_rotation = BuildingsUtils.BuildingRotation.LEFT
+			
+	elif map_data.has(left):
+		data = map_data.get(left)
+		
+		#check if the belt to connect with already has connections
+		if data is Building and !has_neighbour_belts(data, left):
+			# check rotation
+			building.building_rotation = BuildingsUtils.BuildingRotation.RIGHT
+
+	elif map_data.has(bottom):
+		data = map_data.get(bottom)
+		
+		#check if the belt to connect with already has connections
+		if data is Building and !has_neighbour_belts(data, bottom):
+			# check rotation
+			building.building_rotation = BuildingsUtils.BuildingRotation.UP
+	
+	_find_corner(data, building)
+		
+	#_find_corners(root_position, building)
+
+## checks if corner was created (pairwise)
+#func _find_corner(a_rotation: BuildingsUtils.BuildingRotation, b_rotation: BuildingsUtils.BuildingRotation):
+func _find_corner(building_a: Building, building_b: Building):
+	var building_tuple = [building_a, building_b]
+	# check pair wise for new conveyorbelts
+	var tuple = [building_a.building_rotation, building_b.building_rotation]
+	
+	# helper bools
+	var has_right = BuildingsUtils.BuildingRotation.RIGHT in tuple
+	var has_left = BuildingsUtils.BuildingRotation.LEFT in tuple
+	var has_up = BuildingsUtils.BuildingRotation.UP in tuple
+	var has_down = BuildingsUtils.BuildingRotation.DOWN in tuple
+	
+	# CORNER STATES
+	# "f" stands for forward, "b" for backward
+	var is_top_right_corner_f = has_right and has_down
+	var is_botton_right_corner_f = has_left and has_down
+	var is_bottom_left_f = has_left and has_up
+	var is_top_left_f = has_right and has_up
+
+	var is_top_right_corner_b = has_left and has_up
+	var is_botton_right_corner_b = has_right and has_up
+	var is_bottom_left_b = has_right and has_down
+	var is_top_left_b = has_left and has_down
+	
+	#var building_tuple = [building_a, building_b]
+	
+	#if is_top_right_corner_f:
+	# TODO retrieve belt rotate
+	# changes the resource of the belt: conveyor belt -> conveyo belt corner <flow direction>
+	var belt_to_replace: Building
+	
+	var conveyor_belt_corner_f = load("res://resources/building/conveyor_belt_corner_f.tres")
+	var conveyor_belt_corner_b = load("res://resources/building/conveyor_belt_corner_b.tres")
+
+	# FORWARD DIRECTION
+
+	if is_top_right_corner_f:
+		
+		# retrieve the building to replace the resource of
+		if building_a.building_rotation == BuildingsUtils.BuildingRotation.RIGHT:
+			belt_to_replace = building_a
+		else:
+			belt_to_replace = building_b
+				
+		belt_to_replace.building_resource = conveyor_belt_corner_f
+		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.DOWN
+	
+	elif is_botton_right_corner_f:
+		
+		# retrieve the building to replace the resource of
+		if building_a.building_rotation == BuildingsUtils.BuildingRotation.DOWN:
+			belt_to_replace = building_a
+		else:
+			belt_to_replace = building_b
+				
+		belt_to_replace.building_resource = conveyor_belt_corner_f
+		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.LEFT	
+
+	elif is_bottom_left_f:
+		
+		# retrieve the building to replace the resource of
+		if building_a.building_rotation == BuildingsUtils.BuildingRotation.LEFT:
+			belt_to_replace = building_a
+		else:
+			belt_to_replace = building_b
+				
+		belt_to_replace.building_resource = conveyor_belt_corner_f
+		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.UP	
+		
+	elif is_top_left_f:
+		
+		# retrieve the building to replace the resource of
+		if building_a.building_rotation == BuildingsUtils.BuildingRotation.UP:
+			belt_to_replace = building_a
+		else:
+			belt_to_replace = building_b
+				
+		belt_to_replace.building_resource = conveyor_belt_corner_f
+		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.RIGHT	
+	# BACKWARD DIRECTION
+	
+	
+## autotiles cornes of conveyor belts
+func _find_corners(root_position: Vector2i, building: Building):
+	
+	var top = root_position + Vector2i(0, -1)
+	var right = root_position + Vector2i(1, 0)
+	var bottom = root_position + Vector2i(0, 1)
+	var left = root_position + Vector2i(-1, 0)
+
+	if map_data.has(top):
+		var data = map_data.get(top)
+		
+		if data is Building:	
+			# check rotation
+			building.building_rotation = BuildingsUtils.BuildingRotation.DOWN
+			#match(building.building_rotation):
+				#BuildingsUtils.BuildingRotation.DOWN:
+					
+	
+	elif map_data.has(right):
+		var data = map_data.get(right)
+		
+		if data is Building:
+			# check rotation
+			building.building_rotation = BuildingsUtils.BuildingRotation.LEFT
+			
+	elif map_data.has(left):
+		var data = map_data.get(left)
+		
+		if data is Building:
+			# check rotation
+			building.building_rotation = BuildingsUtils.BuildingRotation.RIGHT
+
+	elif map_data.has(bottom):
+		var data = map_data.get(bottom)
+		
+		if data is Building:
+			# check rotation
+			building.building_rotation = BuildingsUtils.BuildingRotation.UP
