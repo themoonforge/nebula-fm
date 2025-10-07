@@ -11,7 +11,8 @@ const COLOR_ADD: Color = Color(0.976, 0.827, 0.416, 0.773)
 
 # dict with key: tiled_coord, value: object on the map
 # for fast access of belts
-var map_data: Dictionary[Vector2i, Node2D] # BELTS ONLY
+var map_data: Dictionary[Vector2i, Node2D] # BELTS ONLY # TODO rename
+var map_data_c_collector: Dictionary[Vector2i, Node2D] # BELTS ONLY
 
 # just for tile map coord calculation
 var ground_layer: TileMapLayer
@@ -127,13 +128,15 @@ func _process(delta: float) -> void:
 				
 				building.tile_coord = tile_coordinate
 				# TODO this is dangerous! improve!
-				print(map_data)
 				if building.building_resource.name == StringName("Conveyor Belt"):
 					building.name = building.name + "_BELT"
 					#map_data[tile_coordinate] = building
 					_evaluate_conveyor_belt_direction(tile_coordinate, building)
 					map_data[tile_coordinate] = building
-
+					
+				# TODO this is dangerous! improve!
+				elif building.building_resource.name == StringName("C-Collector"):
+					map_data_c_collector[tile_coordinate] = building
 				
 				# signal for mister nebula?
 				place_obstacle.emit(building)
@@ -270,14 +273,9 @@ func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Buildi
 	
 	_find_corner(data, building)
 		
-	#_find_corners(root_position, building)
 
 ## checks if corner was created (pairwise)
-#func _find_corner(a_rotation: BuildingsUtils.BuildingRotation, b_rotation: BuildingsUtils.BuildingRotation):
 func _find_corner(present_building: Building, new_building: Building):
-	#var building_tuple = [present_building, new_building]
-	# check pair wise for new conveyorbelts
-	var tuple = [present_building.building_rotation, new_building.building_rotation]
 	
 	# HOW the two buildings are located to each other 
 	var a = present_building.tile_coord
@@ -420,7 +418,7 @@ func _find_corners(root_position: Vector2i, building: Building):
 			# check rotation
 			building.building_rotation = BuildingsUtils.BuildingRotation.DOWN
 			#match(building.building_rotation):
-				#BuildingsUtils.BuildingRotation.DOWN:
+			#BuildingsUtils.BuildingRotation.DOWN:
 					
 	
 	elif map_data.has(right):
