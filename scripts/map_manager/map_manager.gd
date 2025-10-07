@@ -151,7 +151,10 @@ func _process(delta: float) -> void:
 					if building.building_resource is SpaceRadioResource:
 						continue
 					#print("free: ", building.is_active)
+					if building.building_resource.name == StringName("Conveyor Belt") or StringName("corner_b") or StringName("corner_f"):
+						map_data.erase(building.tile_coord)
 					building.queue_free()
+					
 		Mode.IDLE:
 			pass
 			
@@ -302,31 +305,11 @@ func _find_corner(present_building: Building, new_building: Building):
 	var is_bottom_left_f = (is_a_above_b and a_is_up and b_is_left) or (is_a_below_b and a_is_left and b_is_up)
 	var is_top_left_f = (is_a_right_of_b and a_is_right and b_is_up) or (is_a_left_of_b and a_is_up and b_is_right)
 
-	#var is_top_right_corner_b = has_left and has_up
-	#var is_botton_right_corner_b = has_right and has_up
-	#var is_bottom_left_b = has_right and has_down
-	#var is_top_left_b = has_left and has_down
+	var is_top_right_corner_b = (is_a_right_of_b and a_is_up and b_is_left) or (is_a_left_of_b and a_is_left and b_is_up)
+	var is_botton_right_corner_b = (is_a_above_b and a_is_up and b_is_right) or (is_a_below_b and a_is_right and b_is_up)
+	var is_bottom_left_b = (is_a_right_of_b and a_is_right and b_is_down) or (is_a_left_of_b and a_is_down and b_is_right)
+	var is_top_left_b = (is_a_above_b and a_is_left and b_is_down) or (is_a_below_b and a_is_down and b_is_left)
 	
-	# helper bools
-	#var has_right = BuildingsUtils.BuildingRotation.RIGHT in tuple
-	#var has_left = BuildingsUtils.BuildingRotation.LEFT in tuple
-	#var has_up = BuildingsUtils.BuildingRotation.UP in tuple
-	#var has_down = BuildingsUtils.BuildingRotation.DOWN in tuple
-	
-	# CORNER STATES
-	# "f" stands for forward, "b" for backward
-	#var is_top_right_corner_f = has_right and has_down
-	#var is_botton_right_corner_f = has_left and has_down
-	#var is_bottom_left_f = has_left and has_up
-	#var is_top_left_f = has_right and has_up
-#
-	#var is_top_right_corner_b = has_left and has_up
-	#var is_botton_right_corner_b = has_right and has_up
-	#var is_bottom_left_b = has_right and has_down
-	#var is_top_left_b = has_left and has_down
-	
-	
-	#if is_top_right_corner_f:
 	# changes the resource of the belt: conveyor belt -> conveyo belt corner <flow direction>
 	var belt_to_replace: Building
 	
@@ -378,9 +361,50 @@ func _find_corner(present_building: Building, new_building: Building):
 				
 		belt_to_replace.building_resource = conveyor_belt_corner_f
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.RIGHT	
+		
 	# BACKWARD DIRECTION
 	
-	
+	elif is_top_right_corner_b:
+		# retrieve the building to replace the resource of
+		if is_a_right_of_b:
+			belt_to_replace = present_building
+		elif is_a_left_of_b:
+			belt_to_replace = new_building	
+			
+		belt_to_replace.building_resource = conveyor_belt_corner_b
+		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.DOWN	
+
+	elif is_botton_right_corner_b:
+		# retrieve the building to replace the resource of
+		if is_a_below_b:
+			belt_to_replace = present_building
+		elif is_a_above_b:
+			belt_to_replace = new_building	
+			
+		belt_to_replace.building_resource = conveyor_belt_corner_b
+		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.RIGHT	
+		
+	elif is_bottom_left_b:
+		
+		# retrieve the building to replace the resource of
+		if is_a_left_of_b:
+			belt_to_replace = present_building
+		elif is_a_right_of_b:
+			belt_to_replace = new_building	
+			
+		belt_to_replace.building_resource = conveyor_belt_corner_b
+		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.UP	
+		
+	elif is_top_left_b:
+		# retrieve the building to replace the resource of
+		if is_a_above_b:
+			belt_to_replace = present_building
+		elif is_a_below_b:
+			belt_to_replace = new_building	
+			
+		belt_to_replace.building_resource = conveyor_belt_corner_b
+		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.LEFT			
+		
 ## autotiles cornes of conveyor belts
 func _find_corners(root_position: Vector2i, building: Building):
 	
