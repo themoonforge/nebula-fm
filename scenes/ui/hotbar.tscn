@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://csjy35oh1vki4"]
+[gd_scene load_steps=12 format=3 uid="uid://csjy35oh1vki4"]
 
 [ext_resource type="Script" uid="uid://dpl7y8o8dswp0" path="res://scripts/ui/hotbar.gd" id="1_m1s8h"]
 [ext_resource type="PackedScene" uid="uid://donhenh45sal8" path="res://scenes/ui/transformer_item.tscn" id="2_6hkf2"]
@@ -6,10 +6,25 @@
 [ext_resource type="Resource" uid="uid://cls7knxgownu5" path="res://resources/building/c_collector.tres" id="3_6hkf2"]
 [ext_resource type="Resource" uid="uid://cn6kon66bh7gm" path="res://resources/building/splitter.tres" id="4_tyl16"]
 [ext_resource type="Resource" uid="uid://b0gwhmnjesig4" path="res://resources/building/conveyor_belt.tres" id="6_miglr"]
+[ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="7_xu3a2"]
+[ext_resource type="Script" uid="uid://0i4s0mv6jlsp" path="res://scripts/resource/splitter_resource.gd" id="8_f1jgs"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_miglr"]
 texture = ExtResource("2_pikvf")
 axis_stretch_horizontal = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1uw18"]
+atlas = ExtResource("7_xu3a2")
+region = Rect2(144, 144, 16, 16)
+
+[sub_resource type="Resource" id="Resource_fysmm"]
+script = ExtResource("8_f1jgs")
+name = &"Testblock"
+size = Vector2i(1, 1)
+background_tile = Vector2i(9, 9)
+has_rotation = false
+icon = SubResource("AtlasTexture_1uw18")
+metadata/_custom_type_script = "uid://0i4s0mv6jlsp"
 
 [node name="Hotbar" type="CanvasLayer"]
 script = ExtResource("1_m1s8h")
@@ -52,3 +67,7 @@ transformer_resource = ExtResource("4_tyl16")
 [node name="TransformerItem_Belt" parent="MarginContainer/BottomContainer/Panel/MarginContainer/TransformerContainer" instance=ExtResource("2_6hkf2")]
 layout_mode = 2
 transformer_resource = ExtResource("6_miglr")
+
+[node name="Test" parent="MarginContainer/BottomContainer/Panel/MarginContainer/TransformerContainer" instance=ExtResource("2_6hkf2")]
+layout_mode = 2
+transformer_resource = SubResource("Resource_fysmm")

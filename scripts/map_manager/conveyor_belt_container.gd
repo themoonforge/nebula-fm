@@ -35,7 +35,7 @@ func _process(delta: float) -> void:
 
 func _on_beat():
 	var dict = MapManager.map_data_c_collector as Dictionary[Vector2i, Node2D]
-	for c_collector in dict.values():	
+	for c_collector in dict.values():
 		spawn_note(c_collector.tile_coord)
 
 func spawn_note(tile_coord: Vector2i):

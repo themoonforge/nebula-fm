@@ -5,6 +5,8 @@ extends CanvasLayer
 @onready var you_sure_button: Button = %YouSureButton
 @onready var actually_no_button: Button = %ActuallyNoButton
 @onready var controls_panel: PanelContainer = %ControlsPanel
+@onready var build_mode_label: Label = %BuildModeLabel
+@onready var delete_mode_label: Label = %DeleteModeLabel
 
 var button_style_normal: StyleBoxFlat
 var button_style_hover: StyleBoxFlat
@@ -12,6 +14,10 @@ var button_style_hover: StyleBoxFlat
 var is_hovering_button: bool
 
 func _ready() -> void:
+	delete_mode_label.hide()
+	build_mode_label.hide()
+	MapManager.build_mode_change.connect(_on_build_mode_changed)
+
 	you_sure_button.hide()
 	actually_no_button.hide()
 	button_style_normal = show_controls_button.get_theme_stylebox("normal")
@@ -27,6 +33,18 @@ func _ready() -> void:
 	reset_button.pressed.connect(_on_reset_pressed)
 	you_sure_button.pressed.connect(_on_you_sure_button_pressed)
 	actually_no_button.pressed.connect(_on_actually_no_button)
+	
+func _on_build_mode_changed(mode: MapManager.Mode) -> void:
+	match mode:
+		MapManager.Mode.BUILD:
+			build_mode_label.show()
+			delete_mode_label.hide()
+		MapManager.Mode.DELETE:
+			build_mode_label.hide()
+			delete_mode_label.show()
+		_:
+			build_mode_label.hide()
+			delete_mode_label.hide()
 	
 func _on_reset_pressed() -> void:
 	you_sure_button.show()

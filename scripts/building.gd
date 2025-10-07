@@ -137,11 +137,11 @@ func _setup_resource() -> void:
 	var rotation_offset = BuildingsUtils.rotationToOffset(building_rotation, building_resource.rotation_offset)
 	var atlas_coordinate = building_resource.background_tile + rotation_offset
 	background.set_cell(Vector2i.ZERO, BUILDING_TILE_SET, atlas_coordinate)
-	#var tile_data: TileData = background.get_cell_tile_data(Vector2i.ZERO)
-	#var groundPoints: PackedVector2Array = tile_data.get_collision_polygon_points(0, 0)
-	#groundCollisionPolygon.polygon = groundPoints
-	#var shapePoints: PackedVector2Array = tile_data.get_collision_polygon_points(1, 0)
-	#shapeCollisionPolygon.polygon = shapePoints	
+	var tile_data: TileData = background.get_cell_tile_data(Vector2i.ZERO)
+	var groundPoints: PackedVector2Array = tile_data.get_collision_polygon_points(0, 0)
+	groundCollisionPolygon.polygon = groundPoints
+	var shapePoints: PackedVector2Array = tile_data.get_collision_polygon_points(1, 0)
+	shapeCollisionPolygon.polygon = shapePoints
 	label.text = str(building_resource)
 	_setup_connections(building_resource.input_locations, ConnectionType.INPUT)
 	_setup_connections(building_resource.output_locations, ConnectionType.OUTPUT)

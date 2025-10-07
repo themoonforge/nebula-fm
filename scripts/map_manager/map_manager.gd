@@ -2,6 +2,7 @@ extends Node
 
 signal place_obstacle(obstacle: Node2D)
 signal place_building(building: Building)
+signal build_mode_change(mode: Mode)
 signal regenerate()
 
 const TILE_SIZE: Vector2i = Vector2i(16, 16)
@@ -35,6 +36,8 @@ var note_sources: Array[Vector2i]
 @export var mode: Mode = Mode.IDLE:
 	set(value):
 		mode = value
+		grid_cursor.hide()
+		build_mode_change.emit(mode)
 		match mode:
 			Mode.BUILD:
 				building_cursor.show()
@@ -76,16 +79,16 @@ func _process(delta: float) -> void:
 	var snapped_coordinate: Vector2i = (world_mouse_pos - Vector2(TILE_SIZE.x / 2, TILE_SIZE.y / 2)).snapped(TILE_SIZE)
 	snapped_coordinate = snapped_coordinate - Vector2i(0, -16)
 
-	if Input.is_action_just_pressed(&"escape"):
+	if mode == Mode.DELETE && Input.is_action_just_pressed(&"delete"):
 		mode = Mode.IDLE
 		return
 
-	if Input.is_action_just_pressed(&"delete"):
+	if mode != Mode.DELETE && Input.is_action_just_pressed(&"delete"):
 		mode = Mode.DELETE
 		return
 
 	match mode:
-		Mode.BUILD:			
+		Mode.BUILD:
 			if Input.is_action_just_pressed(&"rotate_right"):
 				building_cursor.building.building_rotation = BuildingsUtils.rightRotation(building_cursor.building.building_rotation)
 				MusicPlayer.play_sfx("ui_click_tsk")
@@ -98,16 +101,13 @@ func _process(delta: float) -> void:
 			grid_cursor.show()
 			grid_cursor.global_position = snapped_coordinate
 
-			# CASE: position occupied	
-			#if building_cursor.collider_dict.size() > 0:
-				## todo:
-				## delete farbe nicht anzeigen, wenn SpaceStation gehovered wird
-						#
-				#building_cursor.building.modulate_sprite(COLOR_OCCUPIED)
-				#return
+			if building_cursor.collider_dict.size() > 0 or !GridManager.is_cell_free(hovered_cell):
+				grid_cursor.hide()
+				building_cursor.building.modulate_sprite(COLOR_OCCUPIED)
+				return
 					
 			if building_cursor.building.building_resource is CollectorBuildingResource:
-				if _borders_note_source(hovered_cell) && GridManager.is_cell_free(hovered_cell):
+				if _borders_note_source(hovered_cell):
 					building_cursor.building.modulate_sprite(COLOR_ADD)
 				else:
 					building_cursor.building.modulate_sprite(COLOR_OCCUPIED)
@@ -117,11 +117,9 @@ func _process(delta: float) -> void:
 				
 			if Input.is_action_just_pressed(&"ui_click"):
 				grid_cursor.hide()
-				#var clicked_position: Vector2 = mouse_pos
-				#var clicked_cell: Vector2i = Vector2i(mouse_pos.x / 16, mouse_pos.y / 16)
 				
 				# place buildings or belts (which are also buildings technically)
-				var building = building_cursor.building.duplicate()				
+				var building = building_cursor.building.duplicate()
 				building.global_position = building_cursor.global_position
 				building.is_active = true
 				var tile_coordinate = ground_layer.local_to_map(building_cursor.global_position)
@@ -139,24 +137,41 @@ func _process(delta: float) -> void:
 					map_data_c_collector[tile_coordinate] = building
 				
 				# signal for mister nebula?
+				# - what kind of signal?
+				# - he does subscribe to place_building, yes :)
 				place_obstacle.emit(building)
 				place_building.emit(building)
 				MusicPlayer.play_sfx("build_placed")
 
-				#if GridManager.is_cell_free(clicked_cell):
-				#	GridManager.set_cell(clicked_cell)
+				if GridManager.is_cell_free(hovered_cell):
+					GridManager.set_cell(hovered_cell)
 				if !Input.is_action_pressed(&"build_continue"):
 					mode = Mode.IDLE
 		Mode.DELETE:
 			delete_cursor.global_position = snapped_coordinate
+			
+			for building in delete_cursor.collider_dict:
+				if building.building_resource is SpaceRadioResource:
+					delete_cursor.is_active = false
+					return
+			
+			delete_cursor.is_active = true
+			
 			if Input.is_action_just_pressed(&"ui_click"):
 				for building in delete_cursor.collider_dict:
 					if building.building_resource is SpaceRadioResource:
 						continue
+						 
 					#print("free: ", building.is_active)
 					if building.building_resource.name == StringName("Conveyor Belt") or StringName("corner_b") or StringName("corner_f"):
 						map_data.erase(building.tile_coord)
+						
+					if building.building_resource.name == &"C-Collector":
+						map_data_c_collector.erase(building.tile_coord)
+						
 					building.queue_free()
+					if !GridManager.is_cell_free(hovered_cell):
+						GridManager.free_cell(hovered_cell)
 					
 		Mode.IDLE:
 			pass
@@ -221,7 +236,7 @@ func count_neighbours(root_position):
 	if map_data.has(left):
 		count_neighbours += 1
 	
-	print("count neighbours", count_neighbours)
+	Debug.debug_print("count neighbours", count_neighbours)
 	return count_neighbours
 
 func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Building):

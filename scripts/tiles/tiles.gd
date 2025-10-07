@@ -33,8 +33,10 @@ const DUST_4 = Vector2i(22, 18)
 # tileset patterns
 const PATTERN_TREE_1 = 0
 const PATTERN_TREE_2 = 1
-const PATTERN_TREE_3 = 2
-const PATTERN_TREE_4 = 3
+const PATTERN_TREE_3 = 3
+
+const PATTERN_SHROOM_1 = 2
+const PATTERN_SHROOM_2 = 18
 
 const PATTERN_BLOB_1 = 5
 const PATTERN_BLOB_2 = 6

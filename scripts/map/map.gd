@@ -44,7 +44,8 @@ func _ready() -> void:
 		Tiles.PATTERN_TREE_1, 
 		Tiles.PATTERN_TREE_2,
 		Tiles.PATTERN_TREE_3,
-		Tiles.PATTERN_TREE_4
+		Tiles.PATTERN_SHROOM_1,
+		Tiles.PATTERN_SHROOM_2
 	]
 	
 	small_blob_pattern_choices[Tiles.SOURCE_2] = [
