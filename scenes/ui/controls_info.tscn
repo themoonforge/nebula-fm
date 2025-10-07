@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://iobltexrlhor"]
+[gd_scene load_steps=11 format=3 uid="uid://iobltexrlhor"]
 
 [ext_resource type="Texture2D" uid="uid://bbn6frqqeoue5" path="res://sprites/letter_e.png" id="1_2y6sg"]
 [ext_resource type="Script" uid="uid://c333cnn0ucbxk" path="res://scripts/ui/controls_info.gd" id="1_7qu3e"]
 [ext_resource type="Texture2D" uid="uid://d1pxras8l7gje" path="res://sprites/letter_q.png" id="2_7qu3e"]
 [ext_resource type="Texture2D" uid="uid://7mlg37nqae5m" path="res://sprites/letter_d.png" id="3_j6tdq"]
 [ext_resource type="Texture2D" uid="uid://5dj2bkx7n3vm" path="res://sprites/letter_esc.png" id="4_b8x2d"]
+[ext_resource type="Texture2D" uid="uid://dfqej15bx0jfe" path="res://sprites/mouse_icons.png" id="6_j6tdq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7qu3e"]
 content_margin_left = 4.0
@@ -19,6 +20,14 @@ content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
 bg_color = Color(0.22745098, 0.5647059, 0.8156863, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8x2d"]
+atlas = ExtResource("6_j6tdq")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1l1b0"]
+atlas = ExtResource("6_j6tdq")
+region = Rect2(32, 0, 32, 32)
 
 [node name="ControlsInfo" type="CanvasLayer"]
 script = ExtResource("1_7qu3e")
@@ -164,15 +173,23 @@ text = "Leave delete mode"
 [node name="HBoxContainer5" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ControlsPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/VBoxContainer/ControlsPanel/MarginContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_b8x2d")
+
 [node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/ControlsPanel/MarginContainer/VBoxContainer/HBoxContainer5"]
 layout_mode = 2
 theme_type_variation = &"HudLabel"
-text = "Right-mouse down: Drag to pan"
+text = "Drag to pan"
 
 [node name="HBoxContainer6" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ControlsPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/ControlsPanel/MarginContainer/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_1l1b0")
+
 [node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/ControlsPanel/MarginContainer/VBoxContainer/HBoxContainer6"]
 layout_mode = 2
 theme_type_variation = &"HudLabel"
-text = "Scroll-wheel: ZOOM IN/OUT"
+text = "ZOOM IN/OUT"
