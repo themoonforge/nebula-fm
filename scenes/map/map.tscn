@@ -100,12 +100,15 @@ z_index = 1
 y_sort_enabled = true
 
 [node name="ConveyorBeltManager" type="Node2D" parent="." node_paths=PackedStringArray("ground_layer")]
+y_sort_enabled = true
 script = ExtResource("10_f17u5")
 note_texture = SubResource("AtlasTexture_x2kg6")
 ground_layer = NodePath("../GroundLayerRef")
 
 [node name="ConveyorBeltContainer" type="Node2D" parent="ConveyorBeltManager"]
 unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(0, -16)
 
 [node name="NoiseRect" type="TextureRect" parent="."]
 unique_name_in_owner = true
