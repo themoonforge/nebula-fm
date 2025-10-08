@@ -1,21 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://o1s2bbplsjbf"]
+[gd_scene load_steps=6 format=3 uid="uid://o1s2bbplsjbf"]
 
 [ext_resource type="Script" uid="uid://b6035n41w43nd" path="res://scripts/game.gd" id="1_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://d2fsm3xchosto" path="res://scenes/ui/game_ui.tscn" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://b3lqsa7g6sa0o" path="res://scenes/map/map.tscn" id="2_yqjtg"]
-[ext_resource type="PackedScene" uid="uid://bv4engl26kj82" path="res://scenes/ui/quest_checklist.tscn" id="3_p57ef"]
 [ext_resource type="Script" uid="uid://rg4yrbxve3bl" path="res://scenes/game_camera.gd" id="4_lbhrr"]
-[ext_resource type="PackedScene" uid="uid://iobltexrlhor" path="res://scenes/ui/controls_info.tscn" id="4_u5sy4"]
 [ext_resource type="Texture2D" uid="uid://cogn2e21kqel" path="res://sprites/pivot_debug.png" id="5_iywne"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_lbhrr")
 
 [node name="GameUi" parent="." instance=ExtResource("1_uwrxv")]
-
-[node name="QuestChecklist" parent="GameUi" instance=ExtResource("3_p57ef")]
-
-[node name="ControlsInfo" parent="GameUi" instance=ExtResource("4_u5sy4")]
 
 [node name="Map" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_yqjtg")]
 camera = NodePath("../GameCamera")

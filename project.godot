@@ -24,6 +24,7 @@ GridManager="*res://scenes/grid_manager/grid_manager.tscn"
 SceneTransition="*res://scenes/ui/scene_transition.tscn"
 MusicPlayer="*res://scenes/music_player/music_player.tscn"
 QuestTracker="*res://scenes/quest_tracker/quest_tracker.tscn"
+OptionsMenu="*res://scenes/ui/options_menu.tscn"
 
 [display]
 
