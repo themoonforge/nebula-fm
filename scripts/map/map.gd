@@ -17,6 +17,7 @@ class_name Map extends Node2D
 @onready var placed_objects: Node2D = %Objects
 @onready var noise_rect: TextureRect = %NoiseRect
 @onready var midi_player: MidiPlayer = %GodotMIDIPlayer
+@onready var conveyor_belt_manager: ConveyorBeltManager = %ConveyorBeltManager
 
 var noise_texture: NoiseTexture2D
 var noise_grid: Dictionary[Vector2i, float]
@@ -82,13 +83,10 @@ func _on_regenerate() -> void:
 		
 func _on_place_obstacle(obstacle: Node2D) -> void:
 	placed_objects.add_child(obstacle)
-	
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed(&"generate"):
-		print("SHOULD GENERATE")
-		_regenerate()
 		
 func _regenerate() -> void:
+	conveyor_belt_manager.clear()
+	MapManager.map_data_c_collector.clear()
 	GridManager.free_grid()
 	print("freed grid")
 	MapManager.free_buildings()
@@ -135,7 +133,7 @@ func generate() -> void:
 	register_static_layer(border_layer)
 	_place_radio_station(SubGrid.values()[randi() % SubGrid.size()])
 	_place_note_sources(3)
-	_place_with_noise(obstacles_layer, Tiles.SOURCE_0, Tiles.ROCK_SMALL, Vector2(0.2, 0.25), 0.5)
+	_place_with_noise(obstacles_layer, Tiles.SOURCE_2, Tiles.ROCK_SMALL, Vector2(0.2, 0.25), 0.5)
 	_place_patterns(crater_layer, crater_pattern_choices, Vector2(0.3, 0.5), 0.1)
 	_place_patterns(water_layer, water_pattern_choices, Vector2(0.5, 0.6), 0.1)
 	_place_patterns(big_blob_layer, big_blob_pattern_choices, Vector2(0.18, 0.19), 0.5)

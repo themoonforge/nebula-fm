@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://tpmfvg35idiu" path="res://scenes/mister_nebula_fm/mister_nebula_fm.tscn" id="5_fcby6"]
 [ext_resource type="Script" uid="uid://wde3xbyqm6uu" path="res://addons/midi/addition/midi_input_note_resource.gd" id="7_sqgf4"]
 [ext_resource type="PackedScene" uid="uid://c7b6b1h52gyyp" path="res://scenes/map/ground_layer_ref.tscn" id="9_vvrx0"]
-[ext_resource type="Script" uid="uid://bonu1rlmnev4q" path="res://scripts/map_manager/conveyor_belt_container.gd" id="10_f17u5"]
+[ext_resource type="Script" uid="uid://bonu1rlmnev4q" path="res://scripts/map_manager/conveyor_belt_manager.gd" id="10_f17u5"]
 [ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="11_b56te"]
 
 [sub_resource type="Resource" id="Resource_vvrx0"]
@@ -100,6 +100,7 @@ z_index = 1
 y_sort_enabled = true
 
 [node name="ConveyorBeltManager" type="Node2D" parent="." node_paths=PackedStringArray("ground_layer")]
+unique_name_in_owner = true
 y_sort_enabled = true
 script = ExtResource("10_f17u5")
 note_texture = SubResource("AtlasTexture_x2kg6")

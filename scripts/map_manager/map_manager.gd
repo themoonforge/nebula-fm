@@ -290,11 +290,11 @@ func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Buildi
 		
 
 ## checks if corner was created (pairwise)
-func _find_corner(present_building: Building, new_building: Building):
+func _find_corner(present_belt: Building, new_belt: Building):
 	
 	# HOW the two buildings are located to each other 
-	var a = present_building.tile_coord
-	var b = new_building.tile_coord
+	var a = present_belt.tile_coord
+	var b = new_belt.tile_coord
 	
 	var is_a_right_of_b = a.x > b.x
 	var is_a_left_of_b = a.x < b.x
@@ -302,15 +302,15 @@ func _find_corner(present_building: Building, new_building: Building):
 	var is_a_below_b = a.y > b.y
 	
 	# LOCATION STATES (THESE ARE THE ROTATIONS!)
-	var a_is_right = present_building.building_rotation == BuildingsUtils.BuildingRotation.RIGHT
-	var a_is_left = present_building.building_rotation == BuildingsUtils.BuildingRotation.LEFT
-	var a_is_up = present_building.building_rotation == BuildingsUtils.BuildingRotation.UP
-	var a_is_down = present_building.building_rotation == BuildingsUtils.BuildingRotation.DOWN
+	var a_is_right = present_belt.building_rotation == BuildingsUtils.BuildingRotation.RIGHT
+	var a_is_left = present_belt.building_rotation == BuildingsUtils.BuildingRotation.LEFT
+	var a_is_up = present_belt.building_rotation == BuildingsUtils.BuildingRotation.UP
+	var a_is_down = present_belt.building_rotation == BuildingsUtils.BuildingRotation.DOWN
 	
-	var b_is_right = new_building.building_rotation == BuildingsUtils.BuildingRotation.RIGHT
-	var b_is_left = new_building.building_rotation == BuildingsUtils.BuildingRotation.LEFT
-	var b_is_up = new_building.building_rotation == BuildingsUtils.BuildingRotation.UP
-	var b_is_down = new_building.building_rotation == BuildingsUtils.BuildingRotation.DOWN
+	var b_is_right = new_belt.building_rotation == BuildingsUtils.BuildingRotation.RIGHT
+	var b_is_left = new_belt.building_rotation == BuildingsUtils.BuildingRotation.LEFT
+	var b_is_up = new_belt.building_rotation == BuildingsUtils.BuildingRotation.UP
+	var b_is_down = new_belt.building_rotation == BuildingsUtils.BuildingRotation.DOWN
 	
 	# CORNER STATES
 	var is_top_right_corner_f = (is_a_above_b and a_is_right and b_is_down) or (is_a_below_b and a_is_down and b_is_right)
@@ -335,9 +335,9 @@ func _find_corner(present_building: Building, new_building: Building):
 		
 		# retrieve the building to replace the resource of
 		if is_a_above_b:
-			belt_to_replace = present_building
+			belt_to_replace = present_belt
 		elif is_a_below_b:
-			belt_to_replace = new_building
+			belt_to_replace = new_belt
 				
 		belt_to_replace.building_resource = conveyor_belt_corner_f
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.DOWN
@@ -346,9 +346,9 @@ func _find_corner(present_building: Building, new_building: Building):
 		
 		# retrieve the building to replace the resource of
 		if is_a_right_of_b:
-			belt_to_replace = present_building
+			belt_to_replace = present_belt
 		elif is_a_left_of_b:
-			belt_to_replace = new_building
+			belt_to_replace = new_belt
 				
 		belt_to_replace.building_resource = conveyor_belt_corner_f
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.LEFT	
@@ -357,9 +357,9 @@ func _find_corner(present_building: Building, new_building: Building):
 		
 		# retrieve the building to replace the resource of
 		if is_a_below_b:
-			belt_to_replace = present_building
+			belt_to_replace = present_belt
 		elif is_a_above_b:
-			belt_to_replace = new_building
+			belt_to_replace = new_belt
 				
 		belt_to_replace.building_resource = conveyor_belt_corner_f
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.UP	
@@ -368,9 +368,9 @@ func _find_corner(present_building: Building, new_building: Building):
 		
 		# retrieve the building to replace the resource of
 		if is_a_left_of_b:
-			belt_to_replace = present_building
+			belt_to_replace = present_belt
 		elif is_a_right_of_b:
-			belt_to_replace = new_building
+			belt_to_replace = new_belt
 				
 		belt_to_replace.building_resource = conveyor_belt_corner_f
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.RIGHT	
@@ -380,9 +380,9 @@ func _find_corner(present_building: Building, new_building: Building):
 	elif is_top_right_corner_b:
 		# retrieve the building to replace the resource of
 		if is_a_right_of_b:
-			belt_to_replace = present_building
+			belt_to_replace = present_belt
 		elif is_a_left_of_b:
-			belt_to_replace = new_building	
+			belt_to_replace = new_belt	
 			
 		belt_to_replace.building_resource = conveyor_belt_corner_b
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.DOWN	
@@ -390,9 +390,9 @@ func _find_corner(present_building: Building, new_building: Building):
 	elif is_botton_right_corner_b:
 		# retrieve the building to replace the resource of
 		if is_a_below_b:
-			belt_to_replace = present_building
+			belt_to_replace = present_belt
 		elif is_a_above_b:
-			belt_to_replace = new_building	
+			belt_to_replace = new_belt	
 			
 		belt_to_replace.building_resource = conveyor_belt_corner_b
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.RIGHT	
@@ -401,9 +401,9 @@ func _find_corner(present_building: Building, new_building: Building):
 		
 		# retrieve the building to replace the resource of
 		if is_a_left_of_b:
-			belt_to_replace = present_building
+			belt_to_replace = present_belt
 		elif is_a_right_of_b:
-			belt_to_replace = new_building	
+			belt_to_replace = new_belt	
 			
 		belt_to_replace.building_resource = conveyor_belt_corner_b
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.UP	
@@ -411,9 +411,9 @@ func _find_corner(present_building: Building, new_building: Building):
 	elif is_top_left_b:
 		# retrieve the building to replace the resource of
 		if is_a_above_b:
-			belt_to_replace = present_building
+			belt_to_replace = present_belt
 		elif is_a_below_b:
-			belt_to_replace = new_building	
+			belt_to_replace = new_belt	
 			
 		belt_to_replace.building_resource = conveyor_belt_corner_b
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.LEFT			
