@@ -17,20 +17,17 @@ var move_t: float = 1.0
 
 ## key_number refers to the midi key map 
 ## https://djip.co/blog/logic-studio-9-midi-note-numbers
-@export var key_number: int = 0:
-	set(value):
-		key_number = value
-		name = MidiUtility.key_number_to_note_name_with_octave(key_number)
-		#resource_name = name
-		simple_name = MidiUtility.key_number_to_note_name(key_number)
+#@export var key_number: int = 0:
+	#set(value):
+		#key_number = value
+		#name = MidiUtility.key_number_to_note_name_with_octave(key_number)
+		##resource_name = name
+		#simple_name = MidiUtility.key_number_to_note_name(key_number)
+		
+@export var key_numbers: Array[int]
 
-## maps midi key number to names like C,D,E etc.
-## THIS FIELD IS READ ONLU\Y
-@export var simple_name: StringName = ""
-
-func _init(key_number: int = 0) -> void:
-	self.key_number = key_number
-
+#func _init(key_number: int = 0) -> void:
+	#self.key_number = key_number
 
 func _ready():
 	belt_dict = MapManager.map_data

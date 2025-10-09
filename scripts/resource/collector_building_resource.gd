@@ -17,11 +17,8 @@ var note_scene = preload("res://scenes/map/note.tscn")
 
 func produce(input_buffer: Buffer, output_buffer: Buffer) -> void:
 	var note = note_scene.instantiate() as NotePackage
-	note.simple_name = "C"
-	note.key_number = 60
+	note.key_numbers.append(60)
 	output_buffer.add_element(note)
-	
-	#print("produce: ", note.simple_name)
 
 #func _to_string() -> String:
 	#if note:

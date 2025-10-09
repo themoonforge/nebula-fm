@@ -1,7 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://b5mjgreg8l3ap"]
+[gd_scene load_steps=18 format=3 uid="uid://b5mjgreg8l3ap"]
 
 [ext_resource type="Script" uid="uid://o0f20sinybbj" path="res://scripts/building.gd" id="1_gof7m"]
-[ext_resource type="Resource" uid="uid://cn6kon66bh7gm" path="res://resources/building/splitter.tres" id="2_g3pb6"]
+[ext_resource type="Resource" uid="uid://cn6kon66bh7gm" path="res://resources/building/merger.tres" id="2_g3pb6"]
 [ext_resource type="PackedScene" uid="uid://cpedi8rmqle25" path="res://scenes/connection_gate.tscn" id="3_8lqx8"]
 [ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="4_g3pb6"]
 [ext_resource type="Script" uid="uid://d37e4wlqbw6gr" path="res://scripts/buffer.gd" id="4_iwd2d"]
@@ -37,6 +37,10 @@ region = Rect2(433, 17, 14, 14)
 atlas = ExtResource("4_g3pb6")
 region = Rect2(449, 17, 14, 14)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_g3pb6"]
+atlas = ExtResource("4_g3pb6")
+region = Rect2(352, 32, 16, 16)
+
 [sub_resource type="LabelSettings" id="LabelSettings_mkjfx"]
 font_size = 1
 
@@ -55,6 +59,7 @@ f_texture = SubResource("AtlasTexture_blq7k")
 g_texture = SubResource("AtlasTexture_nm462")
 a_texture = SubResource("AtlasTexture_jc16f")
 b_texture = SubResource("AtlasTexture_g4d30")
+package_texture = SubResource("AtlasTexture_g3pb6")
 
 [node name="InputBuffer" type="Node" parent="."]
 unique_name_in_owner = true

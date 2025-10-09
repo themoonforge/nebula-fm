@@ -41,10 +41,12 @@ signal incomming(gate: ConnectionGate, payload: NotePackage)
 func _on_note_entered(area: Area2D) -> void:
 	if mode != Building.ConnectionType.INPUT:
 		return
-	var scene_root = area.get_parent()
-	if scene_root is NotePackage:
-		var clone = scene_root.duplicate()
-		clone.current_tile_coord = scene_root.current_tile_coord
-		clone.previous_tile_coord = scene_root.previous_tile_coord
-		clone.belt_dict = scene_root.belt_dict
+	var note_package = area.get_parent()
+	if note_package is NotePackage:
+		var clone = note_package.duplicate()
+		clone.key_numbers = note_package.key_numbers
+		clone.current_tile_coord = note_package.current_tile_coord
+		clone.previous_tile_coord = note_package.previous_tile_coord
+		clone.belt_dict = note_package.belt_dict
 		incomming.emit(self, clone)
+		note_package.queue_free()

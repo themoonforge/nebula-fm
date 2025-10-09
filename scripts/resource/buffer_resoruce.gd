@@ -8,6 +8,8 @@ var payload: NotePackage
 
 @export var simple_name: StringName = "":
 	get():
+		if !payload:
+			return ""
 		return payload.simple_name
 
 #func _init(payload: NoteResource = null) -> void:

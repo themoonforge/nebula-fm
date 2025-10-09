@@ -13,6 +13,7 @@ var time_acc: float = 0.0
 
 var note_scene = preload("res://scenes/map/note.tscn")
 var tile_coord: Vector2i # location on the tilemap
+var output_locations: Array[Vector2i]
 
 #region bognari
 
@@ -21,9 +22,6 @@ const BUILDING_TILE_SET = 2
 enum ConnectionType {
 	INPUT, OUTPUT
 }
-
-#@export var note_texture: Texture
-
 
 @export var building_resource: AbstractBuildingResource = null:
 	set(value):
@@ -81,6 +79,7 @@ enum ConnectionType {
 		if is_node_ready():
 			print("is active node is ready")
 			_handle_active()
+			
 
 func _ready() -> void:
 	beat_time = 60.0 / MapManager.global_bpm # TODO use global bpm from conveyor belt manager once it is global
@@ -140,12 +139,18 @@ func _setup_connections(connections: Dictionary[Vector2i, BuildingsUtils.Buildin
 	for node in nodes:
 		node.queue_free()
 					
+	output_locations.clear()
+					
 	var i: int = -1
 	for connection in connections:
 		i += 1
 		#print("_setup_indicators: ", connection)
 		var arrow = BuildingsUtils.rotationToArrow(connections[connection])
 		var coordinate = BuildingsUtils.rotateTileBy(connection, building_rotation, building_resource.size, ground_size)
+		
+		if connection_type == ConnectionType.OUTPUT:
+			output_locations.append(coordinate)
+		
 		var rotated_arrow = BuildingsUtils.rotateArrowBy(arrow, building_rotation)
 		connectionIndicators.set_cell(coordinate, BUILDING_TILE_SET, rotated_arrow)
 		_generate_connetion_gate(coordinate, connection_type, i)
@@ -222,7 +227,7 @@ func modulate_sprite(color: Color) -> void:
 
 func _on_incoming(gate: ConnectionGate, payload: NotePackage) -> void:
 	#if building_resource.building_key == "space_radio_station":
-	input_buffer.add_element(payload)
+	input_buffer.add_element(payload, gate.buffer_index)
 
 ## called when input containers receives new areas with shapes
 #func _on_inputs_child_entered_tree(node: Node) -> void:
@@ -240,26 +245,33 @@ func _on_incoming(gate: ConnectionGate, payload: NotePackage) -> void:
 @export var g_texture: Texture
 @export var a_texture: Texture
 @export var b_texture: Texture
+@export var package_texture: Texture
+
 
 ## Puts NotePackage from buffer on the conveyor belt 
 func spawn_note_from_output_buffer(note: NotePackage):
-	print("NOTE KEY: ", note.simple_name)
+	#print("NOTE KEY: ", note.simple_name)
 	if building_resource.input_locations.keys().size() > 0:
 		note.previous_tile_coord = note.current_tile_coord
 	
 	note.current_tile_coord = tile_coord
+	
+	if output_locations.size() > 0:
+		note.current_tile_coord += output_locations[0]
 
 		#var location: Vector2i = building_resource.input_locations.keys()[0]
 		#note.previous_tile_coord = location
 
-	#note.modulate = Color(12.214, 0.601, 26.769, 1.0) # TODO remove
-	match(note.key_number):
-		60:
-			note.get_child(0).texture = c_texture
-		62:
-			note.get_child(0).texture = d_texture
-		64:
-			note.get_child(0).texture = e_texture
+	if note.key_numbers.size() == 1:
+		match(note.key_numbers[0]):
+			60:
+				note.get_child(0).texture = c_texture
+			62:
+				note.get_child(0).texture = d_texture
+			64:
+				note.get_child(0).texture = e_texture
+	else:
+		note.get_child(0).texture = package_texture
 				
 	note.name = "Note_" + str(Time.get_unix_time_from_system())	
 	# TODO improve access!

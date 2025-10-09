@@ -4,11 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://donhenh45sal8" path="res://scenes/ui/transformer_item.tscn" id="2_6hkf2"]
 [ext_resource type="Texture2D" uid="uid://b20nmqa002u5u" path="res://sprites/panel_tile_bright.png" id="2_pikvf"]
 [ext_resource type="Resource" uid="uid://cls7knxgownu5" path="res://resources/building/collector.tres" id="3_6hkf2"]
-[ext_resource type="Resource" uid="uid://cn6kon66bh7gm" path="res://resources/building/splitter.tres" id="4_tyl16"]
+[ext_resource type="Resource" uid="uid://cn6kon66bh7gm" path="res://resources/building/merger.tres" id="4_tyl16"]
 [ext_resource type="Resource" uid="uid://hiu1ukei6xtw" path="res://resources/building/pitcher.tres" id="5_f1jgs"]
 [ext_resource type="Resource" uid="uid://b0gwhmnjesig4" path="res://resources/building/conveyor_belt.tres" id="6_miglr"]
 [ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="7_xu3a2"]
-[ext_resource type="Script" uid="uid://0i4s0mv6jlsp" path="res://scripts/resource/splitter_resource.gd" id="8_f1jgs"]
+[ext_resource type="Script" uid="uid://0i4s0mv6jlsp" path="res://scripts/resource/merger_resource.gd" id="8_f1jgs"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_miglr"]
 texture = ExtResource("2_pikvf")

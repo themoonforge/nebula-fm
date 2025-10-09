@@ -14,16 +14,16 @@ radius = 6.0
 z_index = 200
 y_sort_enabled = true
 script = ExtResource("1_ypc5c")
-key_number = 62
 simple_name = &"D"
 
 [node name="NoteSprite" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 y_sort_enabled = true
-position = Vector2(0, -7)
 texture = SubResource("AtlasTexture_j8v4j")
+offset = Vector2(0, -23)
 
 [node name="Area2D" type="Area2D" parent="."]
+position = Vector2(0, -16)
 collision_layer = 12
 collision_mask = 12
 priority = 1

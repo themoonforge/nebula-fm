@@ -131,7 +131,7 @@ func _process(delta: float) -> void:
 				building.tile_coord = tile_coordinate
 				if building.building_resource.building_key == StringName("conveyor_belt"):
 					#building.name = "Belt_" + str(Time.get_unix_time_from_system())
-
+					
 					_evaluate_conveyor_belt_direction(tile_coordinate, building)
 					map_data[tile_coordinate] = building
 					
@@ -260,7 +260,7 @@ func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Buildi
 	var left = root_position + Vector2i(-1, 0)
 		
 	# local variable for data of the map. data is a building
-	var data
+	var data: Building
 	if map_data.has(top):
 		data = map_data.get(top)
 		
@@ -292,7 +292,13 @@ func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Buildi
 		#check if the belt to connect with already has connections
 		if data is Building and count_neighbours(bottom) <= 1:
 			# check rotation
-			building.building_rotation = BuildingsUtils.BuildingRotation.UP
+			if data.building_rotation == BuildingsUtils.BuildingRotation.UP:
+				building.building_rotation = BuildingsUtils.BuildingRotation.UP
+			elif data.building_rotation == BuildingsUtils.BuildingRotation.DOWN:
+				building.building_rotation = BuildingsUtils.BuildingRotation.DOWN
+			else:
+				print("else: data.building_rotation - ", data.building_rotation)
+				
 	else:
 		return
 	

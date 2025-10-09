@@ -98,7 +98,6 @@ ground_layer = NodePath("../GroundLayerRef")
 [node name="ConveyorBeltContainer" type="Node2D" parent="ConveyorBeltManager"]
 unique_name_in_owner = true
 y_sort_enabled = true
-position = Vector2(0, -16)
 
 [node name="NoiseRect" type="TextureRect" parent="."]
 unique_name_in_owner = true

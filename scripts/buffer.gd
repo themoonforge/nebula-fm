@@ -26,9 +26,8 @@ func add_element(note: NotePackage, index: int = 0) -> void:
 	if not _buffer.has(index):
 		_buffer[index] = []
 	_buffer[index].append(buffer_resource)
-	if note:
-		_increment_inventory(note.simple_name)
-	inventory_changed.emit.call_deferred(_inventory)
+
+	#inventory_changed.emit.call_deferred(_inventory)
 
 
 func filter_old_buffer(time_offset_in_ms: int = 3000) -> void:
@@ -39,17 +38,9 @@ func filter_old_buffer(time_offset_in_ms: int = 3000) -> void:
 	_last_filter_frame = current_frame
 	var expiration_time: int = Time.get_ticks_msec() - time_offset_in_ms
 
-	var changed: bool = false
-
 	for buffer in _buffer:
 		while not _buffer[buffer].is_empty() and _buffer[buffer][0].creation_time <= expiration_time:
-			changed = true
-			var expired_note_name: StringName = _buffer[buffer][0].simple_name
 			_buffer[buffer].pop_front()
-			_decrement_inventory(expired_note_name)
-
-	if changed:
-		inventory_changed.emit.call_deferred(_inventory)
 
 func consume_note_from_buffer(key_number: int, index: int = 0) -> NoteResource:
 	var found_elem: NoteResource = null
@@ -89,7 +80,7 @@ func consume_first_note_from_buffer(index: int = 0) -> NotePackage:
 	var first = _buffer[index].pop_front()
 	if first != null:
 		found_elem = first.payload
-		_decrement_inventory(first.simple_name)
+		#_decrement_inventory(first.simple_name)
 	return found_elem
 
 func _increment_inventory(item_name: StringName) -> void:
