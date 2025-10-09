@@ -13,7 +13,7 @@ var time_acc: float = 0.0
 var beat_time: float = 0.0
 var move_t: float = 1.0
 
-var consumed_belt: Array[Vector2i] = [] # TODO remove
+#var consumed_belt: Array[Vector2i] = [] # TODO remove
 
 ## key_number refers to the midi key map 
 ## https://djip.co/blog/logic-studio-9-midi-note-numbers

@@ -12,6 +12,14 @@ resource_name = "Pitcher"
 script = ExtResource("1_4xovi")
 name = &"Pitcher"
 building_key = &"pitcher"
+description = "Transforms a note into another one"
 size = Vector2i(1, 1)
 background_tile = Vector2i(17, 0)
+input_locations = Dictionary[Vector2i, int]({
+Vector2i(0, -1): 0
+})
+output_locations = Dictionary[Vector2i, int]({
+Vector2i(0, 1): 0
+})
 icon = SubResource("AtlasTexture_nox11")
+rotation_offset = Array[Vector2i]([Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0)])

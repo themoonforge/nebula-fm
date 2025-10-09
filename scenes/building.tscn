@@ -1,12 +1,41 @@
-[gd_scene load_steps=9 format=3 uid="uid://b5mjgreg8l3ap"]
+[gd_scene load_steps=17 format=3 uid="uid://b5mjgreg8l3ap"]
 
 [ext_resource type="Script" uid="uid://o0f20sinybbj" path="res://scripts/building.gd" id="1_gof7m"]
 [ext_resource type="Resource" uid="uid://cn6kon66bh7gm" path="res://resources/building/splitter.tres" id="2_g3pb6"]
 [ext_resource type="PackedScene" uid="uid://cpedi8rmqle25" path="res://scenes/connection_gate.tscn" id="3_8lqx8"]
+[ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="4_g3pb6"]
 [ext_resource type="Script" uid="uid://d37e4wlqbw6gr" path="res://scripts/buffer.gd" id="4_iwd2d"]
 [ext_resource type="TileSet" uid="uid://cbb4sityyi4us" path="res://tileset/tileset.tres" id="5_7huw0"]
 [ext_resource type="Texture2D" uid="uid://cogn2e21kqel" path="res://sprites/pivot_debug.png" id="6_blq7k"]
 [ext_resource type="Script" uid="uid://f53i8e6t5r1k" path="res://scripts/connection_manager.gd" id="7_nm462"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8lqx8"]
+atlas = ExtResource("4_g3pb6")
+region = Rect2(353, 17, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwd2d"]
+atlas = ExtResource("4_g3pb6")
+region = Rect2(369, 17, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7huw0"]
+atlas = ExtResource("4_g3pb6")
+region = Rect2(385, 17, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_blq7k"]
+atlas = ExtResource("4_g3pb6")
+region = Rect2(401, 17, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nm462"]
+atlas = ExtResource("4_g3pb6")
+region = Rect2(417, 17, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jc16f"]
+atlas = ExtResource("4_g3pb6")
+region = Rect2(433, 17, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4d30"]
+atlas = ExtResource("4_g3pb6")
+region = Rect2(449, 17, 14, 14)
 
 [sub_resource type="LabelSettings" id="LabelSettings_mkjfx"]
 font_size = 1
@@ -14,12 +43,18 @@ font_size = 1
 [node name="Building" type="Area2D"]
 y_sort_enabled = true
 script = ExtResource("1_gof7m")
-beats_per_bar = null
 building_resource = ExtResource("2_g3pb6")
 connection_scene = ExtResource("3_8lqx8")
 ground_size = Vector2i(2, 1)
 show_connection_indicators = true
 current_production_percentage = -1.0
+c_texture = SubResource("AtlasTexture_8lqx8")
+d_texture = SubResource("AtlasTexture_iwd2d")
+e_texture = SubResource("AtlasTexture_7huw0")
+f_texture = SubResource("AtlasTexture_blq7k")
+g_texture = SubResource("AtlasTexture_nm462")
+a_texture = SubResource("AtlasTexture_jc16f")
+b_texture = SubResource("AtlasTexture_g4d30")
 
 [node name="InputBuffer" type="Node" parent="."]
 unique_name_in_owner = true
@@ -94,6 +129,3 @@ position = Vector2(0, -16)
 script = ExtResource("7_nm462")
 
 [connection signal="child_entered_tree" from="Inputs" to="." method="_on_inputs_child_entered_tree"]
-[connection signal="area_entered" from="Inputs/Connection" to="Inputs/Connection" method="_on_note_entered"]
-[connection signal="area_entered" from="Outputs/Connection" to="Outputs/Connection" method="_on_note_entered"]
-[connection signal="area_entered" from="Outputs/@Area2D@21155" to="Outputs/@Area2D@21155" method="_on_note_entered"]

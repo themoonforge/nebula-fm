@@ -12,7 +12,6 @@ resource_name = "Collector"
 script = ExtResource("2_pt0ag")
 name = &"Collector"
 building_key = &"collector"
-description = null
 size = Vector2i(1, 1)
 background_tile = Vector2i(12, 0)
 output_locations = Dictionary[Vector2i, int]({

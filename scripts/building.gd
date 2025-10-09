@@ -153,7 +153,7 @@ func _generate_connetion_gate(tile_coordinate: Vector2i, connection_type: Connec
 	var connection_gate_position = background.map_to_local(tile_coordinate)
 	
 	var connection_gate: ConnectionGate = connection_scene.instantiate()
-	#connection_gate.is_active = is_active # TODO
+	#connection_gate.is_active = is_active 
 	connection_gate.mode = connection_type
 	connection_gate.tile_coordinate = tile_coordinate
 	connection_gate.buffer_index = buffer_index
@@ -162,7 +162,7 @@ func _generate_connetion_gate(tile_coordinate: Vector2i, connection_type: Connec
 	
 	match connection_type:
 		ConnectionType.INPUT:
-			inputs.add_child(connection_gate) # TODO DODODODO
+			inputs.add_child(connection_gate)
 		ConnectionType.OUTPUT:
 			outputs.add_child(connection_gate)
 	
@@ -219,11 +219,8 @@ func modulate_sprite(color: Color) -> void:
 #region chariot
 
 func _on_incoming(gate: ConnectionGate, payload: NotePackage) -> void:
-	#print("_on_incoming : ", gate, " ", payload)
-	if building_resource.building_key == "space_radio_station":
-		input_buffer.add_element(payload)
-	else:
-		pass
+	#if building_resource.building_key == "space_radio_station":
+	input_buffer.add_element(payload)
 
 ## called when input containers receives new areas with shapes
 #func _on_inputs_child_entered_tree(node: Node) -> void:
@@ -233,25 +230,38 @@ func _on_incoming(gate: ConnectionGate, payload: NotePackage) -> void:
 #func _note_received():
 	#pass
 	
+# TODO move this to note.tscn ... im stupido	
+@export var c_texture: Texture
+@export var d_texture: Texture
+@export var e_texture: Texture
+@export var f_texture: Texture
+@export var g_texture: Texture
+@export var a_texture: Texture
+@export var b_texture: Texture
+
 ## Puts NotePackage from buffer on the conveyor belt 
 func spawn_note_from_output_buffer(note: NotePackage):
+	print("NOTE KEY: ", note.simple_name)
+	if building_resource.input_locations.keys().size() > 0:
+		note.previous_tile_coord = note.current_tile_coord
+	
 	note.current_tile_coord = tile_coord
-	note.previous_tile_coord = tile_coord
-	note.modulate = Color(12.214, 0.601, 26.769, 1.0) # TODO remove
+
+		#var location: Vector2i = building_resource.input_locations.keys()[0]
+		#note.previous_tile_coord = location
+
+	#note.modulate = Color(12.214, 0.601, 26.769, 1.0) # TODO remove
+	match(note.key_number):
+		60:
+			note.get_child(0).texture = c_texture
+		62:
+			note.get_child(0).texture = d_texture
+		64:
+			note.get_child(0).texture = e_texture
+				
 	note.name = "Note_" + str(Time.get_unix_time_from_system())	
-	#MapManager.get_node("").add_child(note)
-	#var map = get_parent()
 	# TODO improve access!
 	var conveyor_belt_container = get_node("/root/Game/Map/ConveyorBeltManager/ConveyorBeltContainer") 
 	conveyor_belt_container.add_child(note)
-	
-#func spawn_new_note():
-	#var note = note_scene.instantiate()
-	#note.current_tile_coord = tile_coord
-	#note.previous_tile_coord = tile_coord
-	#note.modulate = Color(randf(), randf(), randf()) # TODO remove
-	#note.name = "Note_" + str(Time.get_unix_time_from_system())
-#
-	#%ConveyorBeltContainer.add_child(note)
 	
 #endregion

@@ -50,7 +50,16 @@ signal incomming(gate: ConnectionGate, payload: NotePackage)
 #endregion
 
 func _on_note_entered(area: Area2D) -> void:
+	if mode != Building.ConnectionType.INPUT:
+		return
 	var scene_root = area.get_parent()
 	if scene_root is NotePackage:
-		print("entered: ", scene_root.name)
-		incomming.emit(self, scene_root.duplicate())
+		
+		if get_parent().get_parent().building_resource.building_key == "pitcher":
+			print("entered pitcher: ", scene_root.name)
+			
+		var clone = scene_root.duplicate()
+		clone.current_tile_coord = scene_root.current_tile_coord
+		clone.previous_tile_coord = scene_root.previous_tile_coord
+		clone.belt_dict = scene_root.belt_dict
+		incomming.emit(self, clone)
