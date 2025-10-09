@@ -1,25 +1,15 @@
-[gd_scene load_steps=16 format=4 uid="uid://b3lqsa7g6sa0o"]
+[gd_scene load_steps=14 format=4 uid="uid://b3lqsa7g6sa0o"]
 
 [ext_resource type="Script" uid="uid://ccd2m6lh6bgbi" path="res://scripts/map/map.gd" id="1_tqkkf"]
 [ext_resource type="TileSet" uid="uid://cbb4sityyi4us" path="res://tileset/tileset.tres" id="2_a2pkv"]
-[ext_resource type="PackedScene" uid="uid://b5mjgreg8l3ap" path="res://scenes/building_2.tscn" id="2_jcaow"]
+[ext_resource type="PackedScene" uid="uid://b5mjgreg8l3ap" path="res://scenes/building.tscn" id="2_jcaow"]
 [ext_resource type="Resource" uid="uid://cqoaywxhmfw1w" path="res://resources/building/space_radio.tres" id="3_04w0f"]
 [ext_resource type="PackedScene" uid="uid://bmd4pfvtpw7pf" path="res://scenes/note_source/note_source.tscn" id="3_ph54e"]
 [ext_resource type="Script" uid="uid://8g273shyfey2" path="res://addons/midi/MidiPlayer.gd" id="5_04w0f"]
 [ext_resource type="PackedScene" uid="uid://tpmfvg35idiu" path="res://scenes/mister_nebula_fm/mister_nebula_fm.tscn" id="5_fcby6"]
-[ext_resource type="Script" uid="uid://wde3xbyqm6uu" path="res://addons/midi/addition/midi_input_note_resource.gd" id="7_sqgf4"]
 [ext_resource type="PackedScene" uid="uid://c7b6b1h52gyyp" path="res://scenes/map/ground_layer_ref.tscn" id="9_vvrx0"]
 [ext_resource type="Script" uid="uid://bonu1rlmnev4q" path="res://scripts/map_manager/conveyor_belt_manager.gd" id="10_f17u5"]
 [ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="11_b56te"]
-
-[sub_resource type="Resource" id="Resource_vvrx0"]
-resource_name = "D4"
-script = ExtResource("7_sqgf4")
-key_number = 62
-creation_time = 2826291
-name = &"D4"
-simple_name = &"D"
-metadata/_custom_type_script = "uid://wde3xbyqm6uu"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x2kg6"]
 atlas = ExtResource("11_b56te")
@@ -45,12 +35,11 @@ note_source_scene = ExtResource("3_ph54e")
 [node name="GodotMIDIPlayer" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("5_04w0f")
-file = "res://midi/alle_meine_entchen.mid"
+file = "res://midi/alle_mein_entchen.mid"
 playing = true
 volume_db = -5.0
 loop = true
 soundfont = "res://soundfont/Aspirin-Stereo.sf2"
-input_buffer = Array[ExtResource("7_sqgf4")]([SubResource("Resource_vvrx0")])
 
 [node name="GroundLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true

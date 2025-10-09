@@ -1,16 +1,17 @@
 [gd_resource type="Resource" script_class="ConveyorResource" load_steps=4 format=3 uid="uid://b0gwhmnjesig4"]
 
-[ext_resource type="Script" path="res://scripts/resource/conveyor_resource.gd" id="1_ngsb5"]
+[ext_resource type="Script" uid="uid://r3k6ov28vxkk" path="res://scripts/resource/conveyor_resource.gd" id="1_ngsb5"]
 [ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="1_uaaj8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pdhp1"]
 atlas = ExtResource("1_uaaj8")
-region = Rect2(144, 16, 16, 16)
+region = Rect2(160, 377, 16, 23)
 
 [resource]
 resource_name = "Conveyor Belt"
 script = ExtResource("1_ngsb5")
 name = &"Conveyor Belt"
+building_key = &"conveyor_belt"
 size = Vector2i(1, 1)
 background_tile = Vector2i(0, 25)
 icon = SubResource("AtlasTexture_pdhp1")

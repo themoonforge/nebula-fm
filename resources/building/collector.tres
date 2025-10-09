@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CollectorBuildingResource" load_steps=4 format=3 uid="uid://cls7knxgownu5"]
+
+[ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="1_k63j1"]
+[ext_resource type="Script" uid="uid://c4v6sx22p8gtg" path="res://scripts/resource/collector_building_resource.gd" id="2_pt0ag"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_50g8j"]
+atlas = ExtResource("1_k63j1")
+region = Rect2(209, 10, 14, 22)
+
+[resource]
+resource_name = "Collector"
+script = ExtResource("2_pt0ag")
+name = &"Collector"
+building_key = &"collector"
+size = Vector2i(1, 1)
+background_tile = Vector2i(12, 0)
+output_locations = Dictionary[Vector2i, int]({
+Vector2i(0, 1): 0
+})
+production_time = 0.5
+icon = SubResource("AtlasTexture_50g8j")
+rotation_offset = Array[Vector2i]([Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0)])

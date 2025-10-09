@@ -172,7 +172,8 @@ func _place_radio_station(sub_grid: SubGrid) -> void:
 	
 	var radio_station: Building = building_scene.instantiate()
 	radio_station.building_resource = radio_station_resource
-	radio_station.is_active = true
+	#radio_station.is_active = true
+	radio_station.name = "Space_Radio_Station"
 	placed_objects.add_child(radio_station)
 	
 	var spawn_cell = Vector2i(
@@ -181,6 +182,7 @@ func _place_radio_station(sub_grid: SubGrid) -> void:
 	)
 	
 	var mister_nebula_instance = mister_nebula.instantiate()
+	mister_nebula_instance.name = "Mister_Nebula_FM"
 	placed_objects.add_child(mister_nebula_instance)
 	
 	match station_subgrid:
@@ -255,6 +257,7 @@ func _place_note_sources(count: int) -> void:
 		if placed_count >= count:
 			break
 		var note_source: NoteSource = note_source_scene.instantiate()
+		note_source.name = "NoteSource_At_" + str(grid_cell)
 		placed_objects.add_child(note_source)
 		var spawn_cell = Vector2i(grid_cell.x, grid_cell.y)
 		note_source.global_position = Vector2(spawn_cell * 16)
