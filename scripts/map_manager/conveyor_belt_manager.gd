@@ -1,5 +1,5 @@
 ### Manager to control notes on conveyor belts (make this global)
-extends Node2D
+class_name ConveyorBeltManager extends Node2D
 
 var note_scene = preload("res://scenes/map/note.tscn")
 
@@ -27,7 +27,10 @@ func _ready():
 	#add_child(beat_timer)
 	
 	#map_manager = get_parent().get_parent().get_parent().get_node("MapManager") # TODO improve this access!
-
+	
+func clear() -> void:
+	for child in %ConveyorBeltContainer.get_children():
+		child.queue_free()
 
 func _process(delta: float) -> void:
 	time_acc += delta

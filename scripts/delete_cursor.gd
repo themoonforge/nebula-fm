@@ -44,8 +44,8 @@ func _on_area_exited(area: Area2D) -> void:
 func _increment_collider(item: Node2D) -> void:
 	if item is Building:
 		var building = item as Building
-		#if not building.is_active:
-			#return
+		if not building.is_active:
+			return
 		#print("_increment_collider: ", building)
 		if not collider_dict.has(item):
 			collider_dict[building] = 1

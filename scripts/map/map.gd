@@ -172,7 +172,7 @@ func _place_radio_station(sub_grid: SubGrid) -> void:
 	
 	var radio_station: Building = building_scene.instantiate()
 	radio_station.building_resource = radio_station_resource
-	#radio_station.is_active = true
+	radio_station.is_active = true
 	radio_station.name = "Space_Radio_Station"
 	placed_objects.add_child(radio_station)
 	

@@ -9,4 +9,3 @@ script = ExtResource("1_q70un")
 
 [node name="Building" parent="." instance=ExtResource("2_7hoo1")]
 unique_name_in_owner = true
-beats_per_bar = 4

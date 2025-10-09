@@ -25,6 +25,8 @@ var ground_layer: TileMapLayer
 		selected_building_resource = value
 		if is_node_ready():
 			building_cursor.building.building_resource = value
+			
+@export var building_scene: PackedScene
 
 enum Mode {
 	BUILD, DELETE, IDLE
@@ -120,10 +122,10 @@ func _process(delta: float) -> void:
 			if Input.is_action_just_pressed(&"ui_click"):
 				grid_cursor.hide()
 				
-				# place buildings or belts (which are also buildings technically)
-				var building = building_cursor.building.duplicate()
+				var building: Building = building_scene.instantiate()
+				building.building_resource = building_cursor.building.building_resource
 				building.global_position = building_cursor.global_position
-				#building.is_active = true
+				building.is_active = true
 				var tile_coordinate = ground_layer.local_to_map(building_cursor.global_position)
 				
 				building.tile_coord = tile_coordinate

@@ -1,0 +1,117 @@
+[gd_scene load_steps=16 format=3 uid="uid://cqraw3rds6p7t"]
+
+[ext_resource type="Texture2D" uid="uid://dmqpimp8wiejo" path="res://sprites/alien_animation.png" id="1_xqibk"]
+[ext_resource type="Script" uid="uid://dsxhk2hv1e6lk" path="res://scenes/audience/audience_member.gd" id="2_xfj17"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a5bpj"]
+atlas = ExtResource("1_xqibk")
+region = Rect2(48, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_niyyu"]
+atlas = ExtResource("1_xqibk")
+region = Rect2(48, 32, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wn6ig"]
+atlas = ExtResource("1_xqibk")
+region = Rect2(48, 64, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7s8c"]
+atlas = ExtResource("1_xqibk")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ppyp2"]
+atlas = ExtResource("1_xqibk")
+region = Rect2(0, 32, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t755i"]
+atlas = ExtResource("1_xqibk")
+region = Rect2(0, 64, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75km7"]
+atlas = ExtResource("1_xqibk")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nhkj2"]
+atlas = ExtResource("1_xqibk")
+region = Rect2(16, 32, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t07bh"]
+atlas = ExtResource("1_xqibk")
+region = Rect2(16, 64, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oadxk"]
+atlas = ExtResource("1_xqibk")
+region = Rect2(32, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u4lyo"]
+atlas = ExtResource("1_xqibk")
+region = Rect2(32, 32, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0hab3"]
+atlas = ExtResource("1_xqibk")
+region = Rect2(32, 64, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_82ffj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a5bpj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_niyyu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wn6ig")
+}],
+"loop": true,
+"name": &"blue",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x7s8c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ppyp2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t755i")
+}],
+"loop": true,
+"name": &"green",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75km7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nhkj2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t07bh")
+}],
+"loop": true,
+"name": &"pink",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oadxk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u4lyo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0hab3")
+}],
+"loop": true,
+"name": &"yellow",
+"speed": 5.0
+}]
+
+[node name="AudienceSprite" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_82ffj")
+animation = &"blue"
+autoplay = "blue"
+script = ExtResource("2_xfj17")

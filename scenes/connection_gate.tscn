@@ -11,6 +11,7 @@ script = ExtResource("1_6yrf8")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
 shape = SubResource("RectangleShape2D_dbnlc")
+disabled = true
 debug_color = Color(0.6939387, 0.29079032, 0.99075454, 0.41960785)
 
 [connection signal="area_entered" from="." to="." method="_on_note_entered"]

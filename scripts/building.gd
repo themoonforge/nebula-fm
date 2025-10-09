@@ -75,11 +75,12 @@ enum ConnectionType {
 	set(value):
 		current_production_percentage = value
 
-#@export var is_active: bool = false:
-	#set(value):
-		#is_active = value
-		#if is_node_ready():
-			#_handle_active()
+@export var is_active: bool = false:
+	set(value):
+		is_active = value
+		if is_node_ready():
+			print("is active node is ready")
+			_handle_active()
 
 func _ready() -> void:
 	beat_time = 60.0 / MapManager.global_bpm # TODO use global bpm from conveyor belt manager once it is global
@@ -153,7 +154,7 @@ func _generate_connetion_gate(tile_coordinate: Vector2i, connection_type: Connec
 	var connection_gate_position = background.map_to_local(tile_coordinate)
 	
 	var connection_gate: ConnectionGate = connection_scene.instantiate()
-	#connection_gate.is_active = is_active 
+	connection_gate.is_active = is_active 
 	connection_gate.mode = connection_type
 	connection_gate.tile_coordinate = tile_coordinate
 	connection_gate.buffer_index = buffer_index
@@ -188,23 +189,24 @@ func _setup_resource() -> void:
 	_setup_connections(building_resource.output_locations, ConnectionType.OUTPUT)
 	connectionIndicators.visible = show_connection_indicators
 
-#func _handle_active() -> void:
-		#if is_active:
-			#self.add_to_group(BuildingsUtils.BUILDING_GROUP)
-		#else:
-			#self.remove_from_group(BuildingsUtils.BUILDING_GROUP)
-		#connectionIndicators.visible = not is_active
-		#background.collision_enabled = is_active
-		#modulate_sprite(Color.WHITE)
-		#shapeCollisionPolygon.disabled = not is_active
-		#groundCollisionPolygon.disabled = is_active
-		#
-		#for input in inputs.get_children():
-			#if input is ConnectionGate:
-				#input.is_active = is_active
-		#for output in outputs.get_children():
-			#if output is ConnectionGate:
-				#output.is_active = is_active
+func _handle_active() -> void:
+	print("handle active called")
+	if is_active:
+		self.add_to_group(BuildingsUtils.BUILDING_GROUP)
+	else:
+		self.remove_from_group(BuildingsUtils.BUILDING_GROUP)
+	connectionIndicators.visible = not is_active
+	background.collision_enabled = is_active
+	modulate_sprite(Color.WHITE)
+	shapeCollisionPolygon.disabled = not is_active
+	groundCollisionPolygon.disabled = is_active
+	
+	for input in inputs.get_children():
+		if input is ConnectionGate:
+			input.is_active = is_active
+	for output in outputs.get_children():
+		if output is ConnectionGate:
+			output.is_active = is_active
 
 func modulate_sprite(color: Color) -> void:
 	background.modulate = color

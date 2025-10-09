@@ -128,13 +128,10 @@ corner_radius_bottom_left = 4
 anti_aliasing = false
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_lcjcl"]
-load_path = "res://.godot/imported/circle.png-44b524053929f94dd1566f087585a590.ctex"
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8ab6e"]
-load_path = "res://.godot/imported/circle.png-44b524053929f94dd1566f087585a590.ctex"
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nrt0f"]
-load_path = "res://.godot/imported/circle.png-44b524053929f94dd1566f087585a590.ctex"
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_8ab6e"]
 color = Color(0.9647059, 0.54901963, 0.7411765, 1)

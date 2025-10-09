@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://ppxs2ykx4137"]
+
+[ext_resource type="Script" uid="uid://d36rdkw0x5uf0" path="res://scenes/audience/audience.gd" id="1_a5bpj"]
+[ext_resource type="PackedScene" uid="uid://cqraw3rds6p7t" path="res://scenes/audience/audience_member.tscn" id="1_o652y"]
+
+[node name="Audience" type="Node2D"]
+script = ExtResource("1_a5bpj")
+audience_member = ExtResource("1_o652y")

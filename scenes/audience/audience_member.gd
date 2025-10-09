@@ -1,0 +1,1 @@
+class_name AudienceMember extends AnimatedSprite2D
