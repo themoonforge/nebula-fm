@@ -18,6 +18,8 @@ var map_data_c_collector: Dictionary[Vector2i, Node2D] # BELTS ONLY
 # just for tile map coord calculation
 var ground_layer: TileMapLayer
 
+@export var global_bpm: float = 120.0 # TODO move to conver
+
 @export var selected_building_resource: AbstractBuildingResource = null:
 	set(value):
 		selected_building_resource = value
@@ -121,20 +123,22 @@ func _process(delta: float) -> void:
 				# place buildings or belts (which are also buildings technically)
 				var building = building_cursor.building.duplicate()
 				building.global_position = building_cursor.global_position
-				building.is_active = true
+				#building.is_active = true
 				var tile_coordinate = ground_layer.local_to_map(building_cursor.global_position)
 				
 				building.tile_coord = tile_coordinate
-				# TODO this is dangerous! improve!
-				if building.building_resource.name == StringName("Conveyor Belt"):
-					building.name = building.name + "_BELT"
-					#map_data[tile_coordinate] = building
+				if building.building_resource.building_key == StringName("conveyor_belt"):
+					#building.name = "Belt_" + str(Time.get_unix_time_from_system())
+
 					_evaluate_conveyor_belt_direction(tile_coordinate, building)
 					map_data[tile_coordinate] = building
 					
-				# TODO this is dangerous! improve!
-				elif building.building_resource.name == StringName("C-Collector"):
+				elif building.building_resource.building_key == StringName("collector"):
+					#building.name = "Collector_" + str(Time.get_unix_time_from_system())					
 					map_data_c_collector[tile_coordinate] = building
+				
+				building.name = building.building_resource.name + "_" + str(Time.get_unix_time_from_system())					
+				
 				
 				# signal for mister nebula?
 				# - what kind of signal?

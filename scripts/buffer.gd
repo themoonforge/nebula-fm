@@ -7,15 +7,29 @@ class_name Buffer extends Node
 signal consume_note(note: NoteResource)
 signal inventory_changed(inventory: Dictionary[StringName, int])
 
-func add_element(note: NoteResource, index: int = 0) -> void:
+#func add_element(note: NoteResource, index: int = 0) -> void:
+	#filter_old_buffer()
+	#var buffer_resource: BufferResource = BufferResource.new(note)
+	#
+	#if not _buffer.has(index):
+		#_buffer[index] = []
+	#_buffer[index].append(buffer_resource)
+	#_increment_inventory(note.simple_name)
+	#inventory_changed.emit.call_deferred(_inventory)
+
+# TODO remove
+
+func add_element(note: NotePackage, index: int = 0) -> void:
 	filter_old_buffer()
 	var buffer_resource: BufferResource = BufferResource.new(note)
 	
 	if not _buffer.has(index):
 		_buffer[index] = []
 	_buffer[index].append(buffer_resource)
-	_increment_inventory(note.simple_name)
+	if note:
+		_increment_inventory(note.simple_name)
 	inventory_changed.emit.call_deferred(_inventory)
+
 
 func filter_old_buffer(time_offset_in_ms: int = 3000) -> void:
 	var current_frame: int = Engine.get_frames_drawn()
@@ -54,8 +68,20 @@ func consume_note_from_buffer(key_number: int, index: int = 0) -> NoteResource:
 		inventory_changed.emit.call_deferred(_inventory)
 	return found_elem
 
-func consume_first_note_from_buffer(index: int = 0) -> NoteResource:
-	var found_elem: NoteResource = null
+#func consume_first_note_from_buffer(index: int = 0) -> NoteResource:
+	#var found_elem: NoteResource = null
+#
+	#if not _buffer.has(index):
+		#_buffer[index] = []
+#
+	#var first = _buffer[index].pop_front()
+	#if first != null:
+		#found_elem = first.payload
+		#_decrement_inventory(first.simple_name)
+	#return found_elem
+	
+func consume_first_note_from_buffer(index: int = 0) -> NotePackage:
+	var found_elem: NotePackage = null
 
 	if not _buffer.has(index):
 		_buffer[index] = []

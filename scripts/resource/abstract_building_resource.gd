@@ -5,6 +5,12 @@
 		name = value
 		resource_name = value
 
+# search key for dictionaries (building type)	
+@export var building_key: StringName
+
+@export var description: String
+
+
 @export var size: Vector2i:
 	set(value):
 		if value.x < 0 or value.y < 0:
@@ -27,4 +33,5 @@
 
 @export var rotation_offset: Array[Vector2i] = []
 
+## take smth from input buffer, transform, put result into output buffer
 @abstract func produce(input_buffer: Buffer, output_buffer: Buffer) -> void

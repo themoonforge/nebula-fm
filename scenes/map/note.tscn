@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://ee1ta87u3uwm"]
+[gd_scene load_steps=5 format=3 uid="uid://ee1ta87u3uwm"]
 
 [ext_resource type="Script" uid="uid://d2snrdgc5qjgm" path="res://scripts/note.gd" id="1_ypc5c"]
 [ext_resource type="Texture2D" uid="uid://q4wc5w1fuy7n" path="res://sprites/tileset2-export.png" id="3_37s5p"]
@@ -7,13 +7,28 @@
 atlas = ExtResource("3_37s5p")
 region = Rect2(129, 112, 14, 14)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_olt44"]
+radius = 12.0
+
 [node name="Note" type="Node2D"]
 z_index = 200
 y_sort_enabled = true
 script = ExtResource("1_ypc5c")
+key_number = 62
+simple_name = &"D"
 
 [node name="NoteSprite" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 y_sort_enabled = true
 position = Vector2(0, -7)
 texture = SubResource("AtlasTexture_j8v4j")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 12
+collision_mask = 12
+priority = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -7)
+shape = SubResource("CircleShape2D_olt44")
+debug_color = Color(0.39980987, 0.609246, 5.7756904e-07, 0.41960785)

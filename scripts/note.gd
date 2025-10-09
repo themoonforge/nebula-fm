@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name NotePackage
+
 var current_tile_coord: Vector2i
 var previous_tile_coord: Vector2i
 var belt_dict: Dictionary[Vector2i, Node2D]
@@ -11,7 +13,24 @@ var time_acc: float = 0.0
 var beat_time: float = 0.0
 var move_t: float = 1.0
 
-var consumed_belt: Array[Vector2i] = []
+var consumed_belt: Array[Vector2i] = [] # TODO remove
+
+## key_number refers to the midi key map 
+## https://djip.co/blog/logic-studio-9-midi-note-numbers
+@export var key_number: int = 0:
+	set(value):
+		key_number = value
+		name = MidiUtility.key_number_to_note_name_with_octave(key_number)
+		#resource_name = name
+		simple_name = MidiUtility.key_number_to_note_name(key_number)
+
+## maps midi key number to names like C,D,E etc.
+## THIS FIELD IS READ ONLU\Y
+@export var simple_name: StringName = ""
+
+func _init(key_number: int = 0) -> void:
+	self.key_number = key_number
+
 
 func _ready():
 	belt_dict = MapManager.map_data

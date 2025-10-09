@@ -1,3 +1,4 @@
+# TODO eventually remove this script
 @tool
 class_name NoteResource extends Resource
 

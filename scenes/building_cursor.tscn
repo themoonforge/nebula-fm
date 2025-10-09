@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://df3luqvourto4"]
 
 [ext_resource type="Script" uid="uid://7p5wq6mhfe2l" path="res://scripts/building_cursor.gd" id="1_q70un"]
-[ext_resource type="PackedScene" uid="uid://b5mjgreg8l3ap" path="res://scenes/building_2.tscn" id="2_7hoo1"]
+[ext_resource type="PackedScene" uid="uid://b5mjgreg8l3ap" path="res://scenes/building.tscn" id="2_7hoo1"]
 
 [node name="BuildingCursor" type="Node2D"]
 z_index = 2
@@ -9,3 +9,4 @@ script = ExtResource("1_q70un")
 
 [node name="Building" parent="." instance=ExtResource("2_7hoo1")]
 unique_name_in_owner = true
+beats_per_bar = 4

@@ -1,40 +1,41 @@
 [gd_scene load_steps=9 format=3 uid="uid://b5mjgreg8l3ap"]
 
-[ext_resource type="Script" uid="uid://o0f20sinybbj" path="res://scripts/building.gd" id="1_nlxt7"]
-[ext_resource type="Resource" uid="uid://cn6kon66bh7gm" path="res://resources/building/splitter.tres" id="2_nlxt7"]
-[ext_resource type="PackedScene" uid="uid://cpedi8rmqle25" path="res://scenes/connection_gate.tscn" id="3_hu0v8"]
-[ext_resource type="Script" uid="uid://d37e4wlqbw6gr" path="res://scripts/buffer.gd" id="3_ixa1u"]
-[ext_resource type="TileSet" uid="uid://cbb4sityyi4us" path="res://tileset/tileset.tres" id="4_hu0v8"]
-[ext_resource type="Texture2D" uid="uid://cogn2e21kqel" path="res://sprites/pivot_debug.png" id="5_a6xvv"]
-[ext_resource type="Script" path="res://scripts/connection_manager.gd" id="6_gwn2p"]
+[ext_resource type="Script" uid="uid://o0f20sinybbj" path="res://scripts/building.gd" id="1_gof7m"]
+[ext_resource type="Resource" uid="uid://cn6kon66bh7gm" path="res://resources/building/splitter.tres" id="2_g3pb6"]
+[ext_resource type="PackedScene" uid="uid://cpedi8rmqle25" path="res://scenes/connection_gate.tscn" id="3_8lqx8"]
+[ext_resource type="Script" uid="uid://d37e4wlqbw6gr" path="res://scripts/buffer.gd" id="4_iwd2d"]
+[ext_resource type="TileSet" uid="uid://cbb4sityyi4us" path="res://tileset/tileset.tres" id="5_7huw0"]
+[ext_resource type="Texture2D" uid="uid://cogn2e21kqel" path="res://sprites/pivot_debug.png" id="6_blq7k"]
+[ext_resource type="Script" uid="uid://f53i8e6t5r1k" path="res://scripts/connection_manager.gd" id="7_nm462"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_mkjfx"]
 font_size = 1
 
 [node name="Building" type="Area2D"]
 y_sort_enabled = true
-script = ExtResource("1_nlxt7")
-building_resource = ExtResource("2_nlxt7")
-connection_scene = ExtResource("3_hu0v8")
+script = ExtResource("1_gof7m")
+beats_per_bar = null
+building_resource = ExtResource("2_g3pb6")
+connection_scene = ExtResource("3_8lqx8")
 ground_size = Vector2i(2, 1)
 show_connection_indicators = true
 current_production_percentage = -1.0
 
 [node name="InputBuffer" type="Node" parent="."]
 unique_name_in_owner = true
-script = ExtResource("3_ixa1u")
+script = ExtResource("4_iwd2d")
 metadata/_custom_type_script = "uid://d37e4wlqbw6gr"
 
 [node name="OutputBuffer" type="Node" parent="."]
 unique_name_in_owner = true
-script = ExtResource("3_ixa1u")
+script = ExtResource("4_iwd2d")
 metadata/_custom_type_script = "uid://d37e4wlqbw6gr"
 
 [node name="ConnectionIndicators" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 position = Vector2(0, -16)
 tile_map_data = PackedByteArray(0, 0, 1, 0, 1, 0, 2, 0, 10, 0, 5, 0, 0, 0, 0, 0, 255, 255, 2, 0, 10, 0, 5, 0, 0, 0, 1, 0, 255, 255, 2, 0, 10, 0, 5, 0, 0, 0)
-tile_set = ExtResource("4_hu0v8")
+tile_set = ExtResource("5_7huw0")
 collision_enabled = false
 navigation_enabled = false
 
@@ -43,7 +44,7 @@ unique_name_in_owner = true
 y_sort_enabled = true
 position = Vector2(0, -16)
 tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 2, 0, 12, 0, 4, 0, 0, 0)
-tile_set = ExtResource("4_hu0v8")
+tile_set = ExtResource("5_7huw0")
 collision_enabled = false
 navigation_enabled = false
 
@@ -51,7 +52,7 @@ navigation_enabled = false
 unique_name_in_owner = true
 y_sort_enabled = true
 position = Vector2(0, -16)
-tile_set = ExtResource("4_hu0v8")
+tile_set = ExtResource("5_7huw0")
 collision_enabled = false
 navigation_enabled = false
 
@@ -59,7 +60,7 @@ navigation_enabled = false
 unique_name_in_owner = true
 visible = false
 scale = Vector2(2, 2)
-texture = ExtResource("5_a6xvv")
+texture = ExtResource("6_blq7k")
 
 [node name="Label" type="Label" parent="."]
 unique_name_in_owner = true
@@ -67,7 +68,7 @@ visible = false
 offset_top = -13.0
 offset_right = 16.0
 offset_bottom = 3.0
-text = "<Resource#-9223369712690181717>"
+text = "<Resource#-9223369708479100369>"
 label_settings = SubResource("LabelSettings_mkjfx")
 horizontal_alignment = 1
 
@@ -82,19 +83,17 @@ unique_name_in_owner = true
 position = Vector2(8, -8)
 polygon = PackedVector2Array(-4, -4, -4, 4, 20, 4, 20, -4)
 
-[node name="Inputs" type="Node2D" parent="." node_paths=PackedStringArray("connection_gate_dict")]
+[node name="Inputs" type="Node2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(0, -16)
-script = ExtResource("6_gwn2p")
-connection_gate_dict = {
-Vector2i(1, 1): NodePath("Connection")
-}
+script = ExtResource("7_nm462")
 
-[node name="Outputs" type="Node2D" parent="." node_paths=PackedStringArray("connection_gate_dict")]
+[node name="Outputs" type="Node2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(0, -16)
-script = ExtResource("6_gwn2p")
-connection_gate_dict = {
-Vector2i(0, -1): NodePath("Connection"),
-Vector2i(1, -1): NodePath("@Area2D@21128")
-}
+script = ExtResource("7_nm462")
+
+[connection signal="child_entered_tree" from="Inputs" to="." method="_on_inputs_child_entered_tree"]
+[connection signal="area_entered" from="Inputs/Connection" to="Inputs/Connection" method="_on_note_entered"]
+[connection signal="area_entered" from="Outputs/Connection" to="Outputs/Connection" method="_on_note_entered"]
+[connection signal="area_entered" from="Outputs/@Area2D@21155" to="Outputs/@Area2D@21155" method="_on_note_entered"]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cpedi8rmqle25"]
+[gd_scene load_steps=4 format=3 uid="uid://cpedi8rmqle25"]
 
 [ext_resource type="Script" uid="uid://di4fgwqcsolli" path="res://scripts/connection_gate.gd" id="1_6yrf8"]
+[ext_resource type="Texture2D" uid="uid://s3cn5lmy3x8i" path="res://sprites/circle.png" id="2_nxudt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dbnlc"]
 size = Vector2(16, 16)
@@ -11,4 +12,10 @@ script = ExtResource("1_6yrf8")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
 shape = SubResource("RectangleShape2D_dbnlc")
-disabled = true
+debug_color = Color(0.6939387, 0.29079032, 0.99075454, 0.41960785)
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+z_index = 400
+texture = ExtResource("2_nxudt")
+
+[connection signal="area_entered" from="." to="." method="_on_note_entered"]

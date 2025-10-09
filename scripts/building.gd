@@ -1,11 +1,29 @@
-@tool
+#@tool
 class_name Building extends Area2D
+
+@export var beats_per_bar: int = 4
+#@export var regions: Array[Rect2] = []
+
+var beat_timer: Timer
+var beat_time: float = 0.0
+var time_acc: float = 0.0
+
+# just for tile map coord calculation
+@export var ground_layer: TileMapLayer
+
+var note_scene = preload("res://scenes/map/note.tscn")
+var tile_coord: Vector2i # location on the tilemap
+
+#region bognari
 
 const BUILDING_TILE_SET = 2
 
 enum ConnectionType {
 	INPUT, OUTPUT
 }
+
+#@export var note_texture: Texture
+
 
 @export var building_resource: AbstractBuildingResource = null:
 	set(value):
@@ -28,8 +46,10 @@ enum ConnectionType {
 
 @onready var input_buffer: Buffer = %InputBuffer
 @onready var output_buffer: Buffer = %OutputBuffer
+
 @onready var background: TileMapLayer = %Background
 @onready var foreground: TileMapLayer = %Foreground
+
 @onready var connectionIndicators: TileMapLayer = %ConnectionIndicators
 @onready var label: Label = %Label
 @onready var groundCollisionPolygon: CollisionPolygon2D = %GroundCollisionPolygon2D
@@ -55,28 +75,49 @@ enum ConnectionType {
 	set(value):
 		current_production_percentage = value
 
-@export var is_active: bool = false:
-	set(value):
-		is_active = value
-		if is_node_ready():
-			_handle_active()
-
-
-var tile_coord: Vector2i # location on the tilemap
+#@export var is_active: bool = false:
+	#set(value):
+		#is_active = value
+		#if is_node_ready():
+			#_handle_active()
 
 func _ready() -> void:
+	beat_time = 60.0 / MapManager.global_bpm # TODO use global bpm from conveyor belt manager once it is global
 	_setup_resource()
-	_handle_active()
+	#_handle_active()
 
 func _process(delta: float) -> void:
-	if Engine.is_editor_hint() || not is_active:
-		return
+	time_acc += delta
+	#if time_acc >= beat_time:
+		#match(building_resource.building_key):
+			#"pitcher":
+				#pass
+			#"c_collector":
+				#pass
+					#
+		#time_acc = 0.0
+			
+	#if Engine.is_editor_hint() || not is_active:
+		#return
 
-	production_time += delta
+	#production_time += delta
 	#print("production_time: ", production_time)
-	if production_time >= building_resource.production_time:
-		production_time = 0.0
-		building_resource.produce(input_buffer, output_buffer)
+	#if production_time >= building_resource.production_time:
+	if time_acc >= beat_time:
+		time_acc = 0.0
+		
+		#production_time = 0.0
+		# TODO fix
+		#print("input: ", input_buffer)
+		
+		# check if the building is actually placed
+		if get_parent() is not BuildingCursor:
+			# PRODUCE (put NotePackage in input buffer, transform, and put to output buffer)
+			building_resource.produce(input_buffer, output_buffer)
+			# take note out of the buffer
+			var note = output_buffer.consume_first_note_from_buffer()
+			if note != null:
+				spawn_note_from_output_buffer(note)
 		
 	for connection_tile in outputs.connection_dict:
 		var connection_gate = outputs.connection_dict[connection_tile]
@@ -112,7 +153,7 @@ func _generate_connetion_gate(tile_coordinate: Vector2i, connection_type: Connec
 	var connection_gate_position = background.map_to_local(tile_coordinate)
 	
 	var connection_gate: ConnectionGate = connection_scene.instantiate()
-	connection_gate.is_active = is_active
+	#connection_gate.is_active = is_active # TODO
 	connection_gate.mode = connection_type
 	connection_gate.tile_coordinate = tile_coordinate
 	connection_gate.buffer_index = buffer_index
@@ -121,7 +162,7 @@ func _generate_connetion_gate(tile_coordinate: Vector2i, connection_type: Connec
 	
 	match connection_type:
 		ConnectionType.INPUT:
-			inputs.add_child(connection_gate)
+			inputs.add_child(connection_gate) # TODO DODODODO
 		ConnectionType.OUTPUT:
 			outputs.add_child(connection_gate)
 	
@@ -147,28 +188,70 @@ func _setup_resource() -> void:
 	_setup_connections(building_resource.output_locations, ConnectionType.OUTPUT)
 	connectionIndicators.visible = show_connection_indicators
 
-func _handle_active() -> void:
-		if is_active:
-			self.add_to_group(BuildingsUtils.BUILDING_GROUP)
-		else:
-			self.remove_from_group(BuildingsUtils.BUILDING_GROUP)
-		connectionIndicators.visible = not is_active
-		background.collision_enabled = is_active
-		modulate_sprite(Color.WHITE)
-		shapeCollisionPolygon.disabled = not is_active
-		groundCollisionPolygon.disabled = is_active
-		
-		for input in inputs.get_children():
-			if input is ConnectionGate:
-				input.is_active = is_active
-		for output in outputs.get_children():
-			if output is ConnectionGate:
-				output.is_active = is_active
+#func _handle_active() -> void:
+		#if is_active:
+			#self.add_to_group(BuildingsUtils.BUILDING_GROUP)
+		#else:
+			#self.remove_from_group(BuildingsUtils.BUILDING_GROUP)
+		#connectionIndicators.visible = not is_active
+		#background.collision_enabled = is_active
+		#modulate_sprite(Color.WHITE)
+		#shapeCollisionPolygon.disabled = not is_active
+		#groundCollisionPolygon.disabled = is_active
+		#
+		#for input in inputs.get_children():
+			#if input is ConnectionGate:
+				#input.is_active = is_active
+		#for output in outputs.get_children():
+			#if output is ConnectionGate:
+				#output.is_active = is_active
 
 func modulate_sprite(color: Color) -> void:
 	background.modulate = color
 	foreground.modulate = color
 
-func _on_incoming(gate: ConnectionGate, payload: NoteResource) -> void:
+#func _on_incoming(gate: ConnectionGate, payload: NoteResource) -> void:
+	##print("_on_incoming : ", gate, " ", payload)
+	#input_buffer.add_element(payload)
+	
+#endregion
+
+#region chariot
+
+func _on_incoming(gate: ConnectionGate, payload: NotePackage) -> void:
 	#print("_on_incoming : ", gate, " ", payload)
-	input_buffer.add_element(payload)
+	if building_resource.building_key == "space_radio_station":
+		input_buffer.add_element(payload)
+	else:
+		pass
+
+## called when input containers receives new areas with shapes
+#func _on_inputs_child_entered_tree(node: Node) -> void:
+	#if node is Area2D:
+		#node.area_entered.connect(_note_received)
+
+#func _note_received():
+	#pass
+	
+## Puts NotePackage from buffer on the conveyor belt 
+func spawn_note_from_output_buffer(note: NotePackage):
+	note.current_tile_coord = tile_coord
+	note.previous_tile_coord = tile_coord
+	note.modulate = Color(12.214, 0.601, 26.769, 1.0) # TODO remove
+	note.name = "Note_" + str(Time.get_unix_time_from_system())	
+	#MapManager.get_node("").add_child(note)
+	#var map = get_parent()
+	# TODO improve access!
+	var conveyor_belt_container = get_node("/root/Game/Map/ConveyorBeltManager/ConveyorBeltContainer") 
+	conveyor_belt_container.add_child(note)
+	
+#func spawn_new_note():
+	#var note = note_scene.instantiate()
+	#note.current_tile_coord = tile_coord
+	#note.previous_tile_coord = tile_coord
+	#note.modulate = Color(randf(), randf(), randf()) # TODO remove
+	#note.name = "Note_" + str(Time.get_unix_time_from_system())
+#
+	#%ConveyorBeltContainer.add_child(note)
+	
+#endregion

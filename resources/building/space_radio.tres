@@ -6,6 +6,7 @@
 resource_name = "Space Radio Station"
 script = ExtResource("1_kh444")
 name = &"Space Radio Station"
+building_key = &"space_radio_station"
 size = Vector2i(7, 7)
 input_locations = Dictionary[Vector2i, int]({
 Vector2i(-1, -3): 1,

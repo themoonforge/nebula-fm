@@ -7,5 +7,5 @@ func produce(input_buffer: Buffer, output_buffer: Buffer) -> void:
 		var midi_input_note = MidiInputNoteResource.new(note.key_number)
 		EventBus.midi_input.emit(midi_input_note)
 
-func _to_string() -> String:
-	return "Space Radio"
+#func _to_string() -> String:
+	#return "Space Radio"

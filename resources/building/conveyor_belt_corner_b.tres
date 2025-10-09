@@ -1,16 +1,17 @@
 [gd_resource type="Resource" script_class="ConveyorResource" load_steps=4 format=3 uid="uid://j7k38pqe5j42"]
 
 [ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="1_5ph3b"]
-[ext_resource type="Script" path="res://scripts/resource/conveyor_resource.gd" id="2_cyhtc"]
+[ext_resource type="Script" uid="uid://r3k6ov28vxkk" path="res://scripts/resource/conveyor_resource.gd" id="2_cyhtc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pdhp1"]
 atlas = ExtResource("1_5ph3b")
 region = Rect2(144, 16, 16, 16)
 
 [resource]
-resource_name = "corner_b"
+resource_name = "Corner (Backward)"
 script = ExtResource("2_cyhtc")
-name = &"corner_b"
+name = &"Corner (Backward)"
+building_key = &"conveyor_belt_corner_b"
 size = Vector2i(1, 1)
 background_tile = Vector2i(19, 24)
 icon = SubResource("AtlasTexture_pdhp1")
