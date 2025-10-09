@@ -226,18 +226,25 @@ func count_neighbours(root_position):
 	var bottom = root_position + Vector2i(0, 1)
 	var left = root_position + Vector2i(-1, 0)
 	
-	var count_neighbours = 0
-	if map_data.has(top):
-		count_neighbours += 1
-	if map_data.has(right):
-		count_neighbours += 1	
-	if map_data.has(bottom):
-		count_neighbours += 1
-	if map_data.has(left):
-		count_neighbours += 1
+	Debug.debug_print("root_position: ", root_position)
+	Debug.debug_print("count_neighbours")
+	Debug.debug_print("top: ", top)
+	Debug.debug_print("right: ", right)
+	Debug.debug_print("bottom: ", bottom)
+	Debug.debug_print("left: ", left)
 	
-	Debug.debug_print("count neighbours", count_neighbours)
-	return count_neighbours
+	var count_of_neighbours = 0
+	if map_data.has(top):
+		count_of_neighbours += 1
+	if map_data.has(right):
+		count_of_neighbours += 1	
+	if map_data.has(bottom):
+		count_of_neighbours += 1
+	if map_data.has(left):
+		count_of_neighbours += 1
+	
+	Debug.debug_print("count neighbours", count_of_neighbours)
+	return count_of_neighbours
 
 func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Building):
 	# check 4 directions
@@ -245,7 +252,7 @@ func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Buildi
 	var right = root_position + Vector2i(1, 0)
 	var bottom = root_position + Vector2i(0, 1)
 	var left = root_position + Vector2i(-1, 0)
-	
+		
 	# local variable for data of the map. data is a building
 	var data
 	if map_data.has(top):
@@ -289,7 +296,7 @@ func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Buildi
 	_find_corner(data, building)
 		
 
-## checks if corner was created (pairwise)
+# checks if corner was created (pairwise)
 func _find_corner(present_belt: Building, new_belt: Building):
 	
 	# HOW the two buildings are located to each other 
@@ -314,7 +321,7 @@ func _find_corner(present_belt: Building, new_belt: Building):
 	
 	# CORNER STATES
 	var is_top_right_corner_f = (is_a_above_b and a_is_right and b_is_down) or (is_a_below_b and a_is_down and b_is_right)
-	var is_botton_right_corner_f = (is_a_right_of_b and a_is_down and b_is_left) or (is_a_left_of_b and a_is_left and b_is_down)
+	var is_bottom_right_corner_f = (is_a_right_of_b and a_is_down and b_is_left) or (is_a_left_of_b and a_is_left and b_is_down)
 	var is_bottom_left_f = (is_a_above_b and a_is_up and b_is_left) or (is_a_below_b and a_is_left and b_is_up)
 	var is_top_left_f = (is_a_right_of_b and a_is_right and b_is_up) or (is_a_left_of_b and a_is_up and b_is_right)
 
@@ -332,44 +339,54 @@ func _find_corner(present_belt: Building, new_belt: Building):
 	# FORWARD DIRECTION
 
 	if is_top_right_corner_f:
+		Debug.debug_print("is_top_right_corner_f")
 		
 		# retrieve the building to replace the resource of
 		if is_a_above_b:
+			Debug.debug_print("is_a_above_b")
 			belt_to_replace = present_belt
 		elif is_a_below_b:
+			Debug.debug_print("is_a_below_b")
 			belt_to_replace = new_belt
 				
 		belt_to_replace.building_resource = conveyor_belt_corner_f
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.DOWN
 	
-	elif is_botton_right_corner_f:
+	elif is_bottom_right_corner_f:
+		Debug.debug_print("is_bottom_right_corner_f")
 		
 		# retrieve the building to replace the resource of
 		if is_a_right_of_b:
+			Debug.debug_print("is_a_right_of_b")
 			belt_to_replace = present_belt
 		elif is_a_left_of_b:
+			Debug.debug_print("is_a_left_of_b")
 			belt_to_replace = new_belt
 				
 		belt_to_replace.building_resource = conveyor_belt_corner_f
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.LEFT	
 
 	elif is_bottom_left_f:
-		
+		Debug.debug_print("is_bottom_left_f")
 		# retrieve the building to replace the resource of
 		if is_a_below_b:
+			Debug.debug_print("is_a_below_b")
 			belt_to_replace = present_belt
 		elif is_a_above_b:
+			Debug.debug_print("is_a_above_b")
 			belt_to_replace = new_belt
 				
 		belt_to_replace.building_resource = conveyor_belt_corner_f
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.UP	
 		
 	elif is_top_left_f:
-		
+		Debug.debug_print("is_top_left_f")
 		# retrieve the building to replace the resource of
 		if is_a_left_of_b:
+			Debug.debug_print("is_a_left_of_b")
 			belt_to_replace = present_belt
 		elif is_a_right_of_b:
+			Debug.debug_print("is_a_right_of_b")
 			belt_to_replace = new_belt
 				
 		belt_to_replace.building_resource = conveyor_belt_corner_f
@@ -378,47 +395,58 @@ func _find_corner(present_belt: Building, new_belt: Building):
 	# BACKWARD DIRECTION
 	
 	elif is_top_right_corner_b:
+		Debug.debug_print("is_top_right_corner_b")
 		# retrieve the building to replace the resource of
 		if is_a_right_of_b:
+			Debug.debug_print("is_a_right_of_b")
 			belt_to_replace = present_belt
 		elif is_a_left_of_b:
+			Debug.debug_print("is_a_left_of_b")
 			belt_to_replace = new_belt	
 			
 		belt_to_replace.building_resource = conveyor_belt_corner_b
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.DOWN	
 
 	elif is_botton_right_corner_b:
+		Debug.debug_print("is_botton_right_corner_b")
 		# retrieve the building to replace the resource of
 		if is_a_below_b:
+			Debug.debug_print("is_a_below_b")
 			belt_to_replace = present_belt
 		elif is_a_above_b:
+			Debug.debug_print("is_a_above_b")
 			belt_to_replace = new_belt	
 			
 		belt_to_replace.building_resource = conveyor_belt_corner_b
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.RIGHT	
 		
 	elif is_bottom_left_b:
-		
+		Debug.debug_print("is_bottom_left_b")
 		# retrieve the building to replace the resource of
 		if is_a_left_of_b:
+			Debug.debug_print("is_a_left_of_b")
 			belt_to_replace = present_belt
 		elif is_a_right_of_b:
+			Debug.debug_print("is_a_right_of_b")
 			belt_to_replace = new_belt	
 			
 		belt_to_replace.building_resource = conveyor_belt_corner_b
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.UP	
 		
 	elif is_top_left_b:
+		Debug.debug_print("is_top_left_b")
 		# retrieve the building to replace the resource of
 		if is_a_above_b:
+			Debug.debug_print("is_a_above_b")
 			belt_to_replace = present_belt
 		elif is_a_below_b:
+			Debug.debug_print("is_a_below_b")
 			belt_to_replace = new_belt	
 			
 		belt_to_replace.building_resource = conveyor_belt_corner_b
 		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.LEFT			
 		
-## autotiles cornes of conveyor belts
+# autotiles cornes of conveyor belts
 func _find_corners(root_position: Vector2i, building: Building):
 	
 	var top = root_position + Vector2i(0, -1)

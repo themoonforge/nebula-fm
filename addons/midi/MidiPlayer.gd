@@ -803,20 +803,20 @@ func _process_track_event_note_off(channel: GodotMIDIPlayerChannelStatus, note: 
 		var current_frame = Engine.get_frames_drawn()
 		var instrument_name = Utility.program_names[channel.program]
 
-		print("off",
-			" current_frame: ", current_frame,
-			#" , instrument_name: ", instrument_name,
-			#" , note: ", note,
-			#" , channel_number:", channel.number,
-			" , key_number:", key_number,
-			#" , bus: ", bus,
-			#" , pitch_bend: ", channel.pitch_bend,
-			#" , pitch_bend_sensitivity: ", channel.rpn.pitch_bend_sensitivity,
-			#" , modulation: ", channel.modulation,
-			#" , modulation_sensitivity: ", channel.rpn.modulation_sensitivity,
-			" , auto_release_mode: ", channel.drum_track,
-			" , hold: ", channel.hold,
-			)
+		#print("off",
+			#" current_frame: ", current_frame,
+			##" , instrument_name: ", instrument_name,
+			##" , note: ", note,
+			##" , channel_number:", channel.number,
+			#" , key_number:", key_number,
+			##" , bus: ", bus,
+			##" , pitch_bend: ", channel.pitch_bend,
+			##" , pitch_bend_sensitivity: ", channel.rpn.pitch_bend_sensitivity,
+			##" , modulation: ", channel.modulation,
+			##" , modulation_sensitivity: ", channel.rpn.modulation_sensitivity,
+			#" , auto_release_mode: ", channel.drum_track,
+			#" , hold: ", channel.hold,
+			#)
 
 ## トラックイベント：ノートオン処理
 ## @param	channel				チャンネルステータス
