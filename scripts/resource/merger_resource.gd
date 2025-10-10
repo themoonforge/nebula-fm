@@ -14,11 +14,9 @@ func produce(input_buffer: Buffer, output_buffer: Buffer) -> void:
 			continue
 	
 		if !new_note_package:
-			print("hallo")
 			new_note_package = note_package_scene.instantiate()
 			new_note_package.current_tile_coord = note.current_tile_coord
 			new_note_package.previous_tile_coord = note.previous_tile_coord
-			new_note_package.belt_dict = note.belt_dict
 				
 		merged_key_numbers.append_array(note.key_numbers)
 		note.queue_free()

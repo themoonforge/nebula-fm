@@ -102,10 +102,18 @@ func _move_note():
 		possible_belts.append(MapManager.map_data.get(left))		
 	
 	for next_belt in possible_belts:
-		if !MapManager.map_data.has(current_tile_coord):
+		if !MapManager.map_data.has(current_tile_coord) or previous_tile_coord == next_belt.tile_coord:
 			continue
-			
+		
 		var curr_belt: Building = MapManager.map_data.get(current_tile_coord)	
+		#if next_belt.tile_coord == curr_belt.tile_coord:
+			#var a = 45
+			#
+		#if current_tile_coord != curr_belt.tile_coord:
+			#var b = 45
+		#if current_tile_coord == next_belt.tile_coord:
+			#var b = 45
+			
 		var curr_belt_key: StringName = curr_belt.building_resource.building_key
 		var next_belt_key: StringName = next_belt.building_resource.building_key
 		
@@ -125,15 +133,22 @@ func _move_note():
 				
 		# FLOW CASES: 
 		var is_case_a = curr_is_straight and next_is_straight and has_same_rotation
+		
+		if is_case_a:
+			# check if the straight belts are rotated correctly based ont the position (e.g. to avoid curr_down, next_down next to each other)
+			var is_case_a_2 = curr_rotation in [0, 2] and curr_belt.tile_coord.x == next_belt.tile_coord.x
+			var is_case_a_3 = curr_rotation in [1, 3] and curr_belt.tile_coord.y == next_belt.tile_coord.y
+			is_case_a = is_case_a_2 or is_case_a_3
+		
 		var is_case_b = curr_is_straight and next_is_corner_f and next_rotation == (curr_rotation + 3) % 4
-		var is_case_c = curr_is_straight and next_is_corner_b and next_rotation == (curr_rotation - 2) % 4
+		var is_case_c = curr_is_straight and next_is_corner_b and next_rotation == abs((curr_rotation - 2) % 4)
 		
 		var is_case_d = curr_is_corner_f and next_is_straight and has_same_rotation
 		var is_case_e = curr_is_corner_f and next_is_corner_f and next_rotation == (curr_rotation + 3) % 4
-		var is_case_f = curr_is_corner_f and next_is_corner_b and next_rotation == (curr_rotation - 2) % 4
+		var is_case_f = curr_is_corner_f and next_is_corner_b and next_rotation == abs((curr_rotation - 2) % 4)
 		
-		var is_case_g = curr_is_corner_b and next_is_straight and next_rotation == (curr_rotation - 3) % 4
-		var is_case_h = curr_is_corner_b and next_is_corner_f and next_rotation == (curr_rotation - 2) % 4
+		var is_case_g = curr_is_corner_b and next_is_straight and next_rotation == abs((curr_rotation - 3) % 4)
+		var is_case_h = curr_is_corner_b and next_is_corner_f and next_rotation == abs((curr_rotation - 2) % 4)
 		var is_case_i = curr_is_corner_b and next_is_corner_b and next_rotation == (curr_rotation + 3) % 4
 		
 		if is_case_a or is_case_b or is_case_c or is_case_d or is_case_e or is_case_f or is_case_g or is_case_h or is_case_i:
