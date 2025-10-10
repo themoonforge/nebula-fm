@@ -111,7 +111,6 @@ emote_heart = SubResource("AtlasTexture_pxqns")
 emote_note = SubResource("AtlasTexture_n05gw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-z_index = 6
 y_sort_enabled = true
 position = Vector2(8, 16)
 texture = ExtResource("1_prrqs")

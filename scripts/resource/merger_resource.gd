@@ -6,10 +6,7 @@ func produce(input_buffer: Buffer, output_buffer: Buffer) -> void:
 	var merged_key_numbers: Array[int] = []
 	var new_note_package: NotePackage = null
 	
-	print("-----------")
-	
 	for i in input_locations.size():
-		print("i: ", i)
 		#var note: NoteResource = input_buffer.consume_first_note_from_buffer()
 		var note: NotePackage = input_buffer.consume_first_note_from_buffer(i)
 
@@ -22,11 +19,8 @@ func produce(input_buffer: Buffer, output_buffer: Buffer) -> void:
 			new_note_package.current_tile_coord = note.current_tile_coord
 			new_note_package.previous_tile_coord = note.previous_tile_coord
 			new_note_package.belt_dict = note.belt_dict
-			
-		print("keynumbers: ", note.key_numbers)
-	
+				
 		merged_key_numbers.append_array(note.key_numbers)
-		print("merged_key_numbers.size()", merged_key_numbers.size())
 		note.queue_free()
 	
 	if merged_key_numbers.size() == 0:

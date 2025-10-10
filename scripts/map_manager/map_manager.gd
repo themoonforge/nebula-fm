@@ -148,6 +148,8 @@ func _process(delta: float) -> void:
 				place_obstacle.emit(building)
 				place_building.emit(building)
 				MusicPlayer.play_sfx("build_placed")
+				
+				building.set_up_shape_polygon(building.tile_coord)
 
 				if GridManager.is_cell_free(hovered_cell):
 					GridManager.set_cell(hovered_cell)
@@ -180,7 +182,7 @@ func _process(delta: float) -> void:
 						GridManager.free_cell(hovered_cell)
 					
 		Mode.IDLE:
-			pass
+			return
 			
 func _borders_note_source(cell: Vector2i) -> bool:
 	for note_cell in note_sources:

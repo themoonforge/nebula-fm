@@ -23,6 +23,8 @@ enum ConnectionType {
 	INPUT, OUTPUT
 }
 
+signal note_produced(note: NotePackage)
+
 @export var building_resource: AbstractBuildingResource = null:
 	set(value):
 		building_resource = value
@@ -55,6 +57,8 @@ enum ConnectionType {
 @onready var inputs: ConnectionManager = %Inputs
 @onready var outputs: ConnectionManager = %Outputs
 
+@onready var building_ui: BuildingUi = %BuildingUi
+
 @export var show_connection_indicators: bool = false:
 	set(value):
 		show_connection_indicators = value
@@ -79,14 +83,27 @@ enum ConnectionType {
 		if is_node_ready():
 			print("is active node is ready")
 			_handle_active()
-			
 
+var building_rect: Rect2i
+var building_shape_polygon: PackedVector2Array
+var building_ui_hovered: bool
+			
 func _ready() -> void:
 	beat_time = 60.0 / MapManager.global_bpm # TODO use global bpm from conveyor belt manager once it is global
 	_setup_resource()
-	#_handle_active()
+	
+	building_ui.setup(self)
+	building_ui.hide()
+	building_ui.get_child(0).mouse_entered.connect(_on_building_ui_mouse_entered)
+	building_ui.get_child(0).mouse_exited.connect(_on_building_ui_mouse_exited)
+	building_rect = Rect2i(tile_coord.x*Tiles.TILE_PX, tile_coord.y*Tiles.TILE_PX, ground_size.x*Tiles.TILE_PX, ground_size.y*Tiles.TILE_PX)
 
 func _process(delta: float) -> void:
+	_handle_ui()
+	
+	if building_ui.visible:
+		building_ui.update()
+
 	time_acc += delta
 	#if time_acc >= beat_time:
 		#match(building_resource.building_key):
@@ -118,6 +135,7 @@ func _process(delta: float) -> void:
 			var note = output_buffer.consume_first_note_from_buffer()
 			if note != null:
 				spawn_note_from_output_buffer(note)
+				note_produced.emit(note)
 		
 	for connection_tile in outputs.connection_dict:
 		var connection_gate = outputs.connection_dict[connection_tile]
@@ -125,6 +143,60 @@ func _process(delta: float) -> void:
 		if found_elem != null:
 			#print("fround elem: ", found_elem)
 			connection_gate.handover(found_elem)
+			
+func set_up_building_rect(tile: Vector2i) -> void:
+	tile_coord = tile
+	
+	building_rect = Rect2i(tile_coord.x*Tiles.TILE_PX, tile_coord.y*Tiles.TILE_PX, ground_size.x*Tiles.TILE_PX, ground_size.y*Tiles.TILE_PX)
+		
+func set_up_shape_polygon(tile: Vector2i) -> void:
+	tile_coord = tile
+	
+	var tile_world_pos = Vector2(tile_coord.x * Tiles.TILE_PX, tile_coord.y * Tiles.TILE_PX)
+	
+	for point in shapeCollisionPolygon.polygon:
+		var polygon_point = tile_world_pos + point
+		building_shape_polygon.append(polygon_point + Vector2(Tiles.TILE_PX, -Tiles.TILE_PX) - shapeCollisionPolygon.position)
+
+func _on_building_ui_mouse_entered() -> void:
+	print("entered")
+	building_ui_hovered = true
+	
+func _on_building_ui_mouse_exited() -> void:
+	print("exited")
+	building_ui_hovered = false
+
+func _handle_ui() -> void:	
+	var mouse_pos = get_viewport().get_mouse_position()
+	var canvas_transform = get_viewport().get_canvas_transform()
+	var world_mouse_pos = canvas_transform.affine_inverse() * mouse_pos
+	
+	var mouse_in_bottom: bool = world_mouse_pos.y >= get_viewport().get_visible_rect().size.y/2
+	
+	if Geometry2D.is_point_in_polygon(world_mouse_pos, building_shape_polygon):
+		if MapManager.mode != MapManager.Mode.IDLE:
+			return
+		if !building_ui.visible:
+			building_ui.show()
+			
+			# align ui with top right of tile
+			building_ui.position.x = building_rect.size.x - building_resource.size.x*16
+			
+			var building_x = global_position.x + building_ui.position.x + building_ui.size.x
+			var overlap_x = building_x - get_viewport().get_visible_rect().size.x+Tiles.TILE_PX
+			
+			if building_x >= get_viewport().get_visible_rect().size.x+Tiles.TILE_PX:
+				building_ui.position.x -= overlap_x
+			
+			if mouse_in_bottom:
+				# ui top center of building
+				building_ui.position.y = -building_rect.size.y/2 - building_ui.size.y - Tiles.TILE_PX/2# - Tiles.HALF_TILE_PX
+			else:
+				# ui bottom center of building
+				building_ui.position.y = -building_rect.size.y/2 - building_ui.size.y + Tiles.TILE_PX + building_ui.size.y - Tiles.HALF_TILE_PX/2
+	else:
+		if !building_ui_hovered:
+				building_ui.hide()
 
 func _setup_connections(connections: Dictionary[Vector2i, BuildingsUtils.BuildingRotation], connection_type: ConnectionType) -> void:
 	var nodes: Array[Node] = []
@@ -189,6 +261,7 @@ func _setup_resource() -> void:
 	groundCollisionPolygon.polygon = groundPoints
 	var shapePoints: PackedVector2Array = tile_data.get_collision_polygon_points(1, 0)
 	shapeCollisionPolygon.polygon = shapePoints
+	
 	label.text = str(building_resource)
 	_setup_connections(building_resource.input_locations, ConnectionType.INPUT)
 	_setup_connections(building_resource.output_locations, ConnectionType.OUTPUT)
@@ -236,17 +309,6 @@ func _on_incoming(gate: ConnectionGate, payload: NotePackage) -> void:
 
 #func _note_received():
 	#pass
-	
-# TODO move this to note.tscn ... im stupido	
-@export var c_texture: Texture
-@export var d_texture: Texture
-@export var e_texture: Texture
-@export var f_texture: Texture
-@export var g_texture: Texture
-@export var a_texture: Texture
-@export var b_texture: Texture
-@export var package_texture: Texture
-
 
 ## Puts NotePackage from buffer on the conveyor belt 
 func spawn_note_from_output_buffer(note: NotePackage):
@@ -262,16 +324,7 @@ func spawn_note_from_output_buffer(note: NotePackage):
 		#var location: Vector2i = building_resource.input_locations.keys()[0]
 		#note.previous_tile_coord = location
 
-	if note.key_numbers.size() == 1:
-		match(note.key_numbers[0]):
-			60:
-				note.get_child(0).texture = c_texture
-			62:
-				note.get_child(0).texture = d_texture
-			64:
-				note.get_child(0).texture = e_texture
-	else:
-		note.get_child(0).texture = package_texture
+	note.get_child(0).texture = note.get_texture()
 				
 	note.name = "Note_" + str(Time.get_unix_time_from_system())	
 	# TODO improve access!

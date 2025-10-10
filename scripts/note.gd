@@ -8,6 +8,14 @@ var belt_dict: Dictionary[Vector2i, Node2D]
 
 @export var bpm: float = 120.0
 @export var beats_per_bar: int = 4
+@export var c_texture: Texture
+@export var d_texture: Texture
+@export var e_texture: Texture
+@export var f_texture: Texture
+@export var g_texture: Texture
+@export var a_texture: Texture
+@export var b_texture: Texture
+@export var package_texture: Texture
 
 var time_acc: float = 0.0
 var beat_time: float = 0.0
@@ -91,3 +99,25 @@ func _move_note():
 		current_tile_coord = left
 	else:
 		self.queue_free()
+		
+func get_texture() -> Texture:
+	if key_numbers.size() == 1:
+		match(key_numbers[0] % 12):
+			0, 1:
+				return c_texture
+			2, 3:
+				return d_texture
+			4:
+				return e_texture
+			5, 6:
+				return f_texture
+			7, 8:
+				return g_texture
+			9, 10:
+				return a_texture
+			11:
+				return b_texture
+	else:
+		return package_texture
+		
+	return null

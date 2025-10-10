@@ -196,6 +196,8 @@ func _place_radio_station(sub_grid: SubGrid) -> void:
 			spawn_cell.y -= 2
 			
 	radio_station.global_position = Vector2(spawn_cell * 16)
+	radio_station.set_up_building_rect(spawn_cell)
+	radio_station.set_up_shape_polygon(spawn_cell)
 	mister_nebula_instance.global_position = Vector2i(spawn_cell * 16)
 	
 	match station_subgrid:
@@ -211,7 +213,7 @@ func _place_radio_station(sub_grid: SubGrid) -> void:
 			mister_nebula_instance.global_position.y -= 16
 		SubGrid.BOTTOM_RIGHT:
 			mister_nebula_instance.global_position.y -= radio_station.building_resource.size.x * 16
-	
+
 	for y in radio_station.building_resource.size.y:
 		for x in radio_station.building_resource.size.x:
 			GridManager.set_cell(Vector2i(x, -y - 1) + spawn_cell)
