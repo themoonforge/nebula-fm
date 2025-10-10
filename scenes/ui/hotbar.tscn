@@ -1,81 +1,95 @@
-[gd_scene load_steps=13 format=3 uid="uid://csjy35oh1vki4"]
+[gd_scene load_steps=11 format=3 uid="uid://csjy35oh1vki4"]
 
-[ext_resource type="Script" uid="uid://dpl7y8o8dswp0" path="res://scripts/ui/hotbar.gd" id="1_m1s8h"]
 [ext_resource type="PackedScene" uid="uid://donhenh45sal8" path="res://scenes/ui/transformer_item.tscn" id="2_6hkf2"]
 [ext_resource type="Texture2D" uid="uid://b20nmqa002u5u" path="res://sprites/panel_tile_bright.png" id="2_pikvf"]
 [ext_resource type="Resource" uid="uid://cls7knxgownu5" path="res://resources/building/collector.tres" id="3_6hkf2"]
 [ext_resource type="Resource" uid="uid://cn6kon66bh7gm" path="res://resources/building/merger.tres" id="4_tyl16"]
 [ext_resource type="Resource" uid="uid://hiu1ukei6xtw" path="res://resources/building/pitcher.tres" id="5_f1jgs"]
-[ext_resource type="Resource" uid="uid://b0gwhmnjesig4" path="res://resources/building/conveyor_belt.tres" id="6_miglr"]
-[ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="7_xu3a2"]
-[ext_resource type="Script" uid="uid://0i4s0mv6jlsp" path="res://scripts/resource/merger_resource.gd" id="8_f1jgs"]
+[ext_resource type="Resource" uid="uid://b0gwhmnjesig4" path="res://resources/building/conveyor_belt_auto.tres" id="6_miglr"]
+[ext_resource type="Resource" uid="uid://boayo86auwloj" path="res://resources/building/conveyor_belt_manual.tres" id="8_xu3a2"]
+[ext_resource type="Resource" uid="uid://5yq7ner4m8gv" path="res://resources/building/conveyor_belt_corner_f.tres" id="9_f1jgs"]
+[ext_resource type="Resource" uid="uid://j7k38pqe5j42" path="res://resources/building/conveyor_belt_corner_b.tres" id="10_1uw18"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_miglr"]
 texture = ExtResource("2_pikvf")
 axis_stretch_horizontal = 1
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1uw18"]
-atlas = ExtResource("7_xu3a2")
-region = Rect2(144, 144, 16, 16)
-
-[sub_resource type="Resource" id="Resource_fysmm"]
-script = ExtResource("8_f1jgs")
-name = &"Testblock"
-size = Vector2i(1, 1)
-background_tile = Vector2i(9, 9)
-has_rotation = false
-icon = SubResource("AtlasTexture_1uw18")
-metadata/_custom_type_script = "uid://0i4s0mv6jlsp"
+axis_stretch_vertical = 1
 
 [node name="Hotbar" type="CanvasLayer"]
-script = ExtResource("1_m1s8h")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-anchors_preset = 12
-anchor_top = 1.0
+[node name="Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -28.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 10
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="Container"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.93900007
+anchor_right = 1.0
+anchor_bottom = 1.031
+offset_top = -11.040039
+offset_right = -213.33331
+offset_bottom = -22.160004
 grow_horizontal = 2
 grow_vertical = 0
-size_flags_vertical = 10
-
-[node name="BottomContainer" type="HBoxContainer" parent="MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 8
-
-[node name="Panel" type="PanelContainer" parent="MarginContainer/BottomContainer"]
-layout_mode = 2
+scale = Vector2(1.5, 1.5)
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxTexture_miglr")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/BottomContainer/Panel"]
-layout_mode = 2
-theme_override_constants/margin_top = -8
-theme_override_constants/margin_bottom = 4
-
-[node name="TransformerContainer" type="HBoxContainer" parent="MarginContainer/BottomContainer/Panel/MarginContainer"]
-layout_mode = 2
+[node name="TransformerContainer" type="HBoxContainer" parent="Container"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.21000001
+anchor_top = 0.71000004
+anchor_right = 0.78800005
+anchor_bottom = 0.9710001
+offset_left = 93.59999
+offset_top = 39.399994
+offset_right = -91.32004
+offset_bottom = -6.560028
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.5, 1.5)
+pivot_offset = Vector2(93.25, 24.5)
 size_flags_horizontal = 6
 theme_override_constants/separation = 8
 
-[node name="TransformerItem_C" parent="MarginContainer/BottomContainer/Panel/MarginContainer/TransformerContainer" instance=ExtResource("2_6hkf2")]
+[node name="TransformerItem_Collector" parent="Container/TransformerContainer" instance=ExtResource("2_6hkf2")]
+custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 transformer_resource = ExtResource("3_6hkf2")
 
-[node name="TransformerItem_Pitcher" parent="MarginContainer/BottomContainer/Panel/MarginContainer/TransformerContainer" instance=ExtResource("2_6hkf2")]
+[node name="TransformerItem_Pitcher" parent="Container/TransformerContainer" instance=ExtResource("2_6hkf2")]
+custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 transformer_resource = ExtResource("5_f1jgs")
 
-[node name="TransformerItem_Splitter" parent="MarginContainer/BottomContainer/Panel/MarginContainer/TransformerContainer" instance=ExtResource("2_6hkf2")]
+[node name="TransformerItem_Splitter" parent="Container/TransformerContainer" instance=ExtResource("2_6hkf2")]
 layout_mode = 2
 transformer_resource = ExtResource("4_tyl16")
 
-[node name="TransformerItem_Belt" parent="MarginContainer/BottomContainer/Panel/MarginContainer/TransformerContainer" instance=ExtResource("2_6hkf2")]
+[node name="TransformerItem_Belt_Auto" parent="Container/TransformerContainer" instance=ExtResource("2_6hkf2")]
+custom_minimum_size = Vector2(21, 0)
 layout_mode = 2
 transformer_resource = ExtResource("6_miglr")
 
-[node name="Test" parent="MarginContainer/BottomContainer/Panel/MarginContainer/TransformerContainer" instance=ExtResource("2_6hkf2")]
-visible = false
+[node name="TransformerItem_Belt_Manual" parent="Container/TransformerContainer" instance=ExtResource("2_6hkf2")]
+custom_minimum_size = Vector2(18, 0)
 layout_mode = 2
-transformer_resource = SubResource("Resource_fysmm")
+transformer_resource = ExtResource("8_xu3a2")
+
+[node name="TransformerItem_Belt_Corner_f_Manual" parent="Container/TransformerContainer" instance=ExtResource("2_6hkf2")]
+custom_minimum_size = Vector2(17, 0)
+layout_mode = 2
+transformer_resource = ExtResource("9_f1jgs")
+
+[node name="TransformerItem_Belt_Corner_b_Manual" parent="Container/TransformerContainer" instance=ExtResource("2_6hkf2")]
+custom_minimum_size = Vector2(17, 0)
+layout_mode = 2
+transformer_resource = ExtResource("10_1uw18")

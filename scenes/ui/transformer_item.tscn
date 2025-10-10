@@ -1,21 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://donhenh45sal8"]
+[gd_scene load_steps=7 format=3 uid="uid://donhenh45sal8"]
 
 [ext_resource type="Script" uid="uid://c7yqn5ulqbve2" path="res://scripts/ui/transformer_item.gd" id="1_t18cr"]
-[ext_resource type="Resource" uid="uid://y353udod5p7m" path="res://scenes/transformer/c_transformer/c_transformer.tres" id="2_tcgv8"]
 [ext_resource type="FontFile" uid="uid://c6h3we4j2dvbf" path="res://fonts/GravityBold8.ttf" id="3_f25kx"]
+[ext_resource type="ButtonGroup" uid="uid://c0113ld2e73eu" path="res://resources/transformer_button_group.tres" id="3_thb85"]
 [ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="4_f25kx"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f25kx"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_thb85"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mafmx"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xgcwx"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l8m1a"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tbg13"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x3q6d"]
 content_margin_left = 4.0
@@ -29,33 +17,39 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 anti_aliasing = false
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_thb85"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_f25kx"]
 atlas = ExtResource("4_f25kx")
-region = Rect2(192, 8, 16, 24)
+region = Rect2(416, 96, 18, 16)
 
-[node name="TransformerItem" type="PanelContainer"]
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxEmpty_f25kx")
+[node name="TransformerItem" type="Control"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -9.0
+offset_top = -23.0
+offset_right = 9.0
+grow_horizontal = 2
+grow_vertical = 0
 script = ExtResource("1_t18cr")
-transformer_resource = ExtResource("2_tcgv8")
 
-[node name="PlacementButton" type="Button" parent="."]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_thb85")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_mafmx")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_xgcwx")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_l8m1a")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_tbg13")
-
-[node name="HoverName" type="Label" parent="PlacementButton"]
+[node name="HoverName" type="Label" parent="."]
 unique_name_in_owner = true
 z_index = 1
-layout_mode = 0
-offset_top = -24.0
-offset_right = 72.0
+clip_contents = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.0
+offset_right = 25.0
+offset_bottom = 20.0
+grow_horizontal = 2
+scale = Vector2(0.75, 0.75)
+pivot_offset = Vector2(25, 11)
 theme_override_fonts/font = ExtResource("3_f25kx")
 theme_override_font_sizes/font_size = 12
 theme_override_styles/normal = SubResource("StyleBoxFlat_x3q6d")
@@ -63,17 +57,22 @@ text = "INFO"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 2
-size_flags_vertical = 0
-mouse_filter = 2
-
-[node name="Icon" type="TextureRect" parent="VBoxContainer"]
+[node name="PlacementButton" type="TextureButton" parent="."]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 2
-texture = SubResource("AtlasTexture_thb85")
-expand_mode = 3
-stretch_mode = 5
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+toggle_mode = true
+button_group = ExtResource("3_thb85")
+texture_normal = SubResource("AtlasTexture_f25kx")
+stretch_mode = 3

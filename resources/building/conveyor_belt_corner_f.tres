@@ -1,18 +1,23 @@
-[gd_resource type="Resource" script_class="ConveyorResource" load_steps=4 format=3 uid="uid://5yq7ner4m8gv"]
+[gd_resource type="Resource" script_class="ConveyorResource" load_steps=5 format=3 uid="uid://5yq7ner4m8gv"]
 
 [ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="1_7l8o5"]
 [ext_resource type="Script" uid="uid://r3k6ov28vxkk" path="res://scripts/resource/conveyor_resource.gd" id="2_iljdk"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pdhp1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ul5ob"]
 atlas = ExtResource("1_7l8o5")
-region = Rect2(144, 16, 16, 16)
+region = Rect2(448, 95, 17, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7l8o5"]
+atlas = ExtResource("1_7l8o5")
+region = Rect2(448, 127, 17, 17)
 
 [resource]
-resource_name = "Corner (Backward)"
+resource_name = "Corner (Forward)"
 script = ExtResource("2_iljdk")
-name = &"Corner (Backward)"
+name = &"Corner (Forward)"
 building_key = &"conveyor_belt_corner_f"
 size = Vector2i(1, 1)
 background_tile = Vector2i(0, 22)
-icon = SubResource("AtlasTexture_pdhp1")
+hotbar_icon = SubResource("AtlasTexture_ul5ob")
+hotbar_icon_hovered = SubResource("AtlasTexture_7l8o5")
 rotation_offset = Array[Vector2i]([Vector2i(0, 4), Vector2i(0, 7), Vector2i(0, 11)])

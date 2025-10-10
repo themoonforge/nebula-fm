@@ -1,12 +1,16 @@
-[gd_resource type="Resource" script_class="MergerBuildingResource" load_steps=5 format=3 uid="uid://cn6kon66bh7gm"]
+[gd_resource type="Resource" script_class="MergerBuildingResource" load_steps=6 format=3 uid="uid://cn6kon66bh7gm"]
 
 [ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="1_mwd6o"]
 [ext_resource type="PackedScene" uid="uid://ee1ta87u3uwm" path="res://scenes/map/note.tscn" id="2_13log"]
 [ext_resource type="Script" uid="uid://0i4s0mv6jlsp" path="res://scripts/resource/merger_resource.gd" id="2_tp5qi"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mi8d6"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_tp5qi"]
 atlas = ExtResource("1_mwd6o")
-region = Rect2(192, 72, 32, 24)
+region = Rect2(352, 89, 32, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13log"]
+atlas = ExtResource("1_mwd6o")
+region = Rect2(352, 121, 32, 23)
 
 [resource]
 script = ExtResource("2_tp5qi")
@@ -22,6 +26,7 @@ Vector2i(1, -1): 0
 output_locations = Dictionary[Vector2i, int]({
 Vector2i(1, 1): 0
 })
-icon = SubResource("AtlasTexture_mi8d6")
+hotbar_icon = SubResource("AtlasTexture_tp5qi")
+hotbar_icon_hovered = SubResource("AtlasTexture_13log")
 rotation_offset = Array[Vector2i]([Vector2i(2, 0), Vector2i(3, 0), Vector2i(5, 0)])
 metadata/_custom_type_script = "uid://0i4s0mv6jlsp"

@@ -29,7 +29,8 @@
 @export var has_rotation: bool = true
 @export var production_time: float = 0.0
 
-@export var icon: Texture2D
+@export var hotbar_icon: Texture2D
+@export var hotbar_icon_hovered: Texture2D
 
 @export var rotation_offset: Array[Vector2i] = []
 
