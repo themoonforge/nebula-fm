@@ -12,7 +12,7 @@ const COLOR_ADD: Color = Color(0.976, 0.827, 0.416, 0.773)
 
 # dict with key: tiled_coord, value: object on the map
 # for fast access of belts
-var map_data: Dictionary[Vector2i, Node2D] # BELTS ONLY # TODO rename
+var map_data: Dictionary[Vector2i, Building] # BELTS ONLY # TODO rename
 var map_data_c_collector: Dictionary[Vector2i, Node2D] # BELTS ONLY
 
 # just for tile map coord calculation
