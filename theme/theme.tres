@@ -1,8 +1,34 @@
-[gd_resource type="Theme" load_steps=52 format=3 uid="uid://cnveursukjnnk"]
+[gd_resource type="Theme" load_steps=64 format=3 uid="uid://cnveursukjnnk"]
 
 [ext_resource type="FontFile" uid="uid://c6h3we4j2dvbf" path="res://fonts/GravityBold8.ttf" id="1_4yjuo"]
 [ext_resource type="Texture2D" uid="uid://bkye0qatrb70" path="res://sprites/checkbox_checked.png" id="1_nrt0f"]
 [ext_resource type="Texture2D" uid="uid://doq3m5pe1wgyx" path="res://sprites/checkbox_unchecked.png" id="2_4yjuo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fil7c"]
+bg_color = Color(0.9607843, 0.93333334, 0.8509804, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iwsu2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mm6bo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jjfh6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5p4dt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_crspv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0bgv2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_18qdb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ocm4p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4gu3r"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uettw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lid6j"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yw8fc"]
 
@@ -332,6 +358,34 @@ corner_radius_top_right = 4
 anti_aliasing = false
 
 [resource]
+BuildingMenuButton/base_type = &"MenuButton"
+BuildingMenuButton/colors/font_color = Color(0.19215687, 0.16078432, 0.28235295, 1)
+BuildingMenuButton/font_sizes/font_size = 6
+BuildingMenuButton/fonts/font = ExtResource("1_4yjuo")
+BuildingPanel/base_type = &"PanelContainer"
+BuildingPanel/styles/panel = SubResource("StyleBoxFlat_fil7c")
+BuildingPanelButton/base_type = &"Button"
+BuildingPanelButton/colors/font_color = Color(0.19215687, 0.16078432, 0.28235295, 1)
+BuildingPanelButton/colors/font_disabled_color = Color(0, 0, 0, 1)
+BuildingPanelButton/colors/font_focus_color = Color(0, 0, 0, 1)
+BuildingPanelButton/colors/font_hover_color = Color(0, 0, 0, 1)
+BuildingPanelButton/colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+BuildingPanelButton/colors/font_outline_color = Color(0, 0, 0, 1)
+BuildingPanelButton/colors/font_pressed_color = Color(0, 0, 0, 1)
+BuildingPanelButton/colors/icon_disabled_color = Color(0, 0, 0, 1)
+BuildingPanelButton/font_sizes/font_size = 8
+BuildingPanelButton/fonts/font = ExtResource("1_4yjuo")
+BuildingPanelButton/styles/disabled = SubResource("StyleBoxEmpty_iwsu2")
+BuildingPanelButton/styles/disabled_mirrored = SubResource("StyleBoxEmpty_mm6bo")
+BuildingPanelButton/styles/focus = SubResource("StyleBoxEmpty_jjfh6")
+BuildingPanelButton/styles/hover = SubResource("StyleBoxEmpty_5p4dt")
+BuildingPanelButton/styles/hover_mirrored = SubResource("StyleBoxEmpty_crspv")
+BuildingPanelButton/styles/hover_pressed = SubResource("StyleBoxEmpty_0bgv2")
+BuildingPanelButton/styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_18qdb")
+BuildingPanelButton/styles/normal = SubResource("StyleBoxEmpty_ocm4p")
+BuildingPanelButton/styles/normal_mirrored = SubResource("StyleBoxEmpty_4gu3r")
+BuildingPanelButton/styles/pressed = SubResource("StyleBoxEmpty_uettw")
+BuildingPanelButton/styles/pressed_mirrored = SubResource("StyleBoxEmpty_lid6j")
 ControlsButton/base_type = &"Button"
 ControlsButton/colors/font_color = Color(0.9607843, 0.93333334, 0.8509804, 1)
 ControlsButton/colors/font_hover_color = Color(0.9607843, 0.93333334, 0.8509804, 1)

@@ -121,7 +121,6 @@ region_rect = Rect2(128, 160, 16, 32)
 
 [node name="Emote" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-z_index = 1
 y_sort_enabled = true
 position = Vector2(8, -16)
 texture = ExtResource("3_pxqns")

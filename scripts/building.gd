@@ -86,24 +86,19 @@ signal note_produced(note: NotePackage)
 
 var building_rect: Rect2i
 var building_shape_polygon: PackedVector2Array
-var building_ui_hovered: bool
 			
 func _ready() -> void:
 	beat_time = 60.0 / MapManager.global_bpm # TODO use global bpm from conveyor belt manager once it is global
 	_setup_resource()
 	
+	MapManager.place_building.connect(_on_place_building)
+	MapManager.click_building.connect(_on_click_building)
+		
 	building_ui.setup(self)
 	building_ui.hide()
-	building_ui.get_child(0).mouse_entered.connect(_on_building_ui_mouse_entered)
-	building_ui.get_child(0).mouse_exited.connect(_on_building_ui_mouse_exited)
 	building_rect = Rect2i(tile_coord.x*Tiles.TILE_PX, tile_coord.y*Tiles.TILE_PX, ground_size.x*Tiles.TILE_PX, ground_size.y*Tiles.TILE_PX)
 
 func _process(delta: float) -> void:
-	_handle_ui()
-	
-	if building_ui.visible:
-		building_ui.update()
-
 	time_acc += delta
 	#if time_acc >= beat_time:
 		#match(building_resource.building_key):
@@ -144,6 +139,25 @@ func _process(delta: float) -> void:
 			#print("fround elem: ", found_elem)
 			connection_gate.handover(found_elem)
 			
+	if MapManager.mode != MapManager.Mode.IDLE:
+		return
+		
+	_handle_ui()
+	
+	if building_ui.visible:
+		building_ui.update()
+
+func _on_click_building(building: Building) -> void:
+	if building != self:
+		building_ui.hide()
+		return
+	
+	building_ui.show()
+			
+func _on_place_building(building: Building) -> void:
+	building_ui.hide()
+	building_ui.is_hovered = false
+			
 func set_up_building_rect(tile: Vector2i) -> void:
 	tile_coord = tile
 	
@@ -158,27 +172,15 @@ func set_up_shape_polygon(tile: Vector2i) -> void:
 		var polygon_point = tile_world_pos + point
 		building_shape_polygon.append(polygon_point + Vector2(Tiles.TILE_PX, -Tiles.TILE_PX) - shapeCollisionPolygon.position)
 
-func _on_building_ui_mouse_entered() -> void:
-	print("entered")
-	building_ui_hovered = true
-	
-func _on_building_ui_mouse_exited() -> void:
-	print("exited")
-	building_ui_hovered = false
-
-func _handle_ui() -> void:	
+func _handle_ui() -> void:
 	var mouse_pos = get_viewport().get_mouse_position()
 	var canvas_transform = get_viewport().get_canvas_transform()
 	var world_mouse_pos = canvas_transform.affine_inverse() * mouse_pos
 	
-	var mouse_in_bottom: bool = world_mouse_pos.y >= get_viewport().get_visible_rect().size.y/2
+	var mouse_in_bottom: bool = building_rect.position.y >= get_viewport().get_visible_rect().size.y/2
 	
 	if Geometry2D.is_point_in_polygon(world_mouse_pos, building_shape_polygon):
-		if MapManager.mode != MapManager.Mode.IDLE:
-			return
 		if !building_ui.visible:
-			building_ui.show()
-			
 			# align ui with top right of tile
 			building_ui.position.x = building_rect.size.x - building_resource.size.x*16
 			
@@ -190,13 +192,17 @@ func _handle_ui() -> void:
 			
 			if mouse_in_bottom:
 				# ui top center of building
-				building_ui.position.y = -building_rect.size.y/2 - building_ui.size.y - Tiles.TILE_PX/2# - Tiles.HALF_TILE_PX
+				building_ui.position.y = -building_rect.size.y/2 - building_ui.size.y - Tiles.TILE_PX/2
 			else:
 				# ui bottom center of building
-				building_ui.position.y = -building_rect.size.y/2 - building_ui.size.y + Tiles.TILE_PX + building_ui.size.y - Tiles.HALF_TILE_PX/2
-	else:
-		if !building_ui_hovered:
-				building_ui.hide()
+				building_ui.position.y = -building_rect.size.y/2 - building_ui.size.y + Tiles.TILE_PX/2 + building_ui.size.y# - Tiles.HALF_TILE_PX/2
+	
+			if Input.is_action_just_pressed("ui_click"):
+				building_ui.size = building_ui.get_child(0).size
+				MapManager.click_building.emit(self)
+	elif building_ui.visible && !building_ui.is_hovered:
+			print("hide here")
+			building_ui.hide()
 
 func _setup_connections(connections: Dictionary[Vector2i, BuildingsUtils.BuildingRotation], connection_type: ConnectionType) -> void:
 	var nodes: Array[Node] = []
