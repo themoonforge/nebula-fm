@@ -1,11 +1,15 @@
-[gd_resource type="Resource" script_class="PitcherBuildingResource" load_steps=4 format=3 uid="uid://hiu1ukei6xtw"]
+[gd_resource type="Resource" script_class="PitcherBuildingResource" load_steps=5 format=3 uid="uid://hiu1ukei6xtw"]
 
 [ext_resource type="Script" uid="uid://dvkawr1dimr5r" path="res://scripts/resource/pitcher_resource.gd" id="1_4xovi"]
 [ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="1_nox11"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nox11"]
 atlas = ExtResource("1_nox11")
-region = Rect2(289, 10, 14, 22)
+region = Rect2(320, 88, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sutfp"]
+atlas = ExtResource("1_nox11")
+region = Rect2(320, 120, 16, 24)
 
 [resource]
 resource_name = "Pitcher"
@@ -21,5 +25,6 @@ Vector2i(0, -1): 0
 output_locations = Dictionary[Vector2i, int]({
 Vector2i(0, 1): 0
 })
-icon = SubResource("AtlasTexture_nox11")
+hotbar_icon = SubResource("AtlasTexture_nox11")
+hotbar_icon_hovered = SubResource("AtlasTexture_sutfp")
 rotation_offset = Array[Vector2i]([Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0)])

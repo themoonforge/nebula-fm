@@ -17,6 +17,7 @@ var map_data_c_collector: Dictionary[Vector2i, Node2D] # BELTS ONLY
 
 # just for tile map coord calculation
 var ground_layer: TileMapLayer
+var is_auto_conveyor_belt_tiling: bool = false
 
 @export var global_bpm: float = 120.0 # TODO move to conver
 
@@ -40,6 +41,7 @@ var note_sources: Array[Vector2i]
 @export var mode: Mode = Mode.IDLE:
 	set(value):
 		mode = value
+		#is_auto_conveyor_belt_tiling = false
 		grid_cursor.hide()
 		build_mode_change.emit(mode)
 		match mode:
@@ -93,11 +95,11 @@ func _process(delta: float) -> void:
 
 	match mode:
 		Mode.BUILD:
-			if Input.is_action_just_pressed(&"rotate_right"):
+			if Input.is_action_just_pressed(&"rotate_right") and !is_auto_conveyor_belt_tiling:
 				building_cursor.building.building_rotation = BuildingsUtils.rightRotation(building_cursor.building.building_rotation)
 				MusicPlayer.play_sfx("ui_click_tsk")
 
-			if Input.is_action_just_pressed(&"rotate_left"):
+			if Input.is_action_just_pressed(&"rotate_left") and !is_auto_conveyor_belt_tiling:
 				building_cursor.building.building_rotation = BuildingsUtils.leftRotation(building_cursor.building.building_rotation)
 				MusicPlayer.play_sfx("ui_click_tsk")
 
@@ -125,18 +127,17 @@ func _process(delta: float) -> void:
 				var building: Building = building_scene.instantiate()
 				building.building_resource = building_cursor.building.building_resource
 				building.global_position = building_cursor.global_position
+				building.building_rotation = building_cursor.building.building_rotation
 				building.is_active = true
 				var tile_coordinate = ground_layer.local_to_map(building_cursor.global_position)
 				
 				building.tile_coord = tile_coordinate
-				if building.building_resource.building_key == StringName("conveyor_belt"):
-					#building.name = "Belt_" + str(Time.get_unix_time_from_system())
-					
-					_evaluate_conveyor_belt_direction(tile_coordinate, building)
+				if building.building_resource.building_key.begins_with("conveyor_belt"): # TODO maybe improve this
+					if is_auto_conveyor_belt_tiling:
+						_evaluate_conveyor_belt_direction(tile_coordinate, building)
 					map_data[tile_coordinate] = building
 					
 				elif building.building_resource.building_key == StringName("collector"):
-					#building.name = "Collector_" + str(Time.get_unix_time_from_system())					
 					map_data_c_collector[tile_coordinate] = building
 				
 				building.name = building.building_resource.name + "_" + str(Time.get_unix_time_from_system())					
@@ -208,7 +209,7 @@ func free_buildings() -> void:
 		building.queue_free()
 
 func hide_ghost() -> void:
-	mode = Mode.IDLE
+	mode = Mode.IDLE	
 
 func set_active_transformer_ghost(transformer_resource: AbstractBuildingResource) -> void:
 	if !building_cursor:
@@ -218,6 +219,11 @@ func set_active_transformer_ghost(transformer_resource: AbstractBuildingResource
 	building_cursor.building.modulate_sprite(COLOR_FREE)
 	building_cursor.building.show_connection_indicators = true
 	mode = Mode.BUILD
+	
+	is_auto_conveyor_belt_tiling = transformer_resource.building_key == "conveyor_belt_auto"
+	if is_auto_conveyor_belt_tiling:
+		building_cursor.building.building_rotation = BuildingsUtils.BuildingRotation.DOWN
+	
 
 # checks if building (or belt) has neighbour belts
 func has_neighbours(root_position):

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ConveyorResource" load_steps=5 format=3 uid="uid://boayo86auwloj"]
+
+[ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="1_rw5ih"]
+[ext_resource type="Script" uid="uid://r3k6ov28vxkk" path="res://scripts/resource/conveyor_resource.gd" id="2_jq6rr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rw5ih"]
+atlas = ExtResource("1_rw5ih")
+region = Rect2(416, 96, 18, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jq6rr"]
+atlas = ExtResource("1_rw5ih")
+region = Rect2(416, 128, 18, 16)
+
+[resource]
+resource_name = "Conveyor Belt"
+script = ExtResource("2_jq6rr")
+name = &"Conveyor Belt"
+building_key = &"conveyor_belt"
+size = Vector2i(1, 1)
+background_tile = Vector2i(0, 25)
+hotbar_icon = SubResource("AtlasTexture_rw5ih")
+hotbar_icon_hovered = SubResource("AtlasTexture_jq6rr")
+rotation_offset = Array[Vector2i]([Vector2i(0, -1), Vector2i(0, 6), Vector2i(0, 5)])

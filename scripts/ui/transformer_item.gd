@@ -1,9 +1,9 @@
-class_name TransformerItem extends PanelContainer
+@tool
+class_name TransformerItem extends Control
 
 @export var transformer_resource: AbstractBuildingResource
 
-@onready var placement_button: Button = %PlacementButton
-@onready var icon: TextureRect = %Icon
+@onready var placement_button: TextureButton = %PlacementButton
 @onready var hover_name: Label = %HoverName
 
 func _ready() -> void:
@@ -11,10 +11,16 @@ func _ready() -> void:
 	placement_button.mouse_entered.connect(_on_transformer_item_mouse_entered)
 	placement_button.mouse_exited.connect(_on_transformer_item_mouse_exited)
 	
-	icon.texture = transformer_resource.icon
+	placement_button.texture_normal = transformer_resource.hotbar_icon
+	placement_button.texture_hover = transformer_resource.hotbar_icon_hovered
+	placement_button.texture_pressed = transformer_resource.hotbar_icon_hovered
+
 	hover_name.text = transformer_resource.name
 	
 	hover_name.hide()
+	
+	# sets the size of controler based on tecture sizes (needed because we use clip contents for the label)
+	custom_minimum_size.x = transformer_resource.hotbar_icon.get_size().x
 	
 func _on_transformer_item_mouse_entered() -> void:
 	hover_name.show()
