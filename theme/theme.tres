@@ -1,11 +1,99 @@
-[gd_resource type="Theme" load_steps=64 format=3 uid="uid://cnveursukjnnk"]
+[gd_resource type="Theme" load_steps=84 format=3 uid="uid://cnveursukjnnk"]
 
 [ext_resource type="FontFile" uid="uid://c6h3we4j2dvbf" path="res://fonts/GravityBold8.ttf" id="1_4yjuo"]
 [ext_resource type="Texture2D" uid="uid://bkye0qatrb70" path="res://sprites/checkbox_checked.png" id="1_nrt0f"]
 [ext_resource type="Texture2D" uid="uid://doq3m5pe1wgyx" path="res://sprites/checkbox_unchecked.png" id="2_4yjuo"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_idhmr"]
+bg_color = Color(0.19607843, 0.16470589, 0.28627452, 1)
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e5uuo"]
+bg_color = Color(0.19607843, 0.16470589, 0.28627452, 1)
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6e26w"]
+bg_color = Color(0.19607843, 0.16470589, 0.28627452, 1)
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aq8ex"]
+bg_color = Color(0.19607843, 0.16470589, 0.28627452, 1)
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_872ig"]
+bg_color = Color(0.19607843, 0.16470589, 0.28627452, 1)
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dsr3u"]
+bg_color = Color(0.19607843, 0.16470589, 0.28627452, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.19607843, 0.16470589, 0.28627452, 1)
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4pha3"]
+bg_color = Color(0.19607843, 0.16470589, 0.28627452, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.19607843, 0.16470589, 0.28627452, 1)
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0w14e"]
+bg_color = Color(0.19607843, 0.16470589, 0.28627452, 1)
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i1vfq"]
+bg_color = Color(0.19607843, 0.16470589, 0.28627452, 1)
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1le5d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yf3u6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fjskk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k3rea"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fil7c"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_idhmr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e5uuo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q1cl6"]
+bg_color = Color(0.19607843, 0.16470589, 0.28627452, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.19607843, 0.16470589, 0.28627452, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6e26w"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aq8ex"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_872ig"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fil7c"]
 bg_color = Color(0.9607843, 0.93333334, 0.8509804, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.19607843, 0.16470589, 0.28627452, 1)
 anti_aliasing = false
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iwsu2"]
@@ -358,10 +446,36 @@ corner_radius_top_right = 4
 anti_aliasing = false
 
 [resource]
-BuildingMenuButton/base_type = &"MenuButton"
-BuildingMenuButton/colors/font_color = Color(0.19215687, 0.16078432, 0.28235295, 1)
-BuildingMenuButton/font_sizes/font_size = 6
-BuildingMenuButton/fonts/font = ExtResource("1_4yjuo")
+BuildingMenuButtonPrimary/base_type = &"Button"
+BuildingMenuButtonPrimary/colors/font_color = Color(0.19607843, 0.16470589, 0.28627452, 1)
+BuildingMenuButtonPrimary/font_sizes/font_size = 6
+BuildingMenuButtonPrimary/fonts/font = ExtResource("1_4yjuo")
+BuildingMenuButtonPrimary/styles/disabled = null
+BuildingMenuButtonPrimary/styles/disabled_mirrored = null
+BuildingMenuButtonPrimary/styles/focus = SubResource("StyleBoxFlat_idhmr")
+BuildingMenuButtonPrimary/styles/hover = SubResource("StyleBoxFlat_e5uuo")
+BuildingMenuButtonPrimary/styles/hover_mirrored = SubResource("StyleBoxFlat_6e26w")
+BuildingMenuButtonPrimary/styles/hover_pressed = SubResource("StyleBoxFlat_aq8ex")
+BuildingMenuButtonPrimary/styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_872ig")
+BuildingMenuButtonPrimary/styles/normal = SubResource("StyleBoxFlat_dsr3u")
+BuildingMenuButtonPrimary/styles/normal_mirrored = SubResource("StyleBoxFlat_4pha3")
+BuildingMenuButtonPrimary/styles/pressed = SubResource("StyleBoxFlat_0w14e")
+BuildingMenuButtonPrimary/styles/pressed_mirrored = SubResource("StyleBoxFlat_i1vfq")
+BuildingMenuButtonSecondary/base_type = &"Button"
+BuildingMenuButtonSecondary/colors/font_color = Color(0.19607843, 0.16470589, 0.28627452, 1)
+BuildingMenuButtonSecondary/font_sizes/font_size = 6
+BuildingMenuButtonSecondary/fonts/font = ExtResource("1_4yjuo")
+BuildingMenuButtonSecondary/styles/disabled = SubResource("StyleBoxEmpty_1le5d")
+BuildingMenuButtonSecondary/styles/disabled_mirrored = SubResource("StyleBoxEmpty_yf3u6")
+BuildingMenuButtonSecondary/styles/focus = SubResource("StyleBoxEmpty_fjskk")
+BuildingMenuButtonSecondary/styles/hover = SubResource("StyleBoxEmpty_k3rea")
+BuildingMenuButtonSecondary/styles/hover_mirrored = SubResource("StyleBoxEmpty_fil7c")
+BuildingMenuButtonSecondary/styles/hover_pressed = SubResource("StyleBoxEmpty_idhmr")
+BuildingMenuButtonSecondary/styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_e5uuo")
+BuildingMenuButtonSecondary/styles/normal = SubResource("StyleBoxFlat_q1cl6")
+BuildingMenuButtonSecondary/styles/normal_mirrored = SubResource("StyleBoxEmpty_6e26w")
+BuildingMenuButtonSecondary/styles/pressed = SubResource("StyleBoxEmpty_aq8ex")
+BuildingMenuButtonSecondary/styles/pressed_mirrored = SubResource("StyleBoxEmpty_872ig")
 BuildingPanel/base_type = &"PanelContainer"
 BuildingPanel/styles/panel = SubResource("StyleBoxFlat_fil7c")
 BuildingPanelButton/base_type = &"Button"

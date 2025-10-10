@@ -150,12 +150,15 @@ func _process(delta: float) -> void:
 func _on_click_building(building: Building) -> void:
 	if building != self:
 		building_ui.hide()
+		building_ui.is_hovered = false
+		print("hide when click building")
 		return
 	
 	building_ui.show()
 			
 func _on_place_building(building: Building) -> void:
 	building_ui.hide()
+	print("hide when place building")
 	building_ui.is_hovered = false
 			
 func set_up_building_rect(tile: Vector2i) -> void:
@@ -178,8 +181,9 @@ func _handle_ui() -> void:
 	var world_mouse_pos = canvas_transform.affine_inverse() * mouse_pos
 	
 	var mouse_in_bottom: bool = building_rect.position.y >= get_viewport().get_visible_rect().size.y/2
+	var mouse_in_polygon: bool = Geometry2D.is_point_in_polygon(world_mouse_pos, building_shape_polygon)
 	
-	if Geometry2D.is_point_in_polygon(world_mouse_pos, building_shape_polygon):
+	if mouse_in_polygon:
 		if !building_ui.visible:
 			# align ui with top right of tile
 			building_ui.position.x = building_rect.size.x - building_resource.size.x*16
@@ -201,8 +205,11 @@ func _handle_ui() -> void:
 				building_ui.size = building_ui.get_child(0).size
 				MapManager.click_building.emit(self)
 	elif building_ui.visible && !building_ui.is_hovered:
-			print("hide here")
-			building_ui.hide()
+		print("hide in handle_ui")
+		building_ui.hide()
+		
+	if Input.is_action_just_pressed("ui_click") && !mouse_in_polygon && !building_ui.is_hovered:
+		building_ui.hide()
 
 func _setup_connections(connections: Dictionary[Vector2i, BuildingsUtils.BuildingRotation], connection_type: ConnectionType) -> void:
 	var nodes: Array[Node] = []

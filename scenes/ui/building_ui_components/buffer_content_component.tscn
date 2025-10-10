@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwckawbphs0g4"]
+
+[ext_resource type="Script" uid="uid://bggwhw41wc7mt" path="res://scenes/ui/building_ui_components/buffer_content_component.gd" id="1_3ox88"]
+[ext_resource type="FontFile" uid="uid://c6h3we4j2dvbf" path="res://fonts/GravityBold8.ttf" id="1_m2t1l"]
+
+[node name="BufferContent" type="HBoxContainer"]
+script = ExtResource("1_3ox88")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="InputBufferContentLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.19215687, 0.16078432, 0.28235295, 1)
+theme_override_fonts/font = ExtResource("1_m2t1l")
+theme_override_font_sizes/font_size = 6
+text = "IN:"
+
+[node name="InputBufferContentContainer" type="HFlowContainer" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="InputNoteTexture" type="TextureRect" parent="HBoxContainer/InputBufferContentContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="OutputBufferContentLabel" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.19215687, 0.16078432, 0.28235295, 1)
+theme_override_fonts/font = ExtResource("1_m2t1l")
+theme_override_font_sizes/font_size = 6
+text = "OUT:"
+
+[node name="OutputBufferContentContainer" type="HFlowContainer" parent="HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="OutputNoteTexture" type="TextureRect" parent="HBoxContainer2/OutputBufferContentContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2

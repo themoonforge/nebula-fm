@@ -1,4 +1,4 @@
-class_name PitchShifter extends HBoxContainer
+class_name PitchShifterComponent extends BuildingUiComponent
 
 signal pitch_shifted(new_pitch: int)
 
@@ -7,6 +7,9 @@ signal pitch_shifted(new_pitch: int)
 
 var current_pitch: int
 
+func set_up(building: Building) -> void:
+	super._set_up(building)
+	
 func _ready() -> void:
 	shift_up.pressed.connect(_on_shift_up_pressed)
 	shift_down.pressed.connect(_on_shift_down_pressed)

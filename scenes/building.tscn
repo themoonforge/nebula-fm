@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b5mjgreg8l3ap"]
+[gd_scene load_steps=11 format=3 uid="uid://b5mjgreg8l3ap"]
 
 [ext_resource type="Script" uid="uid://o0f20sinybbj" path="res://scripts/building.gd" id="1_gof7m"]
 [ext_resource type="Resource" uid="uid://cn6kon66bh7gm" path="res://resources/building/merger.tres" id="2_g3pb6"]
@@ -9,7 +9,6 @@
 [ext_resource type="Script" uid="uid://f53i8e6t5r1k" path="res://scripts/connection_manager.gd" id="7_nm462"]
 [ext_resource type="FontFile" uid="uid://c6h3we4j2dvbf" path="res://fonts/GravityBold8.ttf" id="9_8lqx8"]
 [ext_resource type="Script" uid="uid://ca0xmej764gid" path="res://scripts/ui/building_ui.gd" id="9_iwd2d"]
-[ext_resource type="Script" uid="uid://602fh1dr2tcd" path="res://scenes/ui/pitch_shifter_ui.gd" id="10_iwd2d"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_mkjfx"]
 font_size = 1
@@ -115,10 +114,10 @@ theme_type_variation = &"BuildingPanel"
 [node name="MarginContainer" type="MarginContainer" parent="BuildingUi/PanelContainer"]
 layout_mode = 2
 size_flags_vertical = 4
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
 
 [node name="VBoxContainer" type="VBoxContainer" parent="BuildingUi/PanelContainer/MarginContainer"]
 layout_mode = 2
@@ -131,76 +130,8 @@ theme_override_fonts/font = ExtResource("9_8lqx8")
 theme_override_font_sizes/font_size = 6
 text = "building name"
 
-[node name="BufferContent" type="HBoxContainer" parent="BuildingUi/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="BuildingUi/PanelContainer/MarginContainer/VBoxContainer/BufferContent"]
-layout_mode = 2
-
-[node name="InputBufferContentLabel" type="Label" parent="BuildingUi/PanelContainer/MarginContainer/VBoxContainer/BufferContent/HBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.19215687, 0.16078432, 0.28235295, 1)
-theme_override_fonts/font = ExtResource("9_8lqx8")
-theme_override_font_sizes/font_size = 6
-text = "IN:"
-
-[node name="InputBufferContentContainer" type="HFlowContainer" parent="BuildingUi/PanelContainer/MarginContainer/VBoxContainer/BufferContent/HBoxContainer"]
+[node name="UiComponents" type="VBoxContainer" parent="BuildingUi/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-
-[node name="InputNoteTexture" type="TextureRect" parent="BuildingUi/PanelContainer/MarginContainer/VBoxContainer/BufferContent/HBoxContainer/InputBufferContentContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="BuildingUi/PanelContainer/MarginContainer/VBoxContainer/BufferContent"]
-layout_mode = 2
-
-[node name="OutputBufferContentLabel" type="Label" parent="BuildingUi/PanelContainer/MarginContainer/VBoxContainer/BufferContent/HBoxContainer2"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.19215687, 0.16078432, 0.28235295, 1)
-theme_override_fonts/font = ExtResource("9_8lqx8")
-theme_override_font_sizes/font_size = 6
-text = "OUT:"
-
-[node name="OutputBufferContentContainer" type="HFlowContainer" parent="BuildingUi/PanelContainer/MarginContainer/VBoxContainer/BufferContent/HBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="OutputNoteTexture" type="TextureRect" parent="BuildingUi/PanelContainer/MarginContainer/VBoxContainer/BufferContent/HBoxContainer2/OutputBufferContentContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="BuildingUi/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-mouse_filter = 0
-
-[node name="BuildingNameLabel" type="Label" parent="BuildingUi/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.19215687, 0.16078432, 0.28235295, 1)
-theme_override_fonts/font = ExtResource("9_8lqx8")
-theme_override_font_sizes/font_size = 6
-text = "Pitch:"
-
-[node name="PitchShifter" type="HBoxContainer" parent="BuildingUi/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-script = ExtResource("10_iwd2d")
-
-[node name="ShiftUp" type="Button" parent="BuildingUi/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PitchShifter"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"BuildingPanelButton"
-text = "+"
-
-[node name="ShiftDown" type="Button" parent="BuildingUi/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PitchShifter"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"BuildingPanelButton"
-text = "-"
 
 [connection signal="child_entered_tree" from="Inputs" to="." method="_on_inputs_child_entered_tree"]

@@ -34,5 +34,7 @@
 
 @export var rotation_offset: Array[Vector2i] = []
 
+@export var ui_components: Array[PackedScene]
+
 ## take smth from input buffer, transform, put result into output buffer
 @abstract func produce(input_buffer: Buffer, output_buffer: Buffer) -> void
