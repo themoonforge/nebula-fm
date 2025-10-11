@@ -112,8 +112,9 @@ func _process(delta: float) -> void:
 			building_resource.produce(input_buffer, output_buffer)
 			# take note out of the buffer and spawn in world
 			var note = output_buffer.consume_first_note_from_buffer()
-			
-			if note != null and MapManager.map_data.has(tile_coord):
+			var building_outputs = building_resource.output_locations.keys()
+				
+			if note != null and building_outputs.size() > 0 and MapManager.map_data.has(tile_coord + building_outputs[0]):
 				spawn_note_from_output_buffer(note)
 				note_produced.emit(note)
 		
