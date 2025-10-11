@@ -6,13 +6,13 @@
 [ext_resource type="Script" uid="uid://rg4yrbxve3bl" path="res://scenes/game_camera.gd" id="4_lbhrr"]
 [ext_resource type="Texture2D" uid="uid://cogn2e21kqel" path="res://sprites/pivot_debug.png" id="5_iywne"]
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node"]
 script = ExtResource("1_lbhrr")
-
-[node name="GameUi" parent="." instance=ExtResource("1_uwrxv")]
 
 [node name="Map" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_yqjtg")]
 camera = NodePath("../GameCamera")
+
+[node name="GameUi" parent="." instance=ExtResource("1_uwrxv")]
 
 [node name="GameCamera" type="Camera2D" parent="."]
 unique_name_in_owner = true
