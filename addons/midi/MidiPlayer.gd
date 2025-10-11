@@ -825,6 +825,8 @@ func _process_track_event_note_off(channel: GodotMIDIPlayerChannelStatus, note: 
 func _process_track_event_note_on(channel: GodotMIDIPlayerChannelStatus, note: int, velocity: int) -> void:
 	if channel.mute: return
 	if self.bank == null: return
+	
+	print(note)
 
 	var track_key_shift: int = self.key_shift if not channel.drum_track else 0
 	var key_number: int = note + track_key_shift

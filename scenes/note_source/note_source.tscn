@@ -6,9 +6,10 @@
 [node name="NoteSource" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_bd72m")
+metadata/_edit_horizontal_guides_ = [-3.0]
 
 [node name="Tiles" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 y_sort_enabled = true
-tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 2, 0, 8, 0, 9, 0, 0, 0)
+tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 9, 0, 0, 0)
 tile_set = ExtResource("2_0rh23")
