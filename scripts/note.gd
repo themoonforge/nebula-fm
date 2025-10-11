@@ -21,25 +21,10 @@ class_name NotePackage
 var time_acc: float = 0.0
 var beat_time: float = 0.0
 var move_t: float = 1.0
-
-#var consumed_belt: Array[Vector2i] = [] # TODO remove
-
-## key_number refers to the midi key map 
-## https://djip.co/blog/logic-studio-9-midi-note-numbers
-#@export var key_number: int = 0:
-	#set(value):
-		#key_number = value
-		#name = MidiUtility.key_number_to_note_name_with_octave(key_number)
-		##resource_name = name
-		#simple_name = MidiUtility.key_number_to_note_name(key_number)
 		
 @export var key_numbers: Array[int]
 
-#func _init(key_number: int = 0) -> void:
-	#self.key_number = key_number
-
 func _ready():
-	#belt_dict = MapManager.map_data
 	beat_time = 60.0 / bpm
 	
 	if MapManager.ground_layer:
@@ -51,7 +36,6 @@ func _process(delta: float) -> void:
 	time_acc += delta
 	if time_acc >= beat_time:
 		time_acc = 0.0
-		#current_tile_coord = next_tile_coord
 		_move_note()
 	
 	var t = time_acc / beat_time
@@ -64,23 +48,6 @@ func _lerp_move_note(t: float) -> void:
 	var start_position = MapManager.ground_layer.map_to_local(current_tile_coord)
 	var target_position = MapManager.ground_layer.map_to_local(next_tile_coord)
 	position = start_position.lerp(target_position, t)
-	
-#func _get_next_tile_coord() -> Vector2i:
-	#var top = current_tile_coord + Vector2i.UP
-	#var right = current_tile_coord + Vector2i.RIGHT
-	#var bottom = current_tile_coord + Vector2i.DOWN
-	#var left = current_tile_coord + Vector2i.LEFT
-	#
-	#if MapManager.map_data.has(top) and previous_tile_coord != top:
-		#return top
-	#elif MapManager.map_data.has(right) and previous_tile_coord != right:
-		#return right
-	#elif MapManager.map_data.has(bottom) and previous_tile_coord != bottom:
-		#return bottom
-	#elif MapManager.map_data.has(left) and previous_tile_coord != left:
-		#return left
-		#
-	#return Vector2i.ZERO
 
 func _move_note():
 	# step to next -> previous movement finished
@@ -92,11 +59,6 @@ func _move_note():
 	var left = current_tile_coord + Vector2i.LEFT
 	
 	var possible_belts: Array[Building] = []
-	
-	#var top_belt: Building = MapManager.map_data.get(top)
-	#var right_belt: Building = MapManager.map_data.get(right)
-	#var bottom_belt: Building = MapManager.map_data.get(bottom)
-	#var left_belt: Building = MapManager.map_data.get(left)
 
 	if MapManager.map_data.has(top):
 		possible_belts.append(MapManager.map_data.get(top))
@@ -146,15 +108,6 @@ func _move_note():
 					BuildingsUtils.BuildingRotation.LEFT:
 						allowed_movement_vector = Vector2i.DOWN
 			
-		
-		#if next_belt.tile_coord == curr_belt.tile_coord:
-			#var a = 45
-			#
-		#if current_tile_coord != curr_belt.tile_coord:
-			#var b = 45
-		#if current_tile_coord == next_belt.tile_coord:
-			#var b = 45
-			
 		var curr_belt_key: StringName = curr_belt.building_resource.building_key
 		var next_belt_key: StringName = next_belt.building_resource.building_key
 		
@@ -195,36 +148,15 @@ func _move_note():
 			var real_movement_vector1 = next_belt.tile_coord - current_tile_coord
 			var real_movement_vector2 = next_belt.tile_coord - curr_belt.tile_coord
 			
-			#if real_movement_vector1 == Vector2i.RIGHT or real_movement_vector2 == Vector2i.RIGHT:
-				#print("err2")
-			
 			if previous_tile_coord != Vector2i(INF, INF) and (real_movement_vector1 != allowed_movement_vector or real_movement_vector2 != allowed_movement_vector):
 				continue
 			
 			previous_tile_coord = current_tile_coord
-			#current_tile_coord = next_tile_coord # we dont need this call here
 			next_tile_coord = next_belt.tile_coord
-			
 			
 			return
 	
 	self.queue_free()
-
-	
-	#if belt_dict.has(top) and previous_tile_coord != top:
-		#previous_tile_coord = current_tile_coord
-		#current_tile_coord = top
-	#elif belt_dict.has(right) and previous_tile_coord != right:
-		#previous_tile_coord = current_tile_coord
-		#current_tile_coord = right
-	#elif belt_dict.has(bottom) and previous_tile_coord != bottom:
-		#previous_tile_coord = current_tile_coord
-		#current_tile_coord = bottom	
-	#elif belt_dict.has(left) and previous_tile_coord != left:
-		#previous_tile_coord = current_tile_coord
-		#current_tile_coord = left
-	#else:
-		#self.queue_free()
 		
 func get_texture() -> Texture:
 	if key_numbers.size() == 1:
