@@ -100,35 +100,20 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	time_acc += delta
-	#if time_acc >= beat_time:
-		#match(building_resource.building_key):
-			#"pitcher":
-				#pass
-			#"c_collector":
-				#pass
-					#
-		#time_acc = 0.0
-			
-	#if Engine.is_editor_hint() || not is_active:
-		#return
-
-	#production_time += delta
-	#print("production_time: ", production_time)
-	#if production_time >= building_resource.production_time:
 	if time_acc >= beat_time:
 		time_acc = 0.0
 		
-		#production_time = 0.0
-		# TODO fix
-		#print("input: ", input_buffer)
-		
 		# check if the building is actually placed
 		if get_parent() is not BuildingCursor:
-			# PRODUCE (put NotePackage in input buffer, transform, and put to output buffer)
+			
+			# TRANSFORM NOTES 
+			
+			# puts NotePackage in input buffer -> transform note -> puts to output buffer
 			building_resource.produce(input_buffer, output_buffer)
-			# take note out of the buffer
+			# take note out of the buffer and spawn in world
 			var note = output_buffer.consume_first_note_from_buffer()
-			if note != null:
+			
+			if note != null and MapManager.map_data.has(tile_coord):
 				spawn_note_from_output_buffer(note)
 				note_produced.emit(note)
 		
@@ -136,7 +121,6 @@ func _process(delta: float) -> void:
 		var connection_gate = outputs.connection_dict[connection_tile]
 		var found_elem = output_buffer.consume_first_note_from_buffer(connection_gate.buffer_index)
 		if found_elem != null:
-			#print("fround elem: ", found_elem)
 			connection_gate.handover(found_elem)
 			
 	if MapManager.mode != MapManager.Mode.IDLE:
@@ -151,20 +135,20 @@ func _on_click_building(building: Building) -> void:
 	if building != self:
 		building_ui.hide()
 		building_ui.is_hovered = false
-		print("hide when click building")
+		#print("hide when click building")
 		return
 	
 	building_ui.show()
 			
 func _on_place_building(building: Building) -> void:
 	building_ui.hide()
-	print("hide when place building")
+	#print("hide when place building")
 	building_ui.is_hovered = false
 			
 func set_up_building_rect(tile: Vector2i) -> void:
 	tile_coord = tile
 	
-	building_rect = Rect2i(tile_coord.x*Tiles.TILE_PX, tile_coord.y*Tiles.TILE_PX, ground_size.x*Tiles.TILE_PX, ground_size.y*Tiles.TILE_PX)
+	building_rect = Rect2i(tile_coord.x * Tiles.TILE_PX, tile_coord.y * Tiles.TILE_PX, ground_size.x * Tiles.TILE_PX, ground_size.y * Tiles.TILE_PX)
 		
 func set_up_shape_polygon(tile: Vector2i) -> void:
 	tile_coord = tile
@@ -180,7 +164,7 @@ func _handle_ui() -> void:
 	var canvas_transform = get_viewport().get_canvas_transform()
 	var world_mouse_pos = canvas_transform.affine_inverse() * mouse_pos
 	
-	var mouse_in_bottom: bool = building_rect.position.y >= get_viewport().get_visible_rect().size.y/2
+	var mouse_in_bottom: bool = building_rect.position.y >= get_viewport().get_visible_rect().size.y / 2
 	var mouse_in_polygon: bool = Geometry2D.is_point_in_polygon(world_mouse_pos, building_shape_polygon)
 	
 	if mouse_in_polygon:
@@ -196,16 +180,16 @@ func _handle_ui() -> void:
 			
 			if mouse_in_bottom:
 				# ui top center of building
-				building_ui.position.y = -building_rect.size.y/2 - building_ui.size.y - Tiles.TILE_PX/2
+				building_ui.position.y = -building_rect.size.y / 2 - building_ui.size.y - Tiles.TILE_PX / 2
 			else:
 				# ui bottom center of building
-				building_ui.position.y = -building_rect.size.y/2 - building_ui.size.y + Tiles.TILE_PX/2 + building_ui.size.y# - Tiles.HALF_TILE_PX/2
+				building_ui.position.y = -building_rect.size.y / 2 - building_ui.size.y + Tiles.TILE_PX / 2 + building_ui.size.y # - Tiles.HALF_TILE_PX/2
 	
 			if Input.is_action_just_pressed("ui_click"):
 				building_ui.size = building_ui.get_child(0).size
 				MapManager.click_building.emit(self)
 	elif building_ui.visible && !building_ui.is_hovered:
-		print("hide in handle_ui")
+		#print("hide in handle_ui")
 		building_ui.hide()
 		
 	if Input.is_action_just_pressed("ui_click") && !mouse_in_polygon && !building_ui.is_hovered:
@@ -281,7 +265,7 @@ func _setup_resource() -> void:
 	connectionIndicators.visible = show_connection_indicators
 
 func _handle_active() -> void:
-	print("handle active called")
+	#print("handle active called")
 	if is_active:
 		self.add_to_group(BuildingsUtils.BUILDING_GROUP)
 	else:
@@ -333,9 +317,6 @@ func spawn_note_from_output_buffer(note: NotePackage):
 	
 	if output_locations.size() > 0:
 		note.current_tile_coord += output_locations[0]
-
-		#var location: Vector2i = building_resource.input_locations.keys()[0]
-		#note.previous_tile_coord = location
 
 	note.get_child(0).texture = note.get_texture()
 				

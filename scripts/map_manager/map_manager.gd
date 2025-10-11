@@ -233,7 +233,7 @@ func has_neighbours(root_position):
 	var bottom = root_position + Vector2i(0, 1)
 	var left = root_position + Vector2i(-1, 0)
 			
-	var has_neighbour = map_data.has(top) or map_data.has(right) or map_data.has(bottom) or map_data.has(left)
+	return map_data.has(top) or map_data.has(right) or map_data.has(bottom) or map_data.has(left)
 
 func count_neighbours(root_position):
 	var top = root_position + Vector2i(0, -1)
@@ -241,12 +241,12 @@ func count_neighbours(root_position):
 	var bottom = root_position + Vector2i(0, 1)
 	var left = root_position + Vector2i(-1, 0)
 	
-	Debug.debug_print("root_position: ", root_position)
-	Debug.debug_print("count_neighbours")
-	Debug.debug_print("top: ", top)
-	Debug.debug_print("right: ", right)
-	Debug.debug_print("bottom: ", bottom)
-	Debug.debug_print("left: ", left)
+	#Debug.debug_print("root_position: ", root_position)
+	#Debug.debug_print("count_neighbours")
+	#Debug.debug_print("top: ", top)
+	#Debug.debug_print("right: ", right)
+	#Debug.debug_print("bottom: ", bottom)
+	#Debug.debug_print("left: ", left)
 	
 	var count_of_neighbours = 0
 	if map_data.has(top):
@@ -258,10 +258,13 @@ func count_neighbours(root_position):
 	if map_data.has(left):
 		count_of_neighbours += 1
 	
-	Debug.debug_print("count neighbours", count_of_neighbours)
+	#Debug.debug_print("count neighbours", count_of_neighbours)
 	return count_of_neighbours
-
+	
+# TODO compare with implementation of note movement flow (in note.tscn) and align implementations (they do similar things in different ways)
+# the conveyor belt autotiling implementation (rotates the placed tile based on the present tile)
 func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Building):
+	
 	# check 4 directions
 	var top = root_position + Vector2i(0, -1)
 	var right = root_position + Vector2i(1, 0)
@@ -277,7 +280,6 @@ func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Buildi
 		if data is Building and count_neighbours(top) <= 1:
 			# check rotation
 			building.building_rotation = BuildingsUtils.BuildingRotation.DOWN
-			#_find_corner(data.building_rotation, building.building_rotation)
 	
 	elif map_data.has(right):
 		data = map_data.get(right)
@@ -300,13 +302,6 @@ func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Buildi
 		
 		#check if the belt to connect with already has connections
 		if data is Building and count_neighbours(bottom) <= 1:
-			# check rotation
-			#if data.building_rotation == BuildingsUtils.BuildingRotation.UP:
-				#building.building_rotation = BuildingsUtils.BuildingRotation.UP
-			#elif data.building_rotation == BuildingsUtils.BuildingRotation.DOWN:
-				#building.building_rotation = BuildingsUtils.BuildingRotation.DOWN
-			#else:
-				#print("else: data.building_rotation - ", data.building_rotation)
 			building.building_rotation = BuildingsUtils.BuildingRotation.UP
 				
 	else:
@@ -317,8 +312,7 @@ func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Buildi
 	
 	_find_corner(data, building)
 		
-
-# checks if corner was created (pairwise)
+# checks if the new_belt "creates" a corner and replaces the present or the new belt (depending on the case) with the matching corner tile
 func _find_corner(present_belt: Building, new_belt: Building):
 	
 	# HOW the two buildings are located to each other 
@@ -453,7 +447,7 @@ func _find_corner(present_belt: Building, new_belt: Building):
 			belt_to_replace = new_belt	
 			
 		belt_to_replace.building_resource = conveyor_belt_corner_b
-		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.UP	
+		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.UP
 		
 	elif is_top_left_b:
 		Debug.debug_print("is_top_left_b")
@@ -466,7 +460,7 @@ func _find_corner(present_belt: Building, new_belt: Building):
 			belt_to_replace = new_belt	
 			
 		belt_to_replace.building_resource = conveyor_belt_corner_b
-		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.LEFT			
+		belt_to_replace.building_rotation = BuildingsUtils.BuildingRotation.LEFT
 		
 # autotiles cornes of conveyor belts
 func _find_corners(root_position: Vector2i, building: Building):
@@ -482,9 +476,6 @@ func _find_corners(root_position: Vector2i, building: Building):
 		if data is Building:	
 			# check rotation
 			building.building_rotation = BuildingsUtils.BuildingRotation.DOWN
-			#match(building.building_rotation):
-			#BuildingsUtils.BuildingRotation.DOWN:
-					
 	
 	elif map_data.has(right):
 		var data = map_data.get(right)
