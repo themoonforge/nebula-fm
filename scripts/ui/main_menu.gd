@@ -12,6 +12,8 @@ var is_blocked: bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	_print_startup_message()
+	
 	is_blocked = true
 	splash_screen.splash_done.connect(_on_splash_done)
 	
@@ -77,3 +79,25 @@ func _on_credits_close_button_pressed() -> void:
 		
 	MusicPlayer.play_sfx("ui_click")
 	credits_screen.hide()
+
+func _print_startup_message():
+	print(r"""
+	==================================================
+	 _   _      _           _         ______ __  __ 
+	| \ | |    | |         | |       |  ____|  \/  |
+	|  \| | ___| |__  _   _| | __ _  | |__  | \  / |
+	| . ` |/ _ \ '_ \| | | | |/ _` | |  __| | |\/| |
+	| |\  |  __/ |_) | |_| | | (_| | | |    | |  | |
+	|_| \_|\___|_.__/ \__,_|_|\__,_| |_|    |_|  |_|
+	==================================================
+	                                                 
+	Thanks for playing Nebula FM! ‧₊˚♪ 𝄞₊˚⊹
+
+	You might notice some debug prints here in the console,
+	since the game is in active development.
+
+	Game made by:  @iocutus, @bognari, @prodcautious, @pumpkinchariot
+	→ Reach out on: https://pumpkinchariot.itch.io/nebula-fm
+	
+	✦ Created for Ludum Dare 58 ✦
+	""")

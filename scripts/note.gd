@@ -5,7 +5,6 @@ class_name NotePackage
 @export var current_tile_coord: Vector2i = Vector2i(INF, INF)
 @export var previous_tile_coord: Vector2i = Vector2i(INF, INF)
 @export var next_tile_coord: Vector2i = Vector2i(INF, INF)
-#var belt_dict: Dictionary[Vector2i, Building]
 
 @export var bpm: float = 120.0
 @export var beats_per_bar: int = 4

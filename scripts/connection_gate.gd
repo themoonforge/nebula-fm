@@ -12,7 +12,6 @@ class_name ConnectionGate extends Area2D
 				collision_layer = 8 # output layer
 				collision_mask = 4 # input layer
 
-#region bognari
 @onready var shape: CollisionShape2D = %CollisionShape2D
 
 @export var is_active: bool = false:
@@ -35,8 +34,6 @@ func handover(payload: NoteResource) -> void:
 	incomming.emit(self, payload)
 
 signal incomming(gate: ConnectionGate, payload: NotePackage)
-
-#endregion
 
 func _on_note_entered(area: Area2D) -> void:
 	if mode != Building.ConnectionType.INPUT:

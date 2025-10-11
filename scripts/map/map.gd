@@ -337,9 +337,7 @@ func _place_patterns(tile_map_layer: TileMapLayer, patterns: Dictionary[int, Arr
 				
 func _set_pattern(layer: TileMapLayer, cell: Vector2i, source_id: int, pattern_id: int) -> bool:
 	var pattern = layer.tile_set.get_pattern(pattern_id)
-	
-	print("get pattern with id ", pattern_id)
-	
+		
 	if !_pattern_fits(cell, pattern):
 		return false
 	
