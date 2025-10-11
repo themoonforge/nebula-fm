@@ -14,6 +14,7 @@ atlas = ExtResource("1_nox11")
 region = Rect2(320, 120, 16, 24)
 
 [resource]
+resource_local_to_scene = true
 resource_name = "Pitcher"
 script = ExtResource("1_4xovi")
 name = &"Pitcher"

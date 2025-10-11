@@ -1,6 +1,6 @@
 class_name PitchShifterComponent extends BuildingUiComponent
 
-signal pitch_shifted(new_pitch: int)
+signal pitch_shifted(new_pitch: int, building: Building)
 
 @onready var shift_up: Button = %ShiftUp
 @onready var shift_down: Button = %ShiftDown
@@ -15,7 +15,7 @@ func _ready() -> void:
 	shift_down.pressed.connect(_on_shift_down_pressed)
 	
 func _on_shift_up_pressed() -> void:
-	pitch_shifted.emit(1)
+	pitch_shifted.emit(1, building)
 	
 func _on_shift_down_pressed() -> void:
-	pitch_shifted.emit(-1)
+	pitch_shifted.emit(-1, building)
