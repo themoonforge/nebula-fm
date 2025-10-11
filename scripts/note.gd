@@ -125,7 +125,7 @@ func _move_note():
 		
 		var has_same_rotation = next_belt.building_rotation == curr_belt.building_rotation
 				
-		# FLOW CASES: 
+		# FLOW CASES
 		var is_case_a = curr_is_straight and next_is_straight and has_same_rotation
 		
 		# check if the straight belts are rotated correctly based ont the position (e.g. to avoid curr_down, next_down next to each other)

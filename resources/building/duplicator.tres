@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="PitcherBuildingResource" load_steps=5 format=3 uid="uid://b8evp3u6h0bqc"]
+
+[ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="1_44q1q"]
+[ext_resource type="Script" uid="uid://dvkawr1dimr5r" path="res://scripts/resource/pitcher_resource.gd" id="2_tlqlt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mhlr"]
+atlas = ExtResource("1_44q1q")
+region = Rect2(336, 88, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ip87t"]
+atlas = ExtResource("1_44q1q")
+region = Rect2(336, 120, 16, 24)
+
+[resource]
+resource_name = "Pitcher"
+script = ExtResource("2_tlqlt")
+name = &"Duplicator"
+building_key = &"duplicator"
+description = "Duplicates all notes in the package"
+size = Vector2i(1, 1)
+background_tile = Vector2i(17, 2)
+input_locations = Dictionary[Vector2i, int]({
+Vector2i(0, -1): 0
+})
+output_locations = Dictionary[Vector2i, int]({
+Vector2i(0, 1): 0
+})
+hotbar_icon = SubResource("AtlasTexture_7mhlr")
+hotbar_icon_hovered = SubResource("AtlasTexture_ip87t")
+rotation_offset = Array[Vector2i]([Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0)])
