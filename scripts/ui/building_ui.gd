@@ -40,12 +40,14 @@ func _process(delta: float) -> void:
 	elif !is_hovered && mouse_is_inside:
 		is_hovered = true
 	
-func _on_pitch_shifted(new_pitch: int) -> void:
-	print("new pitch received: ", new_pitch)
+func _on_pitch_shifted(new_pitch: int, this_building: Building) -> void:
+	#print("new pitch received: ", new_pitch)
+	if this_building != building:
+		return
+	
 	if building.building_resource is PitcherBuildingResource:
 		var calculated_pitch = building.building_resource.pitch + new_pitch
 		building.building_resource.pitch = calculated_pitch % 7 # rotate 
-		print("new pitch: ", building.building_resource.pitch)
 	
 func _on_building_ui_mouse_entered() -> void:
 	print("entered")
