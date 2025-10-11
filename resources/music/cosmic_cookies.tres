@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SongResource" load_steps=2 format=3 uid="uid://boru1xjyyb1ly"]
+
+[ext_resource type="Script" uid="uid://ddp8viiurppv6" path="res://resources/music/song_resoure.gd" id="1_70vk1"]
+
+[resource]
+script = ExtResource("1_70vk1")
+soong_title = "Cosmic Cookies"
+song_key = &"cosmic_cookies"
+melody_midi_path = "midi/song_1_midi.mid"
+mix_path = "midi/song_1_mix.wav"

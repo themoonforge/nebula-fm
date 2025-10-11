@@ -149,7 +149,7 @@ class GodotMIDIPlayerChannelStatus:
 
 	## チャンネル初期化
 	func initialize() -> void:
-		self.note_on = {}
+		self.note_on = {}		
 		self.program = 0
 
 		self.pitch_bend = 0.0
@@ -494,8 +494,23 @@ func _init_track() -> void:
 			time = next_time
 
 	self.last_position = track_status_events[len(track_status_events) - 1].time
+	
+	# IOCUTUS, CHARIOT -> Get array of midi key numbers
 	self.track_status.events = track_status_events
 	self.track_status.event_pointer = 0
+	
+	var track: GodotMIDIPlayerTrackStatus = self.track_status
+	if track.events != null:
+		var length: int = len(track.events)
+		
+		for i in range(0, length):
+			var event_chunk = track.events[i]
+			var event: SMF.MIDIEvent = event_chunk.event
+
+			if event is SMF.MIDIEventNoteOn:
+				var event_note_on: SMF.MIDIEventNoteOn = event as SMF.MIDIEventNoteOn
+				var note: int = event_note_on.note	as int
+				print("midi_key: ", note)
 
 ## SMF解析
 func _analyse_smf() -> void:
@@ -691,6 +706,10 @@ func _process_track() -> int:
 		return 0
 
 	var length: int = len(track.events)
+	
+	for i in range(0, length):
+		var event = track.events[i]
+		#print(event)
 
 	if length <= track.event_pointer:
 		if self.loop:
@@ -702,12 +721,18 @@ func _process_track() -> int:
 			self.playing = false
 			self.emit_signal("finished")
 			return 0
-
+			
+	#print(SMF.MIDITrack)
+	#print(SMF.SMFData)
+	
 	var execute_event_count: int = 0
 	var current_position: int = int(ceil(self.position))
 
 	while track.event_pointer < length:
+		#print("pointer", track.event_pointer)
+		#print(track.events)
 		var event_chunk: SMF.MIDIEventChunk = track.events[track.event_pointer]
+		#print(event_chunk)
 		if current_position <= event_chunk.time:
 			break
 		track.event_pointer += 1
@@ -715,14 +740,19 @@ func _process_track() -> int:
 
 		var channel: GodotMIDIPlayerChannelStatus = self.channel_status[event_chunk.channel_number]
 		var event: SMF.MIDIEvent = event_chunk.event
+		#print(event)
 
 		self.emit_signal("midi_event", channel, event)
-		
+		# chariot
 		match event.type:
 			SMF.MIDIEventType.note_off:
 				self._process_track_event_note_off(channel, (event as SMF.MIDIEventNoteOff).note)
 			SMF.MIDIEventType.note_on:
 				var event_note_on: SMF.MIDIEventNoteOn = event as SMF.MIDIEventNoteOn
+				
+				var note: int = event_note_on.note
+				print(note)
+				
 				self._process_track_event_note_on(channel, event_note_on.note, event_note_on.velocity)
 			SMF.MIDIEventType.program_change:
 				channel.program = (event as SMF.MIDIEventProgramChange).number
@@ -743,6 +773,7 @@ func _process_track() -> int:
 ## @param	input_event	イベント
 func receive_raw_midi_message(input_event: InputEventMIDI) -> void:
 	var channel: GodotMIDIPlayerChannelStatus = self.channel_status[input_event.channel]
+	
 
 	match input_event.message:
 		MIDI_MESSAGE_NOTE_OFF:
@@ -828,6 +859,12 @@ func _process_track_event_note_on(channel: GodotMIDIPlayerChannelStatus, note: i
 
 	var track_key_shift: int = self.key_shift if not channel.drum_track else 0
 	var key_number: int = note + track_key_shift
+	
+	# CHARIOT
+	
+	#print("NOTE", note)
+	#print(key_number)
+	#print("CHANNEL", channel.note_on)
 
 	#filter_old_input_buffer(10000000)
 	var elem = consume_note_from_input_buffer(key_number)
