@@ -13,6 +13,3 @@ func produce(input_buffer: Buffer, output_buffer: Buffer) -> void:
 			
 		note.key_numbers = pitched_keys
 		output_buffer.add_element(note)
-
-		#var midi_input_note = MidiInputNoteResource.new(note.key_number)
-		#EventBus.midi_input.emit(midi_input_note)

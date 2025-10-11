@@ -47,6 +47,5 @@ func _on_note_entered(area: Area2D) -> void:
 		clone.key_numbers = note_package.key_numbers
 		clone.current_tile_coord = note_package.current_tile_coord
 		clone.previous_tile_coord = note_package.previous_tile_coord
-		clone.belt_dict = note_package.belt_dict
 		incomming.emit(self, clone)
 		note_package.queue_free()

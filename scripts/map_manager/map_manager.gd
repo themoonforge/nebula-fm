@@ -13,7 +13,7 @@ const COLOR_ADD: Color = Color(0.976, 0.827, 0.416, 0.773)
 
 # dict with key: tiled_coord, value: object on the map
 # for fast access of belts
-var map_data: Dictionary[Vector2i, Node2D] # BELTS ONLY # TODO rename
+var map_data: Dictionary[Vector2i, Building] # BELTS ONLY # TODO rename
 var map_data_c_collector: Dictionary[Vector2i, Node2D] # BELTS ONLY
 
 # just for tile map coord calculation
@@ -301,12 +301,13 @@ func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Buildi
 		#check if the belt to connect with already has connections
 		if data is Building and count_neighbours(bottom) <= 1:
 			# check rotation
-			if data.building_rotation == BuildingsUtils.BuildingRotation.UP:
-				building.building_rotation = BuildingsUtils.BuildingRotation.UP
-			elif data.building_rotation == BuildingsUtils.BuildingRotation.DOWN:
-				building.building_rotation = BuildingsUtils.BuildingRotation.DOWN
-			else:
-				print("else: data.building_rotation - ", data.building_rotation)
+			#if data.building_rotation == BuildingsUtils.BuildingRotation.UP:
+				#building.building_rotation = BuildingsUtils.BuildingRotation.UP
+			#elif data.building_rotation == BuildingsUtils.BuildingRotation.DOWN:
+				#building.building_rotation = BuildingsUtils.BuildingRotation.DOWN
+			#else:
+				#print("else: data.building_rotation - ", data.building_rotation)
+			building.building_rotation = BuildingsUtils.BuildingRotation.UP
 				
 	else:
 		return

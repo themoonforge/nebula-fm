@@ -350,6 +350,10 @@ func read_file( path:String ) -> SMFParseResult:
 	var result: = SMFParseResult.new( )
 
 	var f: = FileAccess.open( path, FileAccess.READ )
+	if f == null:
+		result.error = FileAccess.get_open_error()
+		print("SMF: ", result.error, " path:", path)
+		return result
 	if f.get_error( ) != OK:
 		result.error = f.get_error( )
 		return result

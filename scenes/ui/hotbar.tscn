@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://csjy35oh1vki4"]
+[gd_scene load_steps=12 format=3 uid="uid://csjy35oh1vki4"]
 
 [ext_resource type="PackedScene" uid="uid://donhenh45sal8" path="res://scenes/ui/transformer_item.tscn" id="2_6hkf2"]
 [ext_resource type="Texture2D" uid="uid://b20nmqa002u5u" path="res://sprites/panel_tile_bright.png" id="2_pikvf"]
 [ext_resource type="Resource" uid="uid://cls7knxgownu5" path="res://resources/building/collector.tres" id="3_6hkf2"]
 [ext_resource type="Resource" uid="uid://cn6kon66bh7gm" path="res://resources/building/merger.tres" id="4_tyl16"]
+[ext_resource type="Resource" uid="uid://b8evp3u6h0bqc" path="res://resources/building/duplicator.tres" id="5_1uw18"]
 [ext_resource type="Resource" uid="uid://hiu1ukei6xtw" path="res://resources/building/pitcher.tres" id="5_f1jgs"]
 [ext_resource type="Resource" uid="uid://b0gwhmnjesig4" path="res://resources/building/conveyor_belt_auto.tres" id="6_miglr"]
 [ext_resource type="Resource" uid="uid://boayo86auwloj" path="res://resources/building/conveyor_belt_manual.tres" id="8_xu3a2"]
@@ -69,6 +70,11 @@ transformer_resource = ExtResource("3_6hkf2")
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 transformer_resource = ExtResource("5_f1jgs")
+
+[node name="TransformerItem_Duplicator" parent="Container/TransformerContainer" instance=ExtResource("2_6hkf2")]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+transformer_resource = ExtResource("5_1uw18")
 
 [node name="TransformerItem_Splitter" parent="Container/TransformerContainer" instance=ExtResource("2_6hkf2")]
 layout_mode = 2
