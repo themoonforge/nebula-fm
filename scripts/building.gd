@@ -193,7 +193,8 @@ func _handle_ui() -> void:
 				
 	elif building_ui.visible && !building_ui.is_hovered:
 		#print("hide in handle_ui")
-		building_ui.hide()
+		pass
+		#building_ui.hide()
 		
 	if Input.is_action_just_pressed("ui_click") && !mouse_in_polygon && !building_ui.is_hovered:
 		building_ui.hide()
