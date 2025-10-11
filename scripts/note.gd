@@ -2,8 +2,9 @@ extends Node2D
 
 class_name NotePackage
 
-var current_tile_coord: Vector2i
-var previous_tile_coord: Vector2i
+@export var current_tile_coord: Vector2i = Vector2i(INF, INF)
+@export var previous_tile_coord: Vector2i = Vector2i(INF, INF)
+@export var next_tile_coord: Vector2i = Vector2i(INF, INF)
 #var belt_dict: Dictionary[Vector2i, Building]
 
 @export var bpm: float = 120.0
@@ -43,47 +44,52 @@ func _ready():
 	
 	if MapManager.ground_layer:
 		position = MapManager.ground_layer.map_to_local(current_tile_coord)
+		next_tile_coord = current_tile_coord
+		previous_tile_coord = Vector2i(INF, INF)
 
 func _process(delta: float) -> void:
 	time_acc += delta
 	if time_acc >= beat_time:
 		time_acc = 0.0
+		#current_tile_coord = next_tile_coord
 		_move_note()
 	
 	var t = time_acc / beat_time
 	_lerp_move_note(t)
 
 func _lerp_move_note(t: float) -> void:
-	var _next_tile_coord = _get_next_tile_coord()
-	if _next_tile_coord == Vector2i.ZERO:
+	if next_tile_coord == Vector2i.ZERO:
 		return
 	
 	var start_position = MapManager.ground_layer.map_to_local(current_tile_coord)
-	var target_position = MapManager.ground_layer.map_to_local(_next_tile_coord)
+	var target_position = MapManager.ground_layer.map_to_local(next_tile_coord)
 	position = start_position.lerp(target_position, t)
 	
-func _get_next_tile_coord() -> Vector2i:
-	var top = current_tile_coord + Vector2i(0, -1)
-	var right = current_tile_coord + Vector2i(1, 0)
-	var bottom = current_tile_coord + Vector2i(0, 1)
-	var left = current_tile_coord + Vector2i(-1, 0)
-	
-	if MapManager.map_data.has(top) and previous_tile_coord != top:
-		return top
-	elif MapManager.map_data.has(right) and previous_tile_coord != right:
-		return right
-	elif MapManager.map_data.has(bottom) and previous_tile_coord != bottom:
-		return bottom
-	elif MapManager.map_data.has(left) and previous_tile_coord != left:
-		return left
-		
-	return Vector2i.ZERO
+#func _get_next_tile_coord() -> Vector2i:
+	#var top = current_tile_coord + Vector2i.UP
+	#var right = current_tile_coord + Vector2i.RIGHT
+	#var bottom = current_tile_coord + Vector2i.DOWN
+	#var left = current_tile_coord + Vector2i.LEFT
+	#
+	#if MapManager.map_data.has(top) and previous_tile_coord != top:
+		#return top
+	#elif MapManager.map_data.has(right) and previous_tile_coord != right:
+		#return right
+	#elif MapManager.map_data.has(bottom) and previous_tile_coord != bottom:
+		#return bottom
+	#elif MapManager.map_data.has(left) and previous_tile_coord != left:
+		#return left
+		#
+	#return Vector2i.ZERO
 
 func _move_note():
-	var top = current_tile_coord + Vector2i(0, -1)
-	var right = current_tile_coord + Vector2i(1, 0)
-	var bottom = current_tile_coord + Vector2i(0, 1)
-	var left = current_tile_coord + Vector2i(-1, 0)
+	# step to next -> previous movement finished
+	current_tile_coord = next_tile_coord
+	
+	var top = current_tile_coord + Vector2i.UP
+	var right = current_tile_coord + Vector2i.RIGHT
+	var bottom = current_tile_coord + Vector2i.DOWN
+	var left = current_tile_coord + Vector2i.LEFT
 	
 	var possible_belts: Array[Building] = []
 	
@@ -97,15 +103,50 @@ func _move_note():
 	if MapManager.map_data.has(right):
 		possible_belts.append(MapManager.map_data.get(right))
 	if MapManager.map_data.has(bottom):
-		possible_belts.append(MapManager.map_data.get(bottom))		
+		possible_belts.append(MapManager.map_data.get(bottom))
 	if MapManager.map_data.has(left):
-		possible_belts.append(MapManager.map_data.get(left))		
+		possible_belts.append(MapManager.map_data.get(left))
 	
 	for next_belt in possible_belts:
 		if !MapManager.map_data.has(current_tile_coord) or previous_tile_coord == next_belt.tile_coord:
 			continue
 		
-		var curr_belt: Building = MapManager.map_data.get(current_tile_coord)	
+		var curr_belt: Building = MapManager.map_data.get(current_tile_coord)
+		var allowed_movement_vector: Vector2i = Vector2i.ZERO
+		
+		match curr_belt.building_resource.building_key:
+			&"conveyor_belt_auto", &"conveyor_belt_manual":
+				match curr_belt.building_rotation:
+					BuildingsUtils.BuildingRotation.DOWN:
+						allowed_movement_vector = Vector2i.DOWN
+					BuildingsUtils.BuildingRotation.RIGHT:
+						allowed_movement_vector = Vector2i.RIGHT
+					BuildingsUtils.BuildingRotation.UP:
+						allowed_movement_vector = Vector2i.UP
+					BuildingsUtils.BuildingRotation.LEFT:
+						allowed_movement_vector = Vector2i.LEFT
+			&"conveyor_belt_corner_f":
+				match curr_belt.building_rotation:
+					BuildingsUtils.BuildingRotation.DOWN:
+						allowed_movement_vector = Vector2i.DOWN
+					BuildingsUtils.BuildingRotation.RIGHT:
+						allowed_movement_vector = Vector2i.RIGHT
+					BuildingsUtils.BuildingRotation.UP:
+						allowed_movement_vector = Vector2i.UP
+					BuildingsUtils.BuildingRotation.LEFT:
+						allowed_movement_vector = Vector2i.LEFT
+			&"conveyor_belt_corner_b":
+				match curr_belt.building_rotation:
+					BuildingsUtils.BuildingRotation.DOWN:
+						allowed_movement_vector = Vector2i.LEFT
+					BuildingsUtils.BuildingRotation.RIGHT:
+						allowed_movement_vector = Vector2i.UP
+					BuildingsUtils.BuildingRotation.UP:
+						allowed_movement_vector = Vector2i.RIGHT
+					BuildingsUtils.BuildingRotation.LEFT:
+						allowed_movement_vector = Vector2i.DOWN
+			
+		
 		#if next_belt.tile_coord == curr_belt.tile_coord:
 			#var a = 45
 			#
@@ -134,11 +175,10 @@ func _move_note():
 		# FLOW CASES: 
 		var is_case_a = curr_is_straight and next_is_straight and has_same_rotation
 		
-		if is_case_a:
-			# check if the straight belts are rotated correctly based ont the position (e.g. to avoid curr_down, next_down next to each other)
-			var is_case_a_2 = curr_rotation in [0, 2] and curr_belt.tile_coord.y != next_belt.tile_coord.y
-			var is_case_a_3 = curr_rotation in [1, 3] and curr_belt.tile_coord.x != next_belt.tile_coord.x
-			is_case_a = is_case_a_2 or is_case_a_3
+		# check if the straight belts are rotated correctly based ont the position (e.g. to avoid curr_down, next_down next to each other)
+		var is_case_a_2 = curr_rotation in [0, 2] and curr_belt.tile_coord.y != next_belt.tile_coord.y and curr_belt.tile_coord.x == next_belt.tile_coord.x
+		var is_case_a_3 = curr_rotation in [1, 3] and curr_belt.tile_coord.x != next_belt.tile_coord.x and curr_belt.tile_coord.y == next_belt.tile_coord.y
+		is_case_a = is_case_a and (is_case_a_2 or is_case_a_3)
 		
 		var is_case_b = curr_is_straight and next_is_corner_f and next_rotation == (curr_rotation + 3) % 4
 		var is_case_c = curr_is_straight and next_is_corner_b and next_rotation == abs((curr_rotation - 2) % 4)
@@ -152,8 +192,20 @@ func _move_note():
 		var is_case_i = curr_is_corner_b and next_is_corner_b and next_rotation == (curr_rotation + 3) % 4
 		
 		if is_case_a or is_case_b or is_case_c or is_case_d or is_case_e or is_case_f or is_case_g or is_case_h or is_case_i:
+			var real_movement_vector1 = next_belt.tile_coord - current_tile_coord
+			var real_movement_vector2 = next_belt.tile_coord - curr_belt.tile_coord
+			
+			#if real_movement_vector1 == Vector2i.RIGHT or real_movement_vector2 == Vector2i.RIGHT:
+				#print("err2")
+			
+			if previous_tile_coord != Vector2i(INF, INF) and (real_movement_vector1 != allowed_movement_vector or real_movement_vector2 != allowed_movement_vector):
+				continue
+			
 			previous_tile_coord = current_tile_coord
-			current_tile_coord = next_belt.tile_coord
+			#current_tile_coord = next_tile_coord # we dont need this call here
+			next_tile_coord = next_belt.tile_coord
+			
+			
 			return
 	
 	self.queue_free()
