@@ -21,6 +21,8 @@ drag_vertical_enabled = true
 drag_horizontal_offset = 0.5
 drag_vertical_offset = 0.5
 script = ExtResource("4_lbhrr")
+min_zoom = Vector2(1, 1)
+max_zoom = Vector2(4, 4)
 
 [node name="Sprite2D" type="Sprite2D" parent="GameCamera"]
 visible = false

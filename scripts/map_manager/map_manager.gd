@@ -109,9 +109,17 @@ func _process(delta: float) -> void:
 			grid_cursor.global_position = snapped_coordinate
 
 			if building_cursor.collider_dict.size() > 0 or !GridManager.is_cell_free(hovered_cell):
-				grid_cursor.hide()
-				building_cursor.building.modulate_sprite(COLOR_OCCUPIED)
-				return
+				var is_crater: bool = false
+				
+				if building_cursor.building.building_resource is ConveyorResource:
+					for b in building_cursor.collider_dict:
+						if b.name == "CraterLayer":
+							is_crater = true
+				
+				if !is_crater:
+					grid_cursor.hide()
+					building_cursor.building.modulate_sprite(COLOR_OCCUPIED)
+					return
 					
 			if building_cursor.building.building_resource is CollectorBuildingResource:
 				if _borders_note_source(hovered_cell):

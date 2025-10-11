@@ -43,3 +43,15 @@ const PATTERN_DUST_1 = 14
 const PATTERN_DUST_2 = 15
 const PATTERN_DUST_3 = 16
 const PATTERN_DUST_4 = 17
+
+static func is_meta_tile(layer: TileMapLayer, cell: Vector2i, meta_name: StringName) -> bool:
+	var tile_data: TileData = layer.get_cell_tile_data(cell)
+	if !tile_data:
+		return false
+		
+	if tile_data && tile_data.has_custom_data(meta_name):
+		var is_meta: bool = tile_data.get_custom_data(meta_name)
+		if is_meta:
+			return true
+			
+	return false

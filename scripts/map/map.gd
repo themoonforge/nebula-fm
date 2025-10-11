@@ -117,7 +117,7 @@ func register_static_layer(layer: TileMapLayer) -> void:
 	for y in Tiles.MAP_SIZE.y:
 		for x in Tiles.MAP_SIZE.x:
 			var cell: Vector2i = Vector2i(x, y)
-			if is_meta_tile(layer, cell, &"is_obstacle"):
+			if Tiles.is_meta_tile(layer, cell, &"is_obstacle"):
 				GridManager.set_cell(cell)
 
 func generate() -> void:
@@ -133,7 +133,7 @@ func generate() -> void:
 	register_static_layer(border_layer)
 	_place_radio_station(SubGrid.values()[randi() % SubGrid.size()])
 	_place_note_sources(6)
-	_place_with_noise(obstacles_layer, Tiles.SOURCE_2, Tiles.ROCK_SMALL, Vector2(0.2, 0.25), 0.5)
+	_place_with_noise(obstacles_layer, Tiles.SOURCE_2, Tiles.ROCK_SMALL, Vector2(0.2, 0.25), 0.10)
 	_place_patterns(crater_layer, crater_pattern_choices, Vector2(0.3, 0.5), 0.1)
 	_place_patterns(water_layer, water_pattern_choices, Vector2(0.5, 0.6), 0.1)
 	_place_patterns(big_blob_layer, big_blob_pattern_choices, Vector2(0.18, 0.19), 0.5)
@@ -168,6 +168,9 @@ func _place_radio_station(sub_grid: SubGrid) -> void:
 	station_subgrid = sub_grid
 	
 	var sub_grid_rect = _get_subgrid_rect(sub_grid, Tiles.MAP_SIZE)
+	var max_attempts = 100
+	var spawn_cell: Vector2i = Vector2i(-1, -1)
+	var cells_valid: bool = false
 	
 	var radio_station: Building = building_scene.instantiate()
 	radio_station.building_resource = radio_station_resource
@@ -175,30 +178,57 @@ func _place_radio_station(sub_grid: SubGrid) -> void:
 	radio_station.name = "Space_Radio_Station"
 	placed_objects.add_child(radio_station)
 	
-	var spawn_cell = Vector2i(
-		randi_range(sub_grid_rect.position.x + 2, sub_grid_rect.position.x + sub_grid_rect.size.x - radio_station.building_resource.size.x - 2),
-		randi_range(sub_grid_rect.position.y + radio_station.building_resource.size.y + 2, sub_grid_rect.position.y + sub_grid_rect.size.y - 2)
-	)
-	
-	var mister_nebula_instance = mister_nebula.instantiate()
-	mister_nebula_instance.name = "Mister_Nebula_FM"
-	placed_objects.add_child(mister_nebula_instance)
-	
-	match station_subgrid:
-		SubGrid.TOP_LEFT:
-			spawn_cell.y += 2
-		SubGrid.BOTTOM_LEFT:
-			spawn_cell.y -= 2
-		SubGrid.TOP_RIGHT:
-			spawn_cell.y += 2
-		SubGrid.BOTTOM_RIGHT:
-			spawn_cell.y -= 2
+	for attempt in max_attempts:
+		spawn_cell = Vector2i(
+			randi_range(sub_grid_rect.position.x + 2, sub_grid_rect.position.x + sub_grid_rect.size.x - radio_station.building_resource.size.x - 2),
+			randi_range(sub_grid_rect.position.y + radio_station.building_resource.size.y + 2, sub_grid_rect.position.y + sub_grid_rect.size.y - 2)
+		)
+		
+		match station_subgrid:
+			SubGrid.TOP_LEFT:
+				spawn_cell.y += 2
+			SubGrid.BOTTOM_LEFT:
+				spawn_cell.y -= 2
+			SubGrid.TOP_RIGHT:
+				spawn_cell.y += 2
+			SubGrid.BOTTOM_RIGHT:
+				spawn_cell.y -= 2
+				
+		cells_valid = true
+		for y in radio_station_resource.size.y:
+			for x in radio_station_resource.size.x:
+				var cell_to_check = Vector2i(x, -y - 1) + spawn_cell
+				if not GridManager.is_cell_free(cell_to_check):
+					cells_valid = false
+					break
+			if not cells_valid:
+				break
+				
+		if cells_valid:
+			break
+			
+	if !cells_valid:
+		Debug.debug_printerr("Could not find valid position for radio station in subgrid! Defaulting to cell 5,13.")
+		spawn_cell = Vector2i(5, 13)
 			
 	radio_station.global_position = Vector2(spawn_cell * 16)
 	radio_station.set_up_building_rect(spawn_cell)
 	radio_station.set_up_shape_polygon(spawn_cell)
-	mister_nebula_instance.global_position = Vector2i(spawn_cell * 16)
+
+	for y in radio_station.building_resource.size.y:
+		for x in radio_station.building_resource.size.x:
+			GridManager.set_cell(Vector2i(x, -y - 1) + spawn_cell)
+			
+	_spawn_mister_nebula_fm(spawn_cell, radio_station)
+			
+func _spawn_mister_nebula_fm(station_spawn_cell: Vector2i, radio_station: Building) -> void:
+	var mister_nebula_instance = mister_nebula.instantiate()
+	mister_nebula_instance.name = "Mister_Nebula_FM"
+	placed_objects.add_child(mister_nebula_instance)
 	
+	mister_nebula_instance.global_position = Vector2i(station_spawn_cell * 16)
+	
+	# Position Mister Nebula relative to the station based on subgrid
 	match station_subgrid:
 		SubGrid.TOP_LEFT:
 			mister_nebula_instance.global_position.x += radio_station.building_resource.size.x * 16
@@ -212,10 +242,6 @@ func _place_radio_station(sub_grid: SubGrid) -> void:
 			mister_nebula_instance.global_position.y -= 16
 		SubGrid.BOTTOM_RIGHT:
 			mister_nebula_instance.global_position.y -= radio_station.building_resource.size.x * 16
-
-	for y in radio_station.building_resource.size.y:
-		for x in radio_station.building_resource.size.x:
-			GridManager.set_cell(Vector2i(x, -y - 1) + spawn_cell)
 
 func _get_subgrid_rect(sub_grid, screen_size: Vector2) -> Rect2i:
 	match sub_grid:
@@ -345,9 +371,9 @@ func _set_pattern(layer: TileMapLayer, cell: Vector2i, source_id: int, pattern_i
 	for pattern_cell in pattern.get_used_cells():
 		var cell_in_world: Vector2i = cell + pattern_cell
 		
-		if is_meta_tile(layer, cell_in_world, &"is_obstacle"):
+		if Tiles.is_meta_tile(layer, cell_in_world, &"is_obstacle"):
 			GridManager.set_cell(cell_in_world)
-		if is_meta_tile(layer, cell_in_world, &"is_generation_blocked"):
+		if Tiles.is_meta_tile(layer, cell_in_world, &"is_generation_blocked"):
 			GridManager.set_temporary_cell(cell_in_world)
 	
 	return true
@@ -370,21 +396,9 @@ func _set_cell(layer: TileMapLayer, cell: Vector2i, source_id: int, tile_id: Vec
 	
 	layer.set_cell(cell, source_id, tile_id)
 	
-	if is_meta_tile(layer, cell, &"is_obstacle"):
+	if Tiles.is_meta_tile(layer, cell, &"is_obstacle"):
 		GridManager.set_cell(cell)
-	elif is_meta_tile(layer, cell, &"is_generation_blocked"):
+	elif Tiles.is_meta_tile(layer, cell, &"is_generation_blocked"):
 		GridManager.set_temporary_cell(cell)
 		
 	return true
-
-func is_meta_tile(layer: TileMapLayer, cell: Vector2i, meta_name: StringName) -> bool:
-	var tile_data: TileData = layer.get_cell_tile_data(cell)
-	if !tile_data:
-		return false
-		
-	if tile_data && tile_data.has_custom_data(meta_name):
-		var is_meta: bool = tile_data.get_custom_data(meta_name)
-		if is_meta:
-			return true
-			
-	return false

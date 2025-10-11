@@ -2,6 +2,8 @@ class_name GameCamera extends Camera2D
 
 @export var zoom_speed : float = 10
 @export var drag_lerp_speed : float = 15.0
+@export var min_zoom: Vector2
+@export var max_zoom: Vector2
 
 var zoom_target: Vector2
 var position_target: Vector2
@@ -12,6 +14,7 @@ var is_dragging: bool = false
 var bounds_rect: Rect2i
 
 func _ready():
+	zoom = min_zoom
 	zoom_target = zoom
 	position_target = position
 
@@ -24,10 +27,10 @@ func _process(delta):
 	
 func handle_zoom(delta):
 	if Input.is_action_just_pressed("camera_zoom_in"):
-		zoom_target = (zoom_target * 1.1).clamp(Vector2(1.0, 1.0), Vector2(6.0, 6.0))
+		zoom_target = (zoom_target * 1.1).clamp(min_zoom, max_zoom)
 		
 	if Input.is_action_just_pressed("camera_zoom_out"):
-		zoom_target = (zoom_target * 0.9).clamp(Vector2(1.0, 1.0), Vector2(6.0, 6.0))
+		zoom_target = (zoom_target * 0.9).clamp(min_zoom, max_zoom)
 		
 	zoom = zoom.slerp(zoom_target, zoom_speed * delta)
 	
