@@ -14,7 +14,7 @@ func _on_note_produced(note_package: NotePackage) -> void:
 
 func update() -> void:
 	for i in building.building_resource.input_locations.size():
-		var note_package: NotePackage = building.input_buffer.consume_first_note_from_buffer(i)
+		var note_package: NotePackage = building.input_buffer.read_first_note_from_buffer(i)
 		
 		if !note_package:
 			continue

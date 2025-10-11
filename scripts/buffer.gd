@@ -58,6 +58,17 @@ func consume_note_from_buffer(key_number: int, index: int = 0) -> NoteResource:
 		_decrement_inventory(simple_name)
 		inventory_changed.emit.call_deferred(_inventory)
 	return found_elem
+	
+func read_first_note_from_buffer(index: int = 0) -> NotePackage:
+	var found_elem: NotePackage = null
+
+	if not _buffer.has(index):
+		_buffer[index] = []
+
+	var first = _buffer[index].front()
+	if first != null:
+		found_elem = first.payload
+	return found_elem
 
 #func consume_first_note_from_buffer(index: int = 0) -> NoteResource:
 	#var found_elem: NoteResource = null

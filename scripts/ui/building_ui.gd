@@ -58,7 +58,7 @@ func _on_building_ui_mouse_exited() -> void:
 		is_hovered = false
 		hide()
 		
-func update() -> void:
+func update() -> void:	
 	for component in ui_components.get_children():
 		if component.has_method(&"update"):
 			component.update()

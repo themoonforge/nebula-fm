@@ -6,12 +6,6 @@ class_name BufferResource extends Resource
 var payload: NotePackage
 @export var creation_time: int
 
-@export var simple_name: StringName = "":
-	get():
-		if !payload:
-			return ""
-		return payload.simple_name
-
 #func _init(payload: NoteResource = null) -> void:
 	#self.payload = payload
 	#self.creation_time = Time.get_ticks_msec()
