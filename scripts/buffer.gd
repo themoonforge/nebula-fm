@@ -64,6 +64,9 @@ func read_first_note_from_buffer(index: int = 0) -> NotePackage:
 
 	if not _buffer.has(index):
 		_buffer[index] = []
+		
+	if _buffer[index].is_empty():
+		return null
 
 	var first = _buffer[index].front()
 	if first != null:

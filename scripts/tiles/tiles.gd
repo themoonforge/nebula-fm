@@ -3,7 +3,7 @@ class_name Tiles
 
 const TILE_PX = 16
 const HALF_TILE_PX = TILE_PX / 2
-
+const MAP_SIZE = Vector2i(80,44)
 
 # tileset source 2 tiles
 const SOURCE_2 = 2

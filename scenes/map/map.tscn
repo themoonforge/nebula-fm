@@ -31,7 +31,6 @@ building_scene = ExtResource("2_jcaow")
 mister_nebula = ExtResource("5_fcby6")
 radio_station_resource = ExtResource("3_04w0f")
 note_source_scene = ExtResource("3_ph54e")
-map_size = Vector2i(80, 44)
 
 [node name="GodotMIDIPlayer" type="Node" parent="."]
 unique_name_in_owner = true

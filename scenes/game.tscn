@@ -23,5 +23,6 @@ drag_vertical_offset = 0.5
 script = ExtResource("4_lbhrr")
 
 [node name="Sprite2D" type="Sprite2D" parent="GameCamera"]
+visible = false
 scale = Vector2(4, 4)
 texture = ExtResource("5_iywne")

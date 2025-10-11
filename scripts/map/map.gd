@@ -5,7 +5,6 @@ class_name Map extends Node2D
 @export var radio_station_resource: SpaceRadioResource
 @export var note_source_scene: PackedScene
 @export var camera: GameCamera
-@export var map_size: Vector2i = Vector2i(40, 22)
 @onready var ground_layer: TileMapLayer = %GroundLayer
 @onready var small_blob_layer: TileMapLayer = %SmallBlobLayer
 @onready var water_layer: TileMapLayer = %WaterLayer
@@ -115,8 +114,8 @@ func _regenerate() -> void:
 	print("called generate again")
 		
 func register_static_layer(layer: TileMapLayer) -> void:
-	for y in map_size.y:
-		for x in map_size.x:
+	for y in Tiles.MAP_SIZE.y:
+		for x in Tiles.MAP_SIZE.x:
 			var cell: Vector2i = Vector2i(x, y)
 			if is_meta_tile(layer, cell, &"is_obstacle"):
 				GridManager.set_cell(cell)
@@ -146,8 +145,8 @@ func generate() -> void:
 func _generate_noise() -> void:
 	noise_texture.noise.seed = randi()
 	# generate noise grid
-	for y in map_size.y:
-		for x in map_size.x:
+	for y in Tiles.MAP_SIZE.y:
+		for x in Tiles.MAP_SIZE.x:
 			var cell: Vector2i = Vector2i(x, y)
 			noise_grid[cell] = noise_texture.noise.get_noise_2d(x, y)
 	
@@ -160,15 +159,15 @@ func _generate_noise() -> void:
 			max_noise = val
 
 func _fill_layer(tile_map_layer: TileMapLayer, source_id: int, tile_id: Vector2i) -> void:
-	for y in map_size.y:
-		for x in map_size.x:
+	for y in Tiles.MAP_SIZE.y:
+		for x in Tiles.MAP_SIZE.x:
 			var cell: Vector2i = Vector2i(x, y)
 			_set_cell(tile_map_layer, cell, source_id, tile_id)
 			
 func _place_radio_station(sub_grid: SubGrid) -> void:
 	station_subgrid = sub_grid
 	
-	var sub_grid_rect = _get_subgrid_rect(sub_grid, map_size)
+	var sub_grid_rect = _get_subgrid_rect(sub_grid, Tiles.MAP_SIZE)
 	
 	var radio_station: Building = building_scene.instantiate()
 	radio_station.building_resource = radio_station_resource
@@ -235,12 +234,12 @@ func _is_in_rect(cell: Vector2i, rect: Rect2i) -> bool:
 	return rect.has_point(cell)
 
 func _place_note_sources(count: int) -> void:		
-	var grid_cols = map_size.x
-	var grid_rows = map_size.y
+	var grid_cols = Tiles.MAP_SIZE.x
+	var grid_rows = Tiles.MAP_SIZE.y
 	
 	var grid_cells: Array[Vector2i] = []
 	
-	var station_rect = _get_subgrid_rect(station_subgrid, map_size)
+	var station_rect = _get_subgrid_rect(station_subgrid, Tiles.MAP_SIZE)
 	
 	for col in range(0, grid_cols):
 		for row in range(0, grid_rows):
@@ -304,8 +303,8 @@ func _place_note_sources(count: int) -> void:
 		#placed_count += 1
 			
 func _place_with_noise(tile_map_layer: TileMapLayer, source_id: int, tile_id: Vector2i, noise_range: Vector2, placement_bias: float = 1.0) -> void:
-	for y in map_size.y:
-		for x in map_size.x:
+	for y in Tiles.MAP_SIZE.y:
+		for x in Tiles.MAP_SIZE.x:
 			var cell: Vector2i = Vector2i(x, y)
 			var raw_noise = absf(noise_grid[cell])
 			var normalized = (raw_noise - min_noise) / (max_noise - min_noise)
@@ -318,8 +317,8 @@ func _place_with_noise(tile_map_layer: TileMapLayer, source_id: int, tile_id: Ve
 				continue
 				
 func _place_patterns(tile_map_layer: TileMapLayer, patterns: Dictionary[int, Array], noise_range: Vector2, placement_bias: float = 1.0) -> void:
-	for y in map_size.y:
-		for x in map_size.x:
+	for y in Tiles.MAP_SIZE.y:
+		for x in Tiles.MAP_SIZE.x:
 			var pattern_source = patterns.keys()[randi() % patterns.size()]
 			var pattern_array = patterns[pattern_source]
 			var pattern_id = pattern_array[randi() % pattern_array.size()]
@@ -357,7 +356,7 @@ func _pattern_fits(cell: Vector2i, pattern: TileMapPattern) -> bool:
 	for pattern_cell in pattern.get_used_cells():
 		var cell_in_world: Vector2i = cell + pattern_cell
 		
-		if cell_in_world.x < 0 or cell_in_world.y < 0 or cell_in_world.x >= map_size.x or cell_in_world.y >= map_size.y:
+		if cell_in_world.x < 0 or cell_in_world.y < 0 or cell_in_world.x >= Tiles.MAP_SIZE.x or cell_in_world.y >= Tiles.MAP_SIZE.y:
 			return false
 			
 		if !GridManager.is_cell_free(cell_in_world):

@@ -165,30 +165,32 @@ func _handle_ui() -> void:
 	var canvas_transform = get_viewport().get_canvas_transform()
 	var world_mouse_pos = canvas_transform.affine_inverse() * mouse_pos
 		
-	var mouse_in_bottom: bool = building_rect.position.y >= get_viewport().get_visible_rect().size.y / 2
+	var mouse_in_bottom: bool = building_rect.position.y >= Tiles.MAP_SIZE.y * Tiles.TILE_PX / 2
 	var mouse_in_polygon: bool = Geometry2D.is_point_in_polygon(world_mouse_pos, building_shape_polygon)
 	
 	if mouse_in_polygon:
 		if !building_ui.visible:
+			building_ui.size = building_ui.get_child(0).size
+
 			# align ui with top right of tile
 			building_ui.position.x = building_rect.size.x - building_resource.size.x*16
 			
 			var building_x = global_position.x + building_ui.position.x + building_ui.size.x
-			var overlap_x = building_x - get_viewport().get_visible_rect().size.x+Tiles.TILE_PX
+			var overlap_x = building_x - Tiles.MAP_SIZE.x*Tiles.TILE_PX+Tiles.TILE_PX
 			
-			if building_x >= get_viewport().get_visible_rect().size.x+Tiles.TILE_PX:
+			if building_x >= Tiles.MAP_SIZE.x*Tiles.TILE_PX+Tiles.TILE_PX:
 				building_ui.position.x -= overlap_x
 			
 			if mouse_in_bottom:
 				# ui top center of building
-				building_ui.position.y = -building_rect.size.y / 2 - building_ui.size.y - Tiles.TILE_PX / 2
+				building_ui.position.y = -building_ui.size.y - building_rect.size.y
 			else:
 				# ui bottom center of building
-				building_ui.position.y = -building_rect.size.y / 2 - building_ui.size.y + Tiles.TILE_PX / 2 + building_ui.size.y # - Tiles.HALF_TILE_PX/2
+				building_ui.position.y = 0
 	
 			if Input.is_action_just_pressed("ui_click"):
-				building_ui.size = building_ui.get_child(0).size
 				MapManager.click_building.emit(self)
+				
 	elif building_ui.visible && !building_ui.is_hovered:
 		#print("hide in handle_ui")
 		building_ui.hide()
