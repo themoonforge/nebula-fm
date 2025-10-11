@@ -8,6 +8,11 @@ signal pitch_shifted(new_pitch: int, building: Building)
 var current_pitch: int
 
 func set_up(building: Building) -> void:
+	print("---")
+	print("Setting up pitch shifter component")
+	print("Building instance: ", building)
+	print("---")
+	
 	super._set_up(building)
 	
 func _ready() -> void:

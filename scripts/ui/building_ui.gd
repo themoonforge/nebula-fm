@@ -41,11 +41,12 @@ func _process(delta: float) -> void:
 		is_hovered = true
 	
 func _on_pitch_shifted(new_pitch: int, this_building: Building) -> void:
-	#print("new pitch received: ", new_pitch)
 	if this_building != building:
 		return
 	
 	if building.building_resource is PitcherBuildingResource:
+		print("Adjusted pitch in resource: ", building.building_resource)
+		
 		var calculated_pitch = building.building_resource.pitch + new_pitch
 		building.building_resource.pitch = calculated_pitch % 7 # rotate 
 	
