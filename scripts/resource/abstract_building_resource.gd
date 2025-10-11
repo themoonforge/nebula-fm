@@ -10,7 +10,6 @@
 
 @export var description: String
 
-
 @export var size: Vector2i:
 	set(value):
 		if value.x < 0 or value.y < 0:

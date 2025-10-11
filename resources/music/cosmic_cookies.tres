@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_70vk1")
-soong_title = "Cosmic Cookies"
+song_title = "Cosmic Cookies"
 song_key = &"cosmic_cookies"
 melody_midi_path = "midi/song_1_midi.mid"
 mix_path = "midi/song_1_mix.wav"

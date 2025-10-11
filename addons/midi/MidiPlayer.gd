@@ -362,6 +362,13 @@ signal consume_note(key_number: int)
 
 ## 準備
 func _ready():
+	#set_up_new_song()
+	
+	# CHARIOT, IOCUTUS	
+	EventBus.midi_input.connect(on_midi_input)
+	MusicPlayer.change_song.connect(_on_change_song)
+
+func set_up_new_song():
 	if AudioServer.get_bus_index(self.midi_master_bus_name) == -1:
 		AudioServer.add_bus(-1)
 		var midi_master_bus_idx: int = AudioServer.get_bus_count() - 1
@@ -419,8 +426,16 @@ func _ready():
 
 	if self.playing:
 		self.play()
-		
-	EventBus.midi_input.connect(on_midi_input)
+			
+	## CHARIOT, IOCUTUS	
+	#EventBus.midi_input.connect(on_midi_input)
+	#MusicPlayer.change_song.connect(_on_change_song)
+
+func _on_change_song(song: SongResource):
+	file = "res://" + song.melody_midi_path
+	self.playing = true
+	set_up_new_song()
+	
 
 ## 通知
 ## @param	what	通知要因
@@ -495,7 +510,29 @@ func _init_track() -> void:
 
 	self.last_position = track_status_events[len(track_status_events) - 1].time
 	
+	_init_required_midi_keys(track_status_events)
 	# IOCUTUS, CHARIOT -> Get array of midi key numbers
+	#self.track_status.events = track_status_events
+	#self.track_status.event_pointer = 0
+	#
+	#var track: GodotMIDIPlayerTrackStatus = self.track_status
+	#if track.events != null:
+		#var length: int = len(track.events)
+		#
+		#var midi_notes: Array[int] = []
+		#for i in range(0, length):
+			#var event_chunk = track.events[i]
+			#var event: SMF.MIDIEvent = event_chunk.event
+#
+			#if event is SMF.MIDIEventNoteOn:
+				#var event_note_on: SMF.MIDIEventNoteOn = event as SMF.MIDIEventNoteOn
+				#var note: int = event_note_on.note	as int
+				#print("midi_key: ", note)
+				#midi_notes.append(note)
+		#MusicPlayer.change_required_midi_key.emit(midi_notes)
+
+## IOCUTUS, CHARIOT -> Get array of midi key numbers
+func _init_required_midi_keys(track_status_events: Array[SMF.MIDIEventChunk]):
 	self.track_status.events = track_status_events
 	self.track_status.event_pointer = 0
 	
@@ -503,6 +540,7 @@ func _init_track() -> void:
 	if track.events != null:
 		var length: int = len(track.events)
 		
+		var midi_notes: Array[int] = []
 		for i in range(0, length):
 			var event_chunk = track.events[i]
 			var event: SMF.MIDIEvent = event_chunk.event
@@ -511,6 +549,9 @@ func _init_track() -> void:
 				var event_note_on: SMF.MIDIEventNoteOn = event as SMF.MIDIEventNoteOn
 				var note: int = event_note_on.note	as int
 				print("midi_key: ", note)
+				midi_notes.append(note)
+		print("size", midi_notes.size())
+		MusicPlayer.change_required_midi_key.emit(midi_notes)	
 
 ## SMF解析
 func _analyse_smf() -> void:
@@ -750,8 +791,8 @@ func _process_track() -> int:
 			SMF.MIDIEventType.note_on:
 				var event_note_on: SMF.MIDIEventNoteOn = event as SMF.MIDIEventNoteOn
 				
-				var note: int = event_note_on.note
-				print(note)
+				#var note: int = event_note_on.note
+				#print(note)
 				
 				self._process_track_event_note_on(channel, event_note_on.note, event_note_on.velocity)
 			SMF.MIDIEventType.program_change:
@@ -857,16 +898,13 @@ func _process_track_event_note_on(channel: GodotMIDIPlayerChannelStatus, note: i
 	if channel.mute: return
 	if self.bank == null: return
 	
-	print(note)
-
 	var track_key_shift: int = self.key_shift if not channel.drum_track else 0
 	var key_number: int = note + track_key_shift
 	
 	# CHARIOT
 	
-	#print("NOTE", note)
-	#print(key_number)
-	#print("CHANNEL", channel.note_on)
+	#print("NOTE: ", note)
+	#print("CHANNEL: ", channel.note_on)
 
 	#filter_old_input_buffer(10000000)
 	var elem = consume_note_from_input_buffer(key_number)

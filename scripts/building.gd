@@ -86,6 +86,13 @@ signal note_produced(note: NotePackage)
 
 var building_rect: Rect2i
 var building_shape_polygon: PackedVector2Array
+
+
+signal change_required_midi_key(midi_keys: Array[int])
+
+#func _ready():
+	#change_required_midi_key.connect(_on_change_required_midi_key)
+
 			
 func _ready() -> void:
 	beat_time = 60.0 / MapManager.global_bpm # TODO use global bpm from conveyor belt manager once it is global
@@ -97,6 +104,12 @@ func _ready() -> void:
 	building_ui.setup(self)
 	building_ui.hide()
 	building_rect = Rect2i(tile_coord.x*Tiles.TILE_PX, tile_coord.y*Tiles.TILE_PX, ground_size.x*Tiles.TILE_PX, ground_size.y*Tiles.TILE_PX)
+
+	MusicPlayer.change_required_midi_key.connect(_on_change_required_midi_key)
+
+func _on_change_required_midi_key(midi_keys: Array[int]):
+	if building_resource is SpaceRadioResource:
+		building_resource.required_midi_keys = midi_keys
 
 func _process(delta: float) -> void:
 	time_acc += delta
@@ -270,7 +283,6 @@ func _setup_resource() -> void:
 	connectionIndicators.visible = show_connection_indicators
 
 func _handle_active() -> void:
-	#print("handle active called")
 	if is_active:
 		self.add_to_group(BuildingsUtils.BUILDING_GROUP)
 	else:
@@ -291,26 +303,14 @@ func _handle_active() -> void:
 func modulate_sprite(color: Color) -> void:
 	background.modulate = color
 	foreground.modulate = color
-
-#func _on_incoming(gate: ConnectionGate, payload: NoteResource) -> void:
-	##print("_on_incoming : ", gate, " ", payload)
-	#input_buffer.add_element(payload)
 	
 #endregion
 
 #region chariot
 
 func _on_incoming(gate: ConnectionGate, payload: NotePackage) -> void:
-	#if building_resource.building_key == "space_radio_station":
 	input_buffer.add_element(payload, gate.buffer_index)
 
-## called when input containers receives new areas with shapes
-#func _on_inputs_child_entered_tree(node: Node) -> void:
-	#if node is Area2D:
-		#node.area_entered.connect(_note_received)
-
-#func _note_received():
-	#pass
 
 ## Puts NotePackage from buffer on the conveyor belt 
 func spawn_note_from_output_buffer(note: NotePackage):

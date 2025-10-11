@@ -20,37 +20,30 @@ var time_acc: float = 0.0
 
 func _ready():
 	beat_time = 60.0 / global_bpm
-	#beat_timer = Timer.new()
-	#beat_timer.wait_time = beat_time
-	#beat_timer.autostart = true
-	#beat_timer.timeout.connect(_on_beat)
-	#add_child(beat_timer)
-	
-	#map_manager = get_parent().get_parent().get_parent().get_node("MapManager") # TODO improve this access!
 	
 func clear() -> void:
 	for child in %ConveyorBeltContainer.get_children():
 		child.queue_free()
 
-func _process(delta: float) -> void:
-	time_acc += delta
-	if time_acc >= beat_time:
-		#_on_beat()
-		time_acc = 0.0
-
-func _on_beat():
-	var dict = MapManager.map_data_c_collector as Dictionary[Vector2i, Node2D]
-	for c_collector in dict.values():
-		spawn_note(c_collector.tile_coord)
-
-func spawn_note(tile_coord: Vector2i):
-	var note = note_scene.instantiate()
-	note.current_tile_coord = tile_coord
-	note.previous_tile_coord = tile_coord
-	note.modulate = Color(randf(), randf(), randf()) # TODO remove
-	note.name = "Note_" + str(Time.get_unix_time_from_system())
-
-	%ConveyorBeltContainer.add_child(note)
+#func _process(delta: float) -> void:
+	#time_acc += delta
+	#if time_acc >= beat_time:
+		##_on_beat()
+		#time_acc = 0.0
+#
+#func _on_beat():
+	#var dict = MapManager.map_data_c_collector as Dictionary[Vector2i, Node2D]
+	#for c_collector in dict.values():
+		#spawn_note(c_collector.tile_coord)
+#
+#func spawn_note(tile_coord: Vector2i):
+	#var note = note_scene.instantiate()
+	#note.current_tile_coord = tile_coord
+	#note.previous_tile_coord = tile_coord
+	#note.modulate = Color(randf(), randf(), randf()) # TODO remove
+	#note.name = "Note_" + str(Time.get_unix_time_from_system())
+#
+	#%ConveyorBeltContainer.add_child(note)
 
 	#await get_tree().create_timer(1.0).timeout
 	

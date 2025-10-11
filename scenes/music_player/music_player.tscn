@@ -8,7 +8,9 @@
 
 [node name="MusicPlayer" type="Node"]
 script = ExtResource("3_7oq6m")
-songs = Array[ExtResource("2_cnhyp")]([ExtResource("3_cgdca")])
+songs = Dictionary[StringName, ExtResource("2_cnhyp")]({
+&"cosmic_cookies": ExtResource("3_cgdca")
+})
 
 [node name="BackgroundAtmosphere" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_7oq6m")
