@@ -717,7 +717,7 @@ func _process_track() -> int:
 		var event: SMF.MIDIEvent = event_chunk.event
 
 		self.emit_signal("midi_event", channel, event)
-
+		
 		match event.type:
 			SMF.MIDIEventType.note_off:
 				self._process_track_event_note_off(channel, (event as SMF.MIDIEventNoteOff).note)
@@ -834,7 +834,7 @@ func _process_track_event_note_on(channel: GodotMIDIPlayerChannelStatus, note: i
 	if elem == null:
 		#print_debug("note not in input buffer: ", MidiUtility.key_number_to_note_name_with_octave(key_number), " skip");
 		return
-
+		
 	var preset: Bank.Preset = self.bank.get_preset(channel.program, channel.bank)
 	if preset.instruments[key_number] == null:
 		return

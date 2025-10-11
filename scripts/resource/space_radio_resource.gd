@@ -2,7 +2,6 @@
 class_name SpaceRadioResource extends AbstractBuildingResource
 
 func produce(input_buffer: Buffer, output_buffer: Buffer) -> void:
-	
 	for i in input_locations.size():
 		var note = input_buffer.consume_first_note_from_buffer(i)
 		if note != null:
