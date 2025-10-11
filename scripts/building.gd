@@ -27,7 +27,7 @@ signal note_produced(note: NotePackage)
 
 @export var building_resource: AbstractBuildingResource = null:
 	set(value):
-		building_resource = value
+		building_resource = value.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
 		if is_node_ready():
 			_setup_resource()
 

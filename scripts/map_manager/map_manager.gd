@@ -19,6 +19,7 @@ var map_data_c_collector: Dictionary[Vector2i, Node2D] # BELTS ONLY
 # just for tile map coord calculation
 var ground_layer: TileMapLayer
 var is_auto_conveyor_belt_tiling: bool = false
+var is_hotbar_hovered: bool = false
 
 @export var global_bpm: float = 120.0 # TODO move to conver
 
@@ -71,6 +72,8 @@ func _ready() -> void:
 	building_cursor.building.building_resource = selected_building_resource
 	
 	ground_layer = load("res://scenes/map/ground_layer_ref.tscn").instantiate()
+	
+	EventBus.hotbar_hovered.connect(	_on_hotbar_hovered)
 
 func _process(delta: float) -> void:
 	if !building_cursor:
@@ -130,6 +133,12 @@ func _process(delta: float) -> void:
 			else:
 				building_cursor.building.modulate_sprite(COLOR_FREE)
 				
+			if is_hotbar_hovered:
+				building_cursor.building.modulate_sprite(COLOR_OCCUPIED)
+				return
+			else:
+				building_cursor.building.modulate_sprite(COLOR_FREE)
+				
 			if Input.is_action_just_pressed(&"ui_click"):
 				grid_cursor.hide()
 				
@@ -151,11 +160,8 @@ func _process(delta: float) -> void:
 				
 				building.name = building.building_resource.name + "_" + str(Time.get_unix_time_from_system())
 				
-				
-				# signal for mister nebula?
-				# - what kind of signal?
-				# - he does subscribe to place_building, yes :)
 				place_obstacle.emit(building)
+				print("placed building")
 				place_building.emit(building)
 				MusicPlayer.play_sfx("build_placed")
 				
@@ -194,6 +200,9 @@ func _process(delta: float) -> void:
 		Mode.IDLE:
 			return
 			
+func _on_hotbar_hovered(hovered: bool) -> void:
+	is_hotbar_hovered = hovered
+
 func _borders_note_source(cell: Vector2i) -> bool:
 	for note_cell in note_sources:
 		if note_cell == cell + Vector2i(0, -1):

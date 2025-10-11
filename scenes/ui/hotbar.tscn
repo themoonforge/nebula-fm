@@ -1,12 +1,16 @@
-[gd_scene load_steps=12 format=3 uid="uid://csjy35oh1vki4"]
+[gd_scene load_steps=19 format=3 uid="uid://csjy35oh1vki4"]
 
+[ext_resource type="Script" uid="uid://dpl7y8o8dswp0" path="res://scripts/ui/hotbar.gd" id="1_ipcor"]
 [ext_resource type="PackedScene" uid="uid://donhenh45sal8" path="res://scenes/ui/transformer_item.tscn" id="2_6hkf2"]
 [ext_resource type="Texture2D" uid="uid://b20nmqa002u5u" path="res://sprites/panel_tile_bright.png" id="2_pikvf"]
 [ext_resource type="Resource" uid="uid://cls7knxgownu5" path="res://resources/building/collector.tres" id="3_6hkf2"]
+[ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="4_dimnp"]
 [ext_resource type="Resource" uid="uid://cn6kon66bh7gm" path="res://resources/building/merger.tres" id="4_tyl16"]
 [ext_resource type="Resource" uid="uid://b8evp3u6h0bqc" path="res://resources/building/duplicator.tres" id="5_1uw18"]
-[ext_resource type="Resource" uid="uid://hiu1ukei6xtw" path="res://resources/building/pitcher.tres" id="5_f1jgs"]
+[ext_resource type="Script" uid="uid://dvkawr1dimr5r" path="res://scripts/resource/pitcher_resource.gd" id="5_ipcor"]
+[ext_resource type="PackedScene" uid="uid://cj7pwe6nfrxd8" path="res://scenes/ui/building_ui_components/pitch_shifter_component.tscn" id="6_8qhi3"]
 [ext_resource type="Resource" uid="uid://b0gwhmnjesig4" path="res://resources/building/conveyor_belt_auto.tres" id="6_miglr"]
+[ext_resource type="PackedScene" uid="uid://dwckawbphs0g4" path="res://scenes/ui/building_ui_components/buffer_content_component.tscn" id="7_i2yph"]
 [ext_resource type="Resource" uid="uid://boayo86auwloj" path="res://resources/building/conveyor_belt_manual.tres" id="8_xu3a2"]
 [ext_resource type="Resource" uid="uid://5yq7ner4m8gv" path="res://resources/building/conveyor_belt_corner_f.tres" id="9_f1jgs"]
 [ext_resource type="Resource" uid="uid://j7k38pqe5j42" path="res://resources/building/conveyor_belt_corner_b.tres" id="10_1uw18"]
@@ -16,7 +20,36 @@ texture = ExtResource("2_pikvf")
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_nox11"]
+atlas = ExtResource("4_dimnp")
+region = Rect2(320, 88, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sutfp"]
+atlas = ExtResource("4_dimnp")
+region = Rect2(320, 120, 16, 24)
+
+[sub_resource type="Resource" id="Resource_dimnp"]
+resource_local_to_scene = true
+resource_name = "Pitcher"
+script = ExtResource("5_ipcor")
+name = &"Pitcher"
+building_key = &"pitcher"
+description = "Transforms a note into another one"
+size = Vector2i(1, 1)
+background_tile = Vector2i(17, 0)
+input_locations = Dictionary[Vector2i, int]({
+Vector2i(0, -1): 0
+})
+output_locations = Dictionary[Vector2i, int]({
+Vector2i(0, 1): 0
+})
+hotbar_icon = SubResource("AtlasTexture_nox11")
+hotbar_icon_hovered = SubResource("AtlasTexture_sutfp")
+rotation_offset = Array[Vector2i]([Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0)])
+ui_components = Array[PackedScene]([ExtResource("6_8qhi3"), ExtResource("7_i2yph")])
+
 [node name="Hotbar" type="CanvasLayer"]
+script = ExtResource("1_ipcor")
 
 [node name="Container" type="Control" parent="."]
 layout_mode = 3
@@ -28,6 +61,7 @@ grow_vertical = 2
 size_flags_vertical = 10
 
 [node name="Panel" type="PanelContainer" parent="Container"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.93900007
@@ -69,7 +103,7 @@ transformer_resource = ExtResource("3_6hkf2")
 [node name="TransformerItem_Pitcher" parent="Container/TransformerContainer" instance=ExtResource("2_6hkf2")]
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
-transformer_resource = ExtResource("5_f1jgs")
+transformer_resource = SubResource("Resource_dimnp")
 
 [node name="TransformerItem_Duplicator" parent="Container/TransformerContainer" instance=ExtResource("2_6hkf2")]
 custom_minimum_size = Vector2(16, 0)
