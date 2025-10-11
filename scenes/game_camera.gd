@@ -24,13 +24,12 @@ func _process(delta):
 	
 func handle_zoom(delta):
 	if Input.is_action_just_pressed("camera_zoom_in"):
-		zoom_target *= 1.1
+		zoom_target = (zoom_target * 1.1).clamp(Vector2(1.0, 1.0), Vector2(6.0, 6.0))
 		
 	if Input.is_action_just_pressed("camera_zoom_out"):
-		zoom_target *= 0.9
+		zoom_target = (zoom_target * 0.9).clamp(Vector2(1.0, 1.0), Vector2(6.0, 6.0))
 		
 	zoom = zoom.slerp(zoom_target, zoom_speed * delta)
-	zoom_target = zoom_target.clamp(Vector2(1.0, 1.0), Vector2(6.0, 6.0))
 	
 #func simple_pan(delta):
 	#var move_amount = Vector2.ZERO
