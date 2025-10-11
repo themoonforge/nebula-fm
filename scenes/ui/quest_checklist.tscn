@@ -21,8 +21,8 @@ metadata/_custom_type_script = "uid://dd674gtune7s5"
 [sub_resource type="Resource" id="Resource_xi4mx"]
 script = ExtResource("3_lb0fv")
 quest_signal = 1
-associated_note_name = "D"
-amount = 1
+associated_note_name = "C"
+amount = 16
 metadata/_custom_type_script = "uid://scy0e6iognox"
 
 [sub_resource type="Resource" id="Resource_7qd3y"]
