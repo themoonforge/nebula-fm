@@ -18,4 +18,4 @@ func _on_shift_up_pressed() -> void:
 	pitch_shifted.emit(1)
 	
 func _on_shift_down_pressed() -> void:
-	pitch_shifted.emit(4)
+	pitch_shifted.emit(-1)

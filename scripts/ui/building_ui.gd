@@ -43,7 +43,9 @@ func _process(delta: float) -> void:
 func _on_pitch_shifted(new_pitch: int) -> void:
 	print("new pitch received: ", new_pitch)
 	if building.building_resource is PitcherBuildingResource:
-		building.building_resource.pitch = new_pitch
+		var calculated_pitch = building.building_resource.pitch + new_pitch
+		building.building_resource.pitch = calculated_pitch % 7 # rotate 
+		print("new pitch: ", building.building_resource.pitch)
 	
 func _on_building_ui_mouse_entered() -> void:
 	print("entered")
