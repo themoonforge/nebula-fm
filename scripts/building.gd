@@ -163,7 +163,7 @@ func _handle_ui() -> void:
 	var mouse_pos = get_viewport().get_mouse_position()
 	var canvas_transform = get_viewport().get_canvas_transform()
 	var world_mouse_pos = canvas_transform.affine_inverse() * mouse_pos
-	
+		
 	var mouse_in_bottom: bool = building_rect.position.y >= get_viewport().get_visible_rect().size.y / 2
 	var mouse_in_polygon: bool = Geometry2D.is_point_in_polygon(world_mouse_pos, building_shape_polygon)
 	
