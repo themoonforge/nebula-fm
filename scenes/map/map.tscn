@@ -39,7 +39,7 @@ file = "res://midi/alle_mein_entchen.mid"
 playing = true
 volume_db = -5.0
 loop = true
-soundfont = "res://soundfont/Aspirin-Stereo.sf2"
+soundfont = "res://soundfont/aspirin_stereo.sf2"
 
 [node name="GroundLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true

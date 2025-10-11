@@ -307,7 +307,6 @@ func _evaluate_conveyor_belt_direction(root_position: Vector2i, building: Buildi
 			#else:
 				#print("else: data.building_rotation - ", data.building_rotation)
 			building.building_rotation = BuildingsUtils.BuildingRotation.UP
-
 				
 	else:
 		return

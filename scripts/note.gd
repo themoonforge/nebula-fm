@@ -126,8 +126,8 @@ func _move_note():
 		var next_is_corner_f = next_belt_key == &"conveyor_belt_corner_f"
 		var next_is_corner_b = next_belt_key == &"conveyor_belt_corner_b"
 		
-		var curr_rotation = curr_belt.building_rotation
-		var next_rotation = next_belt.building_rotation
+		var curr_rotation: BuildingsUtils.BuildingRotation = curr_belt.building_rotation
+		var next_rotation: BuildingsUtils.BuildingRotation = next_belt.building_rotation
 		
 		var has_same_rotation = next_belt.building_rotation == curr_belt.building_rotation
 				
@@ -136,8 +136,8 @@ func _move_note():
 		
 		if is_case_a:
 			# check if the straight belts are rotated correctly based ont the position (e.g. to avoid curr_down, next_down next to each other)
-			var is_case_a_2 = curr_rotation in [0, 2] and curr_belt.tile_coord.x == next_belt.tile_coord.x
-			var is_case_a_3 = curr_rotation in [1, 3] and curr_belt.tile_coord.y == next_belt.tile_coord.y
+			var is_case_a_2 = curr_rotation in [0, 2] and curr_belt.tile_coord.y != next_belt.tile_coord.y
+			var is_case_a_3 = curr_rotation in [1, 3] and curr_belt.tile_coord.x != next_belt.tile_coord.x
 			is_case_a = is_case_a_2 or is_case_a_3
 		
 		var is_case_b = curr_is_straight and next_is_corner_f and next_rotation == (curr_rotation + 3) % 4
