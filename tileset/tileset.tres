@@ -61,8 +61,6 @@ tile_data = PackedInt32Array(0, 1441794, 21)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_difrn"]
 texture = ExtResource("3_0w1j7")
-2:8/size_in_atlas = Vector2i(3, 5)
-2:8/0 = 0
 2:16/0 = 0
 2:16/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 2:16/0/custom_data_0 = true
@@ -670,6 +668,17 @@ texture = ExtResource("3_0w1j7")
 20:2/0/texture_origin = Vector2i(0, 8)
 20:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5.1934204, -5.8364162, 5.9847984, -5.8364162, 5.9847984, 6.331026, -4.896653, 6.2321033)
 20:2/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8, -13, 8, -13, 8, 8, -8, 8)
+1:9/animation_columns = 7
+1:9/animation_speed = 6.0
+1:9/animation_mode = 1
+1:9/animation_frame_0/duration = 1.0
+1:9/animation_frame_1/duration = 1.5
+1:9/animation_frame_2/duration = 1.0
+1:9/animation_frame_3/duration = 1.0
+1:9/animation_frame_4/duration = 2.0
+1:9/animation_frame_5/duration = 1.5
+1:9/animation_frame_6/duration = 0.5
+1:9/0 = 0
 
 [resource]
 physics_layer_0/collision_layer = 1
