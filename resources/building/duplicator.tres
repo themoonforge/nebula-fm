@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="PitcherBuildingResource" load_steps=5 format=3 uid="uid://b8evp3u6h0bqc"]
+[gd_resource type="Resource" script_class="DuplicateResource" load_steps=5 format=3 uid="uid://b8evp3u6h0bqc"]
 
 [ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="1_44q1q"]
-[ext_resource type="Script" uid="uid://dvkawr1dimr5r" path="res://scripts/resource/pitcher_resource.gd" id="2_tlqlt"]
+[ext_resource type="Script" uid="uid://cu27jdlp43wn6" path="res://scripts/resource/duplicate_resource.gd" id="2_7mhlr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7mhlr"]
 atlas = ExtResource("1_44q1q")
@@ -12,8 +12,8 @@ atlas = ExtResource("1_44q1q")
 region = Rect2(336, 120, 16, 24)
 
 [resource]
-resource_name = "Pitcher"
-script = ExtResource("2_tlqlt")
+resource_name = "Duplicator"
+script = ExtResource("2_7mhlr")
 name = &"Duplicator"
 building_key = &"duplicator"
 description = "Duplicates all notes in the package"

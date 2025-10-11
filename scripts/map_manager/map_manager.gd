@@ -149,7 +149,7 @@ func _process(delta: float) -> void:
 				elif building.building_resource.building_key == StringName("collector"):
 					map_data_c_collector[tile_coordinate] = building
 				
-				building.name = building.building_resource.name + "_" + str(Time.get_unix_time_from_system())					
+				building.name = building.building_resource.name + "_" + str(Time.get_unix_time_from_system())
 				
 				
 				# signal for mister nebula?

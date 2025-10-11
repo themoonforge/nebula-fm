@@ -2,28 +2,25 @@ class_name PitcherBuildingResource extends AbstractBuildingResource
 
 @export var pitch: int = 0
 
-## takes note from input buffer, pitches and puts it into the output buffer
-func produce(input_buffer: Buffer, output_buffer: Buffer) -> void:
-	var note = input_buffer.consume_first_note_from_buffer()
-	if note != null:
-		var pitched_keys: Array[int] = []
-		for key in note.key_numbers:	
-			print("pitch: ", pitch)		
-			var pitched_note = pitch_note(key)
-			print("key: ", key)		
-			print("pitched_note: ", pitched_note)		
-			pitched_keys.append(pitched_note)
-			
-		note.key_numbers = pitched_keys
-		output_buffer.add_element(note)
-
 enum PitchDirection {
 	UP = 1,
 	DOWN = -1,
 	NONE = 0
 }
 
-# pitches the note by the currently set pitch
+## takes note from input buffer, pitches and puts it into the output buffer
+func produce(input_buffer: Buffer, output_buffer: Buffer) -> void:
+	var note = input_buffer.consume_first_note_from_buffer()
+	if note != null:
+		var pitched_keys: Array[int] = []
+		for key in note.key_numbers:
+			var pitched_note = pitch_note(key)	
+			pitched_keys.append(pitched_note)
+			
+		note.key_numbers = pitched_keys
+		output_buffer.add_element(note)
+
+## pitches the note by the currently set pitch
 func pitch_note(key: int) -> int:
 	var pitched_key = key
 	for i in range(0, absi(pitch)):

@@ -26,7 +26,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 10
-mouse_filter = 2
 
 [node name="Panel" type="PanelContainer" parent="Container"]
 layout_mode = 1
@@ -59,6 +58,7 @@ grow_vertical = 0
 scale = Vector2(1.5, 1.5)
 pivot_offset = Vector2(93.25, 24.5)
 size_flags_horizontal = 6
+mouse_filter = 0
 theme_override_constants/separation = 8
 
 [node name="TransformerItem_Collector" parent="Container/TransformerContainer" instance=ExtResource("2_6hkf2")]
