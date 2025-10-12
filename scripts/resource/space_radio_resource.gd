@@ -12,20 +12,22 @@ func produce(input_buffer: Buffer, output_buffer: Buffer) -> void:
 		if note != null:
 			
 			# for testing
-			#var midi_keys: Array[int] = [88, 86, 79, 84, 87, 86, 82, 77, 79, 82]
-			#note.key_numbers = midi_keys_for_testing
+			var midi_keys: Array[int] = [88, 86, 79, 84, 87, 86, 82, 77, 79, 82]
+			note.key_numbers = midi_keys
 			#note.key_numbers.append(79)
 			#note.key_numbers.append(82)
 			print(note.key_numbers)
 			if _compare_arrays(note.key_numbers, required_midi_keys):
+				EventBus.midi_play.emit(false)
 				MusicPlayer.play_radio_song("cosmic_cookies")
 			else:
 				MusicPlayer.stop_radio_song()
+				EventBus.midi_play.emit(true)
 				for key in note.key_numbers:
 					var midi_input_note = MidiInputNoteResource.new(key)
 					EventBus.midi_input.emit(midi_input_note)
-		else:
-			MusicPlayer.stop_radio_song()
+		#else:
+			#MusicPlayer.stop_radio_song()
 
 # TODO move to some utils
 ## compare arrays 

@@ -333,8 +333,9 @@ var last_filter_frame: int = 0
 func on_midi_input(input: MidiInputNoteResource) -> void:
 	filter_old_input_buffer()
 	input_buffer.append(input)
+	print("added to buffer", input_buffer.size())
 
-func filter_old_input_buffer(time_offset_in_ms: int = 1000) -> void:
+func filter_old_input_buffer(time_offset_in_ms: int = 5000) -> void:
 	var current_frame: int = Engine.get_frames_drawn()
 	if current_frame == last_filter_frame:
 		return
@@ -344,21 +345,26 @@ func filter_old_input_buffer(time_offset_in_ms: int = 1000) -> void:
 	
 	while not input_buffer.is_empty() and input_buffer[0].creation_time <= expiration_time:
 		input_buffer.pop_front()
+	print("clear buffer", input_buffer.size())
 
 func consume_note_from_input_buffer(key_number: int) -> MidiInputNoteResource:
 	var found_elem: MidiInputNoteResource = null
 
 	# simple search
 	var simple_name: String = MidiUtility.key_number_to_note_name(key_number)
-
+	print("indexbuffer", input_buffer.size())
 	var index: int = input_buffer.find_custom(func(elem: MidiInputNoteResource): return elem.simple_name == simple_name)
 	if index != -1:
 		found_elem = input_buffer[index]
 		input_buffer.remove_at(index)
 		consume_note.emit.call_deferred(found_elem.key_number)
+		print(input_buffer.size())
 	return found_elem
 
 signal consume_note(key_number: int)
+
+func on_midi_play(play: bool):
+	self.playing = play
 
 ## 準備
 func _ready():
@@ -366,6 +372,7 @@ func _ready():
 	
 	# CHARIOT, IOCUTUS	
 	EventBus.midi_input.connect(on_midi_input)
+	EventBus.midi_play.connect(on_midi_play)
 	MusicPlayer.change_song.connect(_on_change_song)
 
 func set_up_new_song():
@@ -906,10 +913,10 @@ func _process_track_event_note_on(channel: GodotMIDIPlayerChannelStatus, note: i
 	#print("NOTE: ", note)
 	#print("CHANNEL: ", channel.note_on)
 
-	#filter_old_input_buffer(10000000)
+	filter_old_input_buffer()
 	var elem = consume_note_from_input_buffer(key_number)
 	if elem == null:
-		#print_debug("note not in input buffer: ", MidiUtility.key_number_to_note_name_with_octave(key_number), " skip");
+		print_debug("note not in input buffer: ", MidiUtility.key_number_to_note_name_with_octave(key_number), " skip");
 		return
 		
 	var preset: Bank.Preset = self.bank.get_preset(channel.program, channel.bank)

@@ -37,7 +37,7 @@ unique_name_in_owner = true
 script = ExtResource("5_04w0f")
 file = "res://midi/alle_mein_entchen.mid"
 playing = true
-volume_db = -5.0
+volume_db = -60.55
 loop = true
 soundfont = "res://soundfont/aspirin_stereo.sf2"
 
