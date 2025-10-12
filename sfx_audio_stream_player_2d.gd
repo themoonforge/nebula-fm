@@ -4,7 +4,8 @@ extends Node
 @onready var radio_station_player: AudioStreamPlayer2D = $RadioStationPlayer
 
 signal change_required_midi_key(midi_keys: Array[int])
-signal change_song(song: Resource)
+signal change_song(song: SongResource)
+signal loop_finished(song: SongResource)
 
 var sfx_sounds = {
 	"ui_click": preload("res://sfx/ui/ui_click.ogg"),
@@ -15,8 +16,13 @@ var sfx_sounds = {
 }
 
 var radio_songs = {
-	"cosmic_cookies": preload("res://midi/song_1_mix.wav")
+	"cosmic_cookies": preload("res://midi/song_1_mix.wav"),
+	"bossmusic": preload("res://music/bossmusicsept19.ogg")
 }
+
+var current_radio_song_key: String
+var current_radio_song_plays: int
+var last_radio_song_position: float = -1.0
 
 @export var songs: Dictionary[StringName, SongResource] = {}
 
@@ -24,11 +30,40 @@ func play_sfx(sfx_name: String):
 	sfx_player.stream = sfx_sounds[sfx_name]
 	sfx_player.play()
 
-func play_radio_song(song_name: String):
-	if radio_station_player.stream != radio_songs[song_name]:
-		radio_station_player.stream = radio_songs[song_name]
+func play_radio_song(song_key: String, loop_amount: int = 1):
+	current_radio_song_key = song_key
+	
+	if radio_station_player.stream != radio_songs[song_key]:
+		radio_station_player.stream = radio_songs[song_key]
 	if !radio_station_player.playing:
 		radio_station_player.play()
+		
+	var current_position = radio_station_player.get_playback_position()
+	if current_position < last_radio_song_position:
+		current_radio_song_plays += 1
+		if current_radio_song_plays == loop_amount:
+			MusicPlayer.loop_finished.emit(songs[current_radio_song_key])
+			stop_radio_song()
+	last_radio_song_position = current_position
+		
+func play_current_radio_song() -> void:
+	if current_radio_song_key.is_empty():
+		return
+		
+	play_radio_song(current_radio_song_key)
 	
 func stop_radio_song():
 	radio_station_player.stop()
+
+func get_next_radio_song() -> String:
+	var keys = radio_songs.keys()
+	var index = keys.find(current_radio_song_key)
+	
+	if index == -1:
+		push_error("Current key not found in radio_songs.")
+		return ""
+	
+	if index >= keys.size() - 1:
+		return ""
+	
+	return keys[index + 1]

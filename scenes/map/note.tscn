@@ -1,6 +1,7 @@
 [gd_scene load_steps=21 format=3 uid="uid://ee1ta87u3uwm"]
 
 [ext_resource type="Script" uid="uid://d2snrdgc5qjgm" path="res://scripts/note.gd" id="1_ypc5c"]
+[ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="2_37s5p"]
 [ext_resource type="Texture2D" uid="uid://q4wc5w1fuy7n" path="res://sprites/tileset2-export.png" id="3_37s5p"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_olt44"]
@@ -52,12 +53,9 @@ load_path = "res://.godot/imported/tileset2.png-72bfd1449e7da33365664eeea85cd2aa
 atlas = SubResource("CompressedTexture2D_ej73d")
 region = Rect2(449, 17, 14, 14)
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4y1dw"]
-load_path = "res://.godot/imported/tileset2.png-72bfd1449e7da33365664eeea85cd2aa.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_d6ldf"]
-atlas = SubResource("CompressedTexture2D_4y1dw")
-region = Rect2(352, 32, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_k4jkn"]
+atlas = ExtResource("2_37s5p")
+region = Rect2(352, 48, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j8v4j"]
 atlas = ExtResource("3_37s5p")
@@ -77,7 +75,7 @@ f_texture = SubResource("AtlasTexture_sil4x")
 g_texture = SubResource("AtlasTexture_m7w8w")
 a_texture = SubResource("AtlasTexture_ar8cr")
 b_texture = SubResource("AtlasTexture_d10s5")
-package_texture = SubResource("AtlasTexture_d6ldf")
+package_texture = SubResource("AtlasTexture_k4jkn")
 
 [node name="NoteSprite" type="Sprite2D" parent="."]
 unique_name_in_owner = true

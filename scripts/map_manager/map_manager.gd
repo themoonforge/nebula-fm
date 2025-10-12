@@ -119,10 +119,10 @@ func _process(delta: float) -> void:
 						if b.name == "CraterLayer":
 							is_crater = true
 				
-				if !is_crater:
-					grid_cursor.hide()
-					building_cursor.building.modulate_sprite(COLOR_OCCUPIED)
-					return
+				#if !is_crater:
+					#grid_cursor.hide()
+					#building_cursor.building.modulate_sprite(COLOR_OCCUPIED)
+					#return
 					
 			if building_cursor.building.building_resource is CollectorBuildingResource:
 				if _borders_note_source(hovered_cell):

@@ -17,6 +17,10 @@ func _ready():
 	zoom = min_zoom
 	zoom_target = zoom
 	position_target = position
+	
+func _notification(what):
+	if what == NOTIFICATION_WM_MOUSE_EXIT:
+		is_dragging = false
 
 func _process(delta):
 	handle_zoom(delta)

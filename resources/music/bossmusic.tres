@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SongResource" load_steps=2 format=3 uid="uid://eqn8h3uxs201"]
+
+[ext_resource type="Script" uid="uid://ddp8viiurppv6" path="res://resources/music/song_resoure.gd" id="1_l7p2p"]
+
+[resource]
+script = ExtResource("1_l7p2p")
+song_title = "Cosmic Cookies"
+song_key = &"bossmusic"
+melody_midi_path = "midi/MIDI_sample.mid"
+mix_path = "music/bossmusicsept19.ogg"

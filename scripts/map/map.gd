@@ -132,7 +132,7 @@ func generate() -> void:
 	_place_with_noise(dust_layer, Tiles.SOURCE_2, Tiles.DUST_4, Vector2(0.65, 0.7), 0.5)
 	register_static_layer(border_layer)
 	_place_radio_station(SubGrid.values()[randi() % SubGrid.size()])
-	_place_note_sources(6)
+	_place_note_sources(30)
 	_place_with_noise(obstacles_layer, Tiles.SOURCE_2, Tiles.ROCK_SMALL, Vector2(0.2, 0.25), 0.10)
 	_place_patterns(crater_layer, crater_pattern_choices, Vector2(0.3, 0.5), 0.1)
 	_place_patterns(water_layer, water_pattern_choices, Vector2(0.5, 0.6), 0.1)

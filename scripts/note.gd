@@ -60,13 +60,17 @@ func _move_note():
 	var possible_belts: Array[Building] = []
 
 	if MapManager.map_data.has(top):
-		possible_belts.append(MapManager.map_data.get(top))
+		if is_instance_valid(MapManager.map_data.get(top)):
+			possible_belts.append(MapManager.map_data.get(top))
 	if MapManager.map_data.has(right):
-		possible_belts.append(MapManager.map_data.get(right))
+		if is_instance_valid(MapManager.map_data.get(right)):
+			possible_belts.append(MapManager.map_data.get(right))
 	if MapManager.map_data.has(bottom):
-		possible_belts.append(MapManager.map_data.get(bottom))
+		if is_instance_valid(MapManager.map_data.get(bottom)):
+			possible_belts.append(MapManager.map_data.get(bottom))
 	if MapManager.map_data.has(left):
-		possible_belts.append(MapManager.map_data.get(left))
+		if is_instance_valid(MapManager.map_data.get(left)):
+			possible_belts.append(MapManager.map_data.get(left))
 	
 	for next_belt in possible_belts:
 		if !MapManager.map_data.has(current_tile_coord) or previous_tile_coord == next_belt.tile_coord:

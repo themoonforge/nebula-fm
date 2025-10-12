@@ -106,10 +106,31 @@ func _ready() -> void:
 	building_rect = Rect2i(tile_coord.x*Tiles.TILE_PX, tile_coord.y*Tiles.TILE_PX, ground_size.x*Tiles.TILE_PX, ground_size.y*Tiles.TILE_PX)
 
 	MusicPlayer.change_required_midi_key.connect(_on_change_required_midi_key)
+	MusicPlayer.change_song.connect(_on_change_song)
+	MusicPlayer.loop_finished.connect(_on_loop_finished)
 
 func _on_change_required_midi_key(midi_keys: Array[int]):
 	if building_resource is SpaceRadioResource:
+		print("Required keys are: ")
+		for k in midi_keys:
+			print(MidiUtility.key_number_to_note_name(k))
 		building_resource.required_midi_keys = midi_keys
+		
+func _on_change_song(song: SongResource):
+	if building_resource is SpaceRadioResource:
+		building_resource.current_song = song
+		
+func _on_loop_finished(song: SongResource):
+	if building_resource is SpaceRadioResource:
+		MusicPlayer.stop_radio_song()
+		var next_song_key = MusicPlayer.get_next_radio_song()
+		
+		if next_song_key.is_empty():
+			print("no more songs")
+			return
+		
+		building_resource.current_song = MusicPlayer.songs[next_song_key]
+		MusicPlayer.change_song.emit(MusicPlayer.songs[next_song_key])
 
 func _process(delta: float) -> void:
 	time_acc += delta
@@ -141,7 +162,8 @@ func _process(delta: float) -> void:
 	if MapManager.mode != MapManager.Mode.IDLE:
 		return
 		
-	_handle_ui()
+	if building_resource.ui_components.size() > 0:
+		_handle_ui()
 	
 	if building_ui.visible:
 		building_ui.update()
@@ -313,7 +335,7 @@ func _on_incoming(gate: ConnectionGate, payload: NotePackage) -> void:
 
 
 ## Puts NotePackage from buffer on the conveyor belt 
-func spawn_note_from_output_buffer(note: NotePackage):
+func spawn_note_from_output_buffer(note: NotePackage):	
 	#print("NOTE KEY: ", note.simple_name)
 	if building_resource.input_locations.keys().size() > 0:
 		note.previous_tile_coord = note.current_tile_coord
@@ -325,7 +347,7 @@ func spawn_note_from_output_buffer(note: NotePackage):
 
 	note.get_child(0).texture = note.get_texture()
 				
-	note.name = "Note_" + str(Time.get_unix_time_from_system())	
+	note.name = "Note_" + str(Time.get_unix_time_from_system())
 	# TODO improve access!
 	var conveyor_belt_container = get_node("/root/Game/Map/ConveyorBeltManager/ConveyorBeltContainer") 
 	conveyor_belt_container.add_child(note)

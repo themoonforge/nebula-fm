@@ -28,7 +28,7 @@ region = Rect2(320, 88, 16, 24)
 atlas = ExtResource("4_dimnp")
 region = Rect2(320, 120, 16, 24)
 
-[sub_resource type="Resource" id="Resource_dimnp"]
+[sub_resource type="Resource" id="Resource_ipcor"]
 resource_local_to_scene = true
 resource_name = "Pitcher"
 script = ExtResource("5_ipcor")
@@ -104,7 +104,7 @@ transformer_resource = ExtResource("3_6hkf2")
 [node name="TransformerItem_Pitcher" parent="Container/TransformerContainer" instance=ExtResource("2_6hkf2")]
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
-transformer_resource = SubResource("Resource_dimnp")
+transformer_resource = SubResource("Resource_ipcor")
 
 [node name="TransformerItem_Duplicator" parent="Container/TransformerContainer" instance=ExtResource("2_6hkf2")]
 custom_minimum_size = Vector2(16, 0)
