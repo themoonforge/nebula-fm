@@ -350,10 +350,7 @@ func filter_old_input_buffer(time_offset_in_ms: int = 5000) -> void:
 func consume_note_from_input_buffer(key_number: int) -> MidiInputNoteResource:
 	var found_elem: MidiInputNoteResource = null
 
-	# simple search
-	var simple_name: String = MidiUtility.key_number_to_note_name(key_number)
-	print("indexbuffer", input_buffer.size())
-	var index: int = input_buffer.find_custom(func(elem: MidiInputNoteResource): return elem.simple_name == simple_name)
+	var index: int = input_buffer.find_custom(func(elem: MidiInputNoteResource): return elem._equals(key_number))
 	if index != -1:
 		found_elem = input_buffer[index]
 		input_buffer.remove_at(index)
