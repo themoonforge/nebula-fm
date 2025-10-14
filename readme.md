@@ -3,7 +3,7 @@
 
 ![Ludum Dare 58](https://img.shields.io/badge/LudumDare-58-f79122?labelColor=ee5533&link=https%3A%2F%2Fldjam.com%2Fevents%2Fludum-dare%2F56)
 
-This time we worked as a team of four and were divided between creating a rhythm game or a strategy game, so we decided to combine both. The result is an intergalactic music factory simulator where you build production lines to broadcast beats across space.
+Nebula FM is our entry for Ludum Dare 58! This time we worked as a team of four and were divided between creating a rhythm game or a strategy game, so we decided to combine both. The result is an intergalactic music factory simulator where you build production lines to broadcast beats across space.
 
 We experimented with timing systems, conveyor logic, and musical resource chains to bring the concept to life. Some features, such as the conveyor belts, are still experimental due to the jam’s time limit, but the core idea is already fully playable.
 
