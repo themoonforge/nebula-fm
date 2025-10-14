@@ -44,10 +44,10 @@ Nebula FM is built with Godot 4.5 and was originally created during Ludum Dare 5
 Development continues beyond the jam version, with the current focus on refining the overall game loop, adding new content such as the intro, outro, and quests, and ongoing bug fixing and polishing.
 
 ## Contributors 
-@iocutus  
-@pumpkinchariot  
-@prodcautious  
-@bognari  
+[★ iocutus]()  
+[★ pumpkinchariot]()  
+[★ prodcautious]()  
+[★ bognari]()
 
 ## Credits
 font: https://ggbot.itch.io/robtronika-font  
