@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="SpaceRadioResource" load_steps=2 format=3 uid="uid://cqoaywxhmfw1w"]
+[gd_resource type="Resource" script_class="SpaceRadioResource" load_steps=3 format=3 uid="uid://cqoaywxhmfw1w"]
 
 [ext_resource type="Script" uid="uid://cd0agy2rihr7p" path="res://scripts/resource/space_radio_resource.gd" id="1_kh444"]
+[ext_resource type="PackedScene" uid="uid://bwfcbpko787ih" path="res://scenes/ui/building_ui_components/next_on_air_component/next_on_air_component.tscn" id="2_neahg"]
 
 [resource]
 resource_name = "Space Radio Station"
@@ -14,4 +15,5 @@ Vector2i(3, -7): 0,
 Vector2i(3, 1): 2,
 Vector2i(7, -3): 3
 })
+ui_components = Array[PackedScene]([ExtResource("2_neahg")])
 metadata/_custom_type_script = "uid://cd0agy2rihr7p"

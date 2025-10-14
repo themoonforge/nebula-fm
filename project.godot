@@ -26,6 +26,7 @@ SceneTransition="*res://scenes/ui/scene_transition.tscn"
 MusicPlayer="*res://scenes/music_player/music_player.tscn"
 QuestTracker="*res://scenes/quest_tracker/quest_tracker.tscn"
 OptionsMenu="*res://scenes/ui/options_menu.tscn"
+NotePackageTextures="*res://scenes/note_package_textures/note_package_textures.tscn"
 
 [display]
 
@@ -35,7 +36,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/PaletteTools/plugin.cfg", "res://addons/midi/plugin.cfg")
+enabled=PackedStringArray("res://addons/midi/plugin.cfg")
 
 [gui]
 

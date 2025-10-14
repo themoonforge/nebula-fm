@@ -19,7 +19,7 @@ class_name MidiInputNoteResource extends Resource
 
 func _equals(other: int) -> bool:
 	var up = MidiUtility.key_number_to_note_name_flat_up(other)
-	var down = MidiUtility.key_number_to_note_name_flat_down(key_number)
+	var down = MidiUtility.key_number_to_note_name_flat_down(other)
 	return simple_name_flat_up == up or simple_name_flat_down == down 
 
 func _init(key_number: int = 0) -> void:

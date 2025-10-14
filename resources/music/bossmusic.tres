@@ -1,10 +1,16 @@
-[gd_resource type="Resource" script_class="SongResource" load_steps=2 format=3 uid="uid://eqn8h3uxs201"]
+[gd_resource type="Resource" script_class="SongResource" load_steps=4 format=3 uid="uid://eqn8h3uxs201"]
 
-[ext_resource type="Script" uid="uid://ddp8viiurppv6" path="res://resources/music/song_resoure.gd" id="1_l7p2p"]
+[ext_resource type="Script" uid="uid://ddp8viiurppv6" path="res://resources/music/song_resource.gd" id="1_328ob"]
+[ext_resource type="Texture2D" uid="uid://bmt62u4mtyt2x" path="res://sprites/tileset2.png" id="2_2gxds"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjqco"]
+atlas = ExtResource("2_2gxds")
+region = Rect2(416, 48, 16, 16)
 
 [resource]
-script = ExtResource("1_l7p2p")
-song_title = "Cosmic Cookies"
+script = ExtResource("1_328ob")
+song_title = "Boss music"
 song_key = &"bossmusic"
+song_cover = SubResource("AtlasTexture_qjqco")
 melody_midi_path = "midi/MIDI_sample.mid"
 mix_path = "music/bossmusicsept19.ogg"

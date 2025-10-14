@@ -3,9 +3,11 @@ extends Node
 @onready var sfx_player: AudioStreamPlayer2D = $SFXPlayer
 @onready var radio_station_player: AudioStreamPlayer2D = $RadioStationPlayer
 
-signal change_required_midi_key(midi_keys: Array[int])
+signal active_radio_keys_updated(song: SongResource, midi_keys: Array[int])
+signal change_required_radio_song(song: SongResource, midi_keys: Array[int])
 signal change_song(song: SongResource)
 signal loop_finished(song: SongResource)
+signal share_songs(songs: Dictionary[StringName, SongResource])
 
 var sfx_sounds = {
 	"ui_click": preload("res://sfx/ui/ui_click.ogg"),

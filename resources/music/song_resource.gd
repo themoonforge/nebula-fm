@@ -2,6 +2,7 @@ class_name SongResource extends Resource
 
 @export var song_title: String
 @export var song_key: StringName
+@export var song_cover: Texture
 
 @export var melody_midi_path: String # .midi file!
 @export var mix_path: String # .wav file!
