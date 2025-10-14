@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwjbsl4iwvcmm"
-path="res://.godot/imported/bly32-1x.png-90bee5199f40438e51eb452e96310446.ctex"
+uid="uid://4vipb42bj3uf"
+path="res://.godot/imported/midi_note_numbers_sheet.png-4407f0d9a4649c82163f821e97745e2f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://docs/bly32-1x.png"
-dest_files=["res://.godot/imported/bly32-1x.png-90bee5199f40438e51eb452e96310446.ctex"]
+source_file="res://docs/md_images/midi_note_numbers_sheet.png"
+dest_files=["res://.godot/imported/midi_note_numbers_sheet.png-4407f0d9a4649c82163f821e97745e2f.ctex"]
 
 [params]
 
