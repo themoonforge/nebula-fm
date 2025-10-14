@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwjbsl4iwvcmm"
-path="res://.godot/imported/bly32-1x.png-90bee5199f40438e51eb452e96310446.ctex"
+uid="uid://btpdffnqlat6m"
+path="res://.godot/imported/curr_corner_b_and_next_corner_b_800.png-9c0e963943c036a6e8b94ed3b604603c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://docs/bly32-1x.png"
-dest_files=["res://.godot/imported/bly32-1x.png-90bee5199f40438e51eb452e96310446.ctex"]
+source_file="res://docs/md_images/curr_corner_b_and_next_corner_b_800.png"
+dest_files=["res://.godot/imported/curr_corner_b_and_next_corner_b_800.png-9c0e963943c036a6e8b94ed3b604603c.ctex"]
 
 [params]
 

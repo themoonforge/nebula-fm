@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://do1eka2gxp6mu"
-path="res://.godot/imported/banner.png-672a735a86fa364e099be10842c8f5ad.ctex"
+uid="uid://4vipb42bj3uf"
+path="res://.godot/imported/midi_note_numbers_sheet.png-4407f0d9a4649c82163f821e97745e2f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://docs/banner.png"
-dest_files=["res://.godot/imported/banner.png-672a735a86fa364e099be10842c8f5ad.ctex"]
+source_file="res://docs/md_images/midi_note_numbers_sheet.png"
+dest_files=["res://.godot/imported/midi_note_numbers_sheet.png-4407f0d9a4649c82163f821e97745e2f.ctex"]
 
 [params]
 
