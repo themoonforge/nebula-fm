@@ -11,14 +11,25 @@ Nebula FM is our entry for Ludum Dare 58! ᯓ★ This time we worked as a team o
 Nebula FM is losing listeners fast. Across the galaxy, no one is tuning in anymore. Then mysterious sources of resonance are discovered on distant worlds. You are sent to harvest these signals and turn them into the sickest space beats the universe has ever heard. Build production lines, refine raw resonance, and keep the rhythm alive, because the future of intergalactic radio depends on you!
 
 ### Genres
-![simulation](https://img.shields.io/badge/simulation-8A2BE2) ![factory building](https://img.shields.io/badge/factory%20building-8A2BE2) ![adventure](https://img.shields.io/badge/adventure-8A2BE2) ![sci-fi](https://img.shields.io/badge/sci--fi-8A2BE2)
+![simulation](https://img.shields.io/badge/simulation-white) ![factory building](https://img.shields.io/badge/factory%20building-white) ![adventure](https://img.shields.io/badge/adventure-white) ![sci-fi](https://img.shields.io/badge/sci--fi-white)
 
 ### Features
 - Procedural map generation
 - Factory automation
 
 ### Controls
-wip
+
+| Action | Key / Mouse |
+|---------|--------------|
+| Select factory building from hotbar | *Click on desired object* |
+| Rotate left | **Q** |
+| Rotate right | **E** |
+| Place selected building | **Left Click** |
+| Toggle delete cursor | **D** |
+| Delete factory or conveyor | **Left Click** (while in delete mode) |
+| Exit delete mode / Deselect building | **Esc** |
+| Zoom in or out | **Scroll Wheel** |
+| Drag camera | **Hold Right Click** |
 
 ## Contributors 
 @iocutus  
