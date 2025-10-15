@@ -345,7 +345,7 @@ func filter_old_input_buffer(time_offset_in_ms: int = 5000) -> void:
 	
 	while not input_buffer.is_empty() and input_buffer[0].creation_time <= expiration_time:
 		input_buffer.pop_front()
-	print("clear buffer", input_buffer.size())
+	#print("clear buffer", input_buffer.size())
 
 func consume_note_from_input_buffer(key_number: int) -> MidiInputNoteResource:
 	var found_elem: MidiInputNoteResource = null
@@ -555,8 +555,15 @@ func _init_required_midi_keys(track_status_events: Array[SMF.MIDIEventChunk]):
 				var note: int = event_note_on.note	as int
 				print("midi_key: ", note)
 				midi_notes.append(note)
-		print("size", midi_notes.size())
-		MusicPlayer.change_required_midi_key.emit(midi_notes)	
+		
+		# IOCUTUS
+		# Finds the associated song for the required keys
+		var current_song: SongResource
+		for song in MusicPlayer.songs.values():
+			if "res://" + song.melody_midi_path == file:
+				current_song = song
+				
+		MusicPlayer.change_required_radio_song.emit(current_song, midi_notes)
 
 ## SMF解析
 func _analyse_smf() -> void:
@@ -914,7 +921,7 @@ func _process_track_event_note_on(channel: GodotMIDIPlayerChannelStatus, note: i
 	filter_old_input_buffer()
 	var elem = consume_note_from_input_buffer(key_number)
 	if elem == null:
-		print_debug("note not in input buffer: ", MidiUtility.key_number_to_note_name_with_octave(key_number), " skip");
+		#print_debug("note not in input buffer: ", MidiUtility.key_number_to_note_name_with_octave(key_number), " skip");
 		return
 		
 	var preset: Bank.Preset = self.bank.get_preset(channel.program, channel.bank)

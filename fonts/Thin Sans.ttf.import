@@ -1,0 +1,36 @@
+[remap]
+
+importer="font_data_dynamic"
+type="FontFile"
+uid="uid://66ts8gvdok5v"
+path="res://.godot/imported/Thin Sans.ttf-de3e69cf1e7c99f2a262ba52be86a2d5.fontdata"
+
+[deps]
+
+source_file="res://fonts/Thin Sans.ttf"
+dest_files=["res://.godot/imported/Thin Sans.ttf-de3e69cf1e7c99f2a262ba52be86a2d5.fontdata"]
+
+[params]
+
+Rendering=null
+antialiasing=1
+generate_mipmaps=false
+disable_embedded_bitmaps=true
+multichannel_signed_distance_field=false
+msdf_pixel_range=8
+msdf_size=48
+allow_system_fallback=true
+force_autohinter=false
+modulate_color_glyphs=false
+hinting=1
+subpixel_positioning=4
+keep_rounding_remainders=true
+oversampling=0.0
+Fallbacks=null
+fallbacks=[]
+Compress=null
+compress=true
+preload=[]
+language_support={}
+script_support={}
+opentype_features={}

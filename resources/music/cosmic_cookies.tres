@@ -1,10 +1,18 @@
-[gd_resource type="Resource" script_class="SongResource" load_steps=2 format=3 uid="uid://boru1xjyyb1ly"]
+[gd_resource type="Resource" script_class="SongResource" load_steps=4 format=3 uid="uid://boru1xjyyb1ly"]
 
-[ext_resource type="Script" uid="uid://ddp8viiurppv6" path="res://resources/music/song_resoure.gd" id="1_70vk1"]
+[ext_resource type="Script" uid="uid://ddp8viiurppv6" path="res://resources/music/song_resource.gd" id="1_70vk1"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2ohi7"]
+load_path = "res://.godot/imported/tileset2.png-72bfd1449e7da33365664eeea85cd2aa.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0d57"]
+atlas = SubResource("CompressedTexture2D_2ohi7")
+region = Rect2(416, 48, 16, 16)
 
 [resource]
 script = ExtResource("1_70vk1")
 song_title = "Cosmic Cookies"
 song_key = &"cosmic_cookies"
+song_cover = SubResource("AtlasTexture_w0d57")
 melody_midi_path = "midi/song_1_midi.mid"
 mix_path = "midi/song_1_mix.wav"

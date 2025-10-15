@@ -679,6 +679,15 @@ texture = ExtResource("3_0w1j7")
 1:9/animation_frame_5/duration = 1.5
 1:9/animation_frame_6/duration = 0.5
 1:9/0 = 0
+19:9/0 = 0
+19:10/0 = 0
+20:9/0 = 0
+20:10/0 = 0
+21:9/0 = 0
+21:10/0 = 0
+22:9/0 = 0
+22:10/0 = 0
+26:3/0 = 0
 
 [resource]
 physics_layer_0/collision_layer = 1

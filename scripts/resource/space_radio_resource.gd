@@ -29,7 +29,7 @@ func produce(input_buffer: Buffer, output_buffer: Buffer) -> void:
 				keys.append(key)
 				#if !remembered_keys.has(simple):
 				#	remembered_keys.append(simple)
-					
+		
 			#for k in remembered_keys:
 			#	print(MidiUtility.key_number_to_note_name(k))
 					
@@ -56,6 +56,7 @@ func produce(input_buffer: Buffer, output_buffer: Buffer) -> void:
 			var midi_input_note = MidiInputNoteResource.new(key)
 			EventBus.midi_input.emit(midi_input_note)
 	
+	MusicPlayer.active_radio_keys_updated.emit(current_song, keys)
 
 # TODO move to some utils
 ## compare arrays 

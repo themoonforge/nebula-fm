@@ -87,12 +87,6 @@ signal note_produced(note: NotePackage)
 var building_rect: Rect2i
 var building_shape_polygon: PackedVector2Array
 
-
-signal change_required_midi_key(midi_keys: Array[int])
-
-#func _ready():
-	#change_required_midi_key.connect(_on_change_required_midi_key)
-
 			
 func _ready() -> void:
 	beat_time = 60.0 / MapManager.global_bpm # TODO use global bpm from conveyor belt manager once it is global
@@ -105,11 +99,11 @@ func _ready() -> void:
 	building_ui.hide()
 	building_rect = Rect2i(tile_coord.x*Tiles.TILE_PX, tile_coord.y*Tiles.TILE_PX, ground_size.x*Tiles.TILE_PX, ground_size.y*Tiles.TILE_PX)
 
-	MusicPlayer.change_required_midi_key.connect(_on_change_required_midi_key)
+	MusicPlayer.change_required_radio_song.connect(_on_change_required_radio_song)
 	MusicPlayer.change_song.connect(_on_change_song)
 	MusicPlayer.loop_finished.connect(_on_loop_finished)
 
-func _on_change_required_midi_key(midi_keys: Array[int]):
+func _on_change_required_radio_song(song: SongResource, midi_keys: Array[int]):
 	if building_resource is SpaceRadioResource:
 		print("Required keys are: ")
 		for k in midi_keys:
