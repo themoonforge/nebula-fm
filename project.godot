@@ -14,7 +14,6 @@ config/name="harmony"
 run/main_scene="res://scenes/ui/main_menu.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
 run/max_fps=60
-boot_splash/image="uid://ck8usqqks8b60"
 config/icon="res://icon.svg"
 
 [autoload]
@@ -35,7 +34,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/PaletteTools/plugin.cfg", "res://addons/midi/plugin.cfg")
+enabled=PackedStringArray("res://addons/midi/plugin.cfg")
 
 [gui]
 

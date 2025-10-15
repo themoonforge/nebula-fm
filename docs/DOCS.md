@@ -6,7 +6,8 @@
 By bly32-1x
 
 ### Rotation Guideline
-Sprites in the tilemap.png are rotated in the following order (except for the convoyer belt corners). 
+Sprites in the tilemap.png are rotated in the following order (except for the convoyer belt corners)
+
 ⬆️ ➡️ ⬇️ ⬅️
 
 ## Code
