@@ -18,8 +18,8 @@ var sfx_sounds = {
 }
 
 var radio_songs = {
-	"cosmic_cookies": preload("res://midi/song_1_mix.wav"),
-	"bossmusic": preload("res://music/bossmusicsept19.ogg")
+	"cosmic_cookies": preload("res://music/radio_songs/cosmic_cookies-mix.ogg"),
+	"balance": preload("res://music/radio_songs/balance-mix.ogg")
 }
 
 var current_radio_song_key: String
