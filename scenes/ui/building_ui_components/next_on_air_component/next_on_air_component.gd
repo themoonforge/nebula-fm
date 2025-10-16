@@ -22,7 +22,17 @@ func set_up(_building: Building) -> void:
 
 func _on_active_radio_keys_updated(song: SongResource, keys: Array[int]) -> void:
 	var formatted_keys_label_text = generate_bbcode_string(required_radio_song_keys, keys)
-	required_radio_song_element.keys_label.text = formatted_keys_label_text
+	
+	
+	for element in next_on_air_container.get_children():
+		if element is not NextOnAirSongElement:
+			continue
+		if element.song != song:
+			element.keys_label.text = ""
+			continue
+		
+		required_radio_song_element = element
+		element.keys_label.text = formatted_keys_label_text
 	
 func _on_change_required_radio_song(song: SongResource, midi_keys: Array[int]) -> void:
 	for element in next_on_air_container.get_children():

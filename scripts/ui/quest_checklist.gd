@@ -6,13 +6,17 @@ extends CanvasLayer
 @onready var tutorial_panel: Container = %TutorialPanel
 @onready var show_tutorial_button: Button = %ShowTutorialButton
 
-var buildings_placed: Dictionary[String, int]
-var notes_played: Dictionary[String, int]
+var buildings_placed: Dictionary[StringName, int]
+var notes_played: Dictionary[StringName, int]
+var notes_transmitted: Dictionary[StringName, int]
+var played_songs: Array[StringName]
 
 var button_style_normal: StyleBoxFlat
 var button_style_hover: StyleBoxFlat
 
 var is_hovering_button: bool
+
+var is_in_tutorial: bool = true
 
 func _ready() -> void:
 	MapManager.regenerate.connect(_on_map_regenerate)
@@ -28,13 +32,16 @@ func _ready() -> void:
 	tutorial_panel.mouse_entered.connect(_on_tutorial_panel_mouse_entered)
 	tutorial_panel.mouse_exited.connect(_on_tutorial_panel_mouse_exited)
 	
+	MusicPlayer.current_played_song.connect(_on_play_song)
 	EventBus.note_played.connect(_on_note_played)
+	EventBus.note_transmitted.connect(_on_note_transmitted)
 	MapManager.place_building.connect(_on_placed_building)
 	_render_quest_info_items()
 	
 func _on_map_regenerate() -> void:
 	buildings_placed = {}
 	notes_played = {}
+	notes_transmitted = {}
 	
 	for resource in quest_resources:
 		resource.complete = false
@@ -42,11 +49,28 @@ func _on_map_regenerate() -> void:
 			requirement.complete = false
 	
 func _on_quest_complete(quest_resource: QuestResource) -> void:
-	# todo just fade an icon in or something
-	pass
+	for quest in quest_resources:
+		if quest.is_tutorial and !quest.complete:
+			return
+	if is_in_tutorial:
+		is_in_tutorial = false
+		MusicPlayer.loop_finished.emit(null)
 	
 func _on_note_played(note_resource: MidiInputNoteResource) -> void:
+	var simple = note_resource.simple_name_flat_up
+	if notes_played.has(simple):
+		notes_played[simple] = notes_played[simple] + 1
+	else:
+		notes_played[simple] = 1
 	check_quest_completion(QuestRequirement.QuestSignal.NOTE_PLAYED)
+
+func _on_note_transmitted(note_resource: MidiInputNoteResource) -> void:
+	var simple = note_resource.simple_name_flat_up
+	if notes_transmitted.has(simple):
+		notes_transmitted[simple] = notes_transmitted[simple] + 1
+	else:
+		notes_transmitted[simple] = 1
+	check_quest_completion(QuestRequirement.QuestSignal.NOTE_TRANSMITTED)
 
 func _set_button_font_color(color: Color) -> void:
 	show_tutorial_button.add_theme_color_override("font_color", color)
@@ -77,6 +101,11 @@ func _render_quest_info_items() -> void:
 		quest_info_container.add_child(quest_info_instance)
 		quest_info_instance.setup(resource)
 
+func _on_play_song(song_key: String):
+	played_songs.append(song_key)
+	check_quest_completion(QuestRequirement.QuestSignal.RADIO_SONGS_FINISHED)
+
+
 func _on_placed_building(building: Node2D) -> void:
 	check_quest_completion(QuestRequirement.QuestSignal.BUILDINGS_PLACED, building)
 
@@ -88,15 +117,15 @@ func check_quest_completion(quest_signal : QuestRequirement.QuestSignal, buildin
 			if building:
 				if requirement.associated_building_name != building.building_resource.name:
 					continue
-			
+					
 			var mapped_required_amount = _increase_required_amount(requirement)
 			
-			if requirement.quest_signal == quest_signal && requirement.amount == mapped_required_amount:
+			if requirement.quest_signal == quest_signal && requirement.amount <= mapped_required_amount:
 				requirement.complete = true
 				resource.completed_requirements.append(requirement)
-			if resource.completed_requirements.size() == resource.requirements_array.size():
-				resource.complete = true
-				QuestTracker.quest_completed.emit(resource)
+		if resource.completed_requirements.size() == resource.requirements_array.size():
+			resource.complete = true
+			QuestTracker.quest_completed.emit(resource)
 
 func _increase_required_amount(requirement: QuestRequirement) -> int:
 	match requirement.quest_signal:
@@ -108,10 +137,12 @@ func _increase_required_amount(requirement: QuestRequirement) -> int:
 			return buildings_placed[requirement.associated_building_name]
 			
 		QuestRequirement.QuestSignal.NOTE_PLAYED:
-			if !notes_played.has(requirement.associated_note_name):
-				notes_played[requirement.associated_note_name] = 0
-
-			notes_played[requirement.associated_note_name] += 1
 			return notes_played[requirement.associated_note_name]
-		
+		QuestRequirement.QuestSignal.NOTE_TRANSMITTED:
+			return notes_transmitted[requirement.associated_note_name]
+		QuestRequirement.QuestSignal.RADIO_SONGS_FINISHED:
+			var index = played_songs.find(requirement.associated_song_name)
+			if index > -1:
+				return 1
+			return 0
 	return 0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bv4engl26kj82"]
+[gd_scene load_steps=14 format=3 uid="uid://bv4engl26kj82"]
 
 [ext_resource type="Script" uid="uid://b8eu8xvtilanj" path="res://scripts/ui/quest_checklist.gd" id="1_ss3m1"]
 [ext_resource type="Script" uid="uid://dd674gtune7s5" path="res://scripts/resource/quest_resource.gd" id="2_wtq8e"]
@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_knh3f"]
 script = ExtResource("3_lb0fv")
-associated_building_name = "Collector"
+associated_building_name = &"Collector"
 amount = 1
 metadata/_custom_type_script = "uid://scy0e6iognox"
 
@@ -16,24 +16,52 @@ metadata/_custom_type_script = "uid://scy0e6iognox"
 script = ExtResource("2_wtq8e")
 description = "Place collector near source"
 requirements_array = Array[ExtResource("3_lb0fv")]([SubResource("Resource_knh3f")])
+is_tutorial = true
 metadata/_custom_type_script = "uid://dd674gtune7s5"
 
 [sub_resource type="Resource" id="Resource_xi4mx"]
 script = ExtResource("3_lb0fv")
-quest_signal = 1
-associated_note_name = "C"
-amount = 16
+quest_signal = 2
+associated_note_name = &"C"
+amount = 10
 metadata/_custom_type_script = "uid://scy0e6iognox"
 
 [sub_resource type="Resource" id="Resource_7qd3y"]
 script = ExtResource("2_wtq8e")
-description = "Transmit to the station!"
+description = "Transmit to the station! (10 x C)"
 requirements_array = Array[ExtResource("3_lb0fv")]([SubResource("Resource_xi4mx")])
+is_tutorial = true
+metadata/_custom_type_script = "uid://dd674gtune7s5"
+
+[sub_resource type="Resource" id="Resource_4et1r"]
+script = ExtResource("3_lb0fv")
+quest_signal = 3
+associated_song_name = &"cosmic_cookies"
+amount = 1
+metadata/_custom_type_script = "uid://scy0e6iognox"
+
+[sub_resource type="Resource" id="Resource_itu6j"]
+script = ExtResource("2_wtq8e")
+description = "Produce radio song \"Cosmic Cookies\""
+requirements_array = Array[ExtResource("3_lb0fv")]([SubResource("Resource_4et1r")])
+metadata/_custom_type_script = "uid://dd674gtune7s5"
+
+[sub_resource type="Resource" id="Resource_hmqr2"]
+script = ExtResource("3_lb0fv")
+quest_signal = 3
+associated_song_name = &"balance"
+amount = 1
+metadata/_custom_type_script = "uid://scy0e6iognox"
+
+[sub_resource type="Resource" id="Resource_npspd"]
+script = ExtResource("2_wtq8e")
+description = "Produce radio song \"Balance\""
+requirements_array = Array[ExtResource("3_lb0fv")]([SubResource("Resource_hmqr2")])
 metadata/_custom_type_script = "uid://dd674gtune7s5"
 
 [node name="QuestChecklist" type="CanvasLayer"]
 script = ExtResource("1_ss3m1")
-quest_resources = Array[ExtResource("2_wtq8e")]([SubResource("Resource_lb0fv"), SubResource("Resource_7qd3y")])
+quest_resources = Array[ExtResource("2_wtq8e")]([SubResource("Resource_lb0fv"), SubResource("Resource_7qd3y"), SubResource("Resource_itu6j"), SubResource("Resource_npspd")])
 quest_info_scene = ExtResource("5_knh3f")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

@@ -222,9 +222,9 @@ func _place_radio_station(sub_grid: SubGrid) -> void:
 	_spawn_mister_nebula_fm(spawn_cell, radio_station)
 	
 	# SET SONG
-	var start_song: SongResource = MusicPlayer.songs.get(&"cosmic_cookies")
-	MusicPlayer.change_song.emit(start_song)
-	print("SET START SONG: ", start_song.song_title)
+	#var start_song: SongResource = MusicPlayer.songs.get(&"cosmic_cookies")
+	#MusicPlayer.change_song.emit(start_song)
+	#print("SET START SONG: ", start_song.song_title)
 			
 func _spawn_mister_nebula_fm(station_spawn_cell: Vector2i, radio_station: Building) -> void:
 	var mister_nebula_instance = mister_nebula.instantiate()

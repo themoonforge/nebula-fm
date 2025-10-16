@@ -438,8 +438,9 @@ func set_up_new_song():
 func _on_change_song(song: SongResource):
 	print("set up new song: ", song.song_key)
 	file = "res://" + song.melody_midi_path
-	self.playing = true
+	self.playing = false
 	set_up_new_song()
+	play()
 	
 
 ## 通知

@@ -46,7 +46,7 @@ func produce(input_buffer: Buffer, output_buffer: Buffer) -> void:
 			#		EventBus.midi_input.emit(midi_input_note)
 		#else:
 			#MusicPlayer.stop_radio_song()
-	if _is_subarray_in(required_midi_keys_simple, simple_names):
+	if required_midi_keys_simple.size() > 0 and _is_subarray_in(required_midi_keys_simple, simple_names):
 		EventBus.midi_play.emit(false)
 		MusicPlayer.play_radio_song(current_song.song_key, 3)
 	else:
@@ -55,6 +55,7 @@ func produce(input_buffer: Buffer, output_buffer: Buffer) -> void:
 		for key in keys:
 			var midi_input_note = MidiInputNoteResource.new(key)
 			EventBus.midi_input.emit(midi_input_note)
+			EventBus.note_transmitted.emit(midi_input_note)
 	
 	MusicPlayer.active_radio_keys_updated.emit(current_song, keys)
 

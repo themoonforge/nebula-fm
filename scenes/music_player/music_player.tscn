@@ -10,7 +10,7 @@
 [node name="MusicPlayer" type="Node"]
 script = ExtResource("3_7oq6m")
 songs = Dictionary[StringName, ExtResource("2_cnhyp")]({
-&"bossmusic": ExtResource("4_cgdca"),
+&"balance": ExtResource("4_cgdca"),
 &"cosmic_cookies": ExtResource("3_cgdca")
 })
 

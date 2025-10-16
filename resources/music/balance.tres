@@ -5,12 +5,12 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qjqco"]
 atlas = ExtResource("2_owpea")
-region = Rect2(416, 48, 16, 16)
+region = Rect2(432, 48, 15, 15)
 
 [resource]
 script = ExtResource("1_4tr77")
 song_title = "Balance"
 song_key = &"balance"
 song_cover = SubResource("AtlasTexture_qjqco")
-melody_midi_path = "midi/MIDI_sample.mid"
-mix_path = "music/bossmusicsept19.ogg"
+melody_midi_path = "music/radio_songs/balance-melody_midi.mid"
+mix_path = "music/radio_songs/balance-mix.ogg"

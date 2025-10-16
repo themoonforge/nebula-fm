@@ -9,6 +9,8 @@ signal change_song(song: SongResource)
 signal loop_finished(song: SongResource)
 signal share_songs(songs: Dictionary[StringName, SongResource])
 
+signal current_played_song(song: StringName)
+
 var sfx_sounds = {
 	"ui_click": preload("res://sfx/ui/ui_click.ogg"),
 	"ui_click_pop": preload("res://sfx/ui/ui_click_pop.ogg"),
@@ -33,6 +35,7 @@ func play_sfx(sfx_name: String):
 	sfx_player.play()
 
 func play_radio_song(song_key: String, loop_amount: int = 1):
+	
 	current_radio_song_key = song_key
 	
 	if radio_station_player.stream != radio_songs[song_key]:
@@ -47,6 +50,8 @@ func play_radio_song(song_key: String, loop_amount: int = 1):
 			MusicPlayer.loop_finished.emit(songs[current_radio_song_key])
 			stop_radio_song()
 	last_radio_song_position = current_position
+	
+	current_played_song.emit(song_key)
 		
 func play_current_radio_song() -> void:
 	if current_radio_song_key.is_empty():
@@ -60,10 +65,6 @@ func stop_radio_song():
 func get_next_radio_song() -> String:
 	var keys = radio_songs.keys()
 	var index = keys.find(current_radio_song_key)
-	
-	if index == -1:
-		push_error("Current key not found in radio_songs.")
-		return ""
 	
 	if index >= keys.size() - 1:
 		return ""
